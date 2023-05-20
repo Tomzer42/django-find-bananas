@@ -6,6 +6,7 @@ from datetime import datetime
 
 def home(request):
   print(Bananas.objects.count())
+  print(Bananas.objects.latest('timestamp').timestamp)
   print(Bananas.objects.latest('timestamp').nb_bananas_1)
   if Bananas.objects.count() == 0 :
     bananas_of_the_day(True)
@@ -25,7 +26,7 @@ def home(request):
   dico["round1"]["image"] = latest_bananas.image_1
   dico["round2"]["image"] = latest_bananas.image_2
   dico["round3"]["image"] = latest_bananas.image_3
-  dico["timestamp"] = str(int(datetime.timestamp(datetime.now())))
+  dico["date"] = latest_bananas.date
   print("Round 1 :", dico["round1"]["number"])
   print("Round 2 :", dico["round2"]["number"])
   print("Round 3 :", dico["round3"]["number"])
