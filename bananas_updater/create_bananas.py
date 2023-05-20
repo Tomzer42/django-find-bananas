@@ -4,15 +4,13 @@ import random as rd
 from django.utils import timezone
 import os
 import time
+from datetime import datetime, timedelta
 
 from django_project.settings import BASE_DIR
 from find_bananas.models import Bananas
 
 outfile = os.path.join(BASE_DIR, 'find_bananas/static/images/banana_thumbnail.png')
 outfile_rotated = os.path.join(BASE_DIR, 'find_bananas/static/images/banana_thumbnail_rotated.png')
-image1 = os.path.join(BASE_DIR, 'find_bananas/static/images/bananas_of_the_day_round1.png')
-image2 = os.path.join(BASE_DIR, 'find_bananas/static/images/bananas_of_the_day_round2.png')
-image3 = os.path.join(BASE_DIR, 'find_bananas/static/images/bananas_of_the_day_round3.png')
 
 
 def is_locked(filepath):
@@ -44,6 +42,15 @@ def wait_for_file(filepath):
 
 
 def bananas_of_the_day(first_time = False):
+
+  now = datetime.now()
+  offset = timedelta(hours=2)  # Fuseau horaire français : UTC+2
+  now_france = now + offset
+  date = now_france.strftime("%Y-%m-%d-%H-%M-%S")
+
+  image1 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round1_{date}.png')
+  image2 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round2_{date}.png')
+  image3 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round3_{date}.png')
 
   img_thumb = Image.open(outfile, 'r').convert("RGBA")
 
@@ -94,7 +101,8 @@ def bananas_of_the_day(first_time = False):
     if first_time == False:
       Bananas.objects.latest('timestamp').delete()
     new_bananas = Bananas()
-    new_bananas.timestamp = timezone.now()
+    new_bananas.timestamp = now_france
+    new_bananas.date = date
     new_bananas.nb_bananas_1 = dico_bananas["round1"]["number"]
     new_bananas.nb_bananas_2 = dico_bananas["round2"]["number"]
     new_bananas.nb_bananas_3 = dico_bananas["round3"]["number"]

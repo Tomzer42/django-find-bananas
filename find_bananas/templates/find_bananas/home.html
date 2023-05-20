@@ -19,13 +19,19 @@
                 <button onClick="showImage3()" type="button" class="btn btn-primary btn-lg">Round 3</button>
             </div>
             <div id="image1" style="display:none;" class="pti-marg">
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static 'images/bananas_of_the_day_round1.png' %}?v={{dico.timestamp}}"/>
+                {% with image_name='images/bananas_of_the_day_round1_'|add:dico.date|add:'.png' %}
+                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
+                {% endwith %}
             </div>
             <div id="image2" style="display:none;" class="pti-marg">
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static 'images/bananas_of_the_day_round2.png' %}?v={{dico.timestamp}}"/>
+                {% with image_name='images/bananas_of_the_day_round2_'|add:dico.date|add:'.png' %}
+                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
+                {% endwith %}
             </div>
             <div id="image3" style="display:none;" class="pti-marg">
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static 'images/bananas_of_the_day_round3.png' %}?v={{dico.timestamp}}"/>
+                {% with image_name='images/bananas_of_the_day_round3_'|add:dico.date|add:'.png' %}
+                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
+                {% endwith %}
             </div>
             <div id="input1" style="display:none;">
                 <form onsubmit="return false" method="get" id="form1" class="form-inline">
