@@ -4,7 +4,7 @@ import random as rd
 from django.utils import timezone
 import os
 import time
-from datetime import datetime, timedelta
+from django.utils import timezone
 
 from django_project.settings import BASE_DIR
 from find_bananas.models import Bananas
@@ -43,9 +43,7 @@ def wait_for_file(filepath):
 
 def bananas_of_the_day(first_time = False):
 
-  now = datetime.now()
-  offset = timedelta(hours=2)  # Fuseau horaire français : UTC+2
-  now_france = now + offset
+  now_france = timezone.localtime(timezone.now())
   date = now_france.strftime("%Y-%m-%d-%H-%M-%S")
 
   image1 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round1_{date}.png')
