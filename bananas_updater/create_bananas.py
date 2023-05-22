@@ -10,7 +10,7 @@ from django_project.settings import BASE_DIR
 from find_bananas.models import Bananas
 
 outfile = os.path.join(BASE_DIR, 'find_bananas/static/images/banana_thumbnail.png')
-outfile_rotated = os.path.join(BASE_DIR, 'find_bananas/static/images/banana_thumbnail_rotated.png')
+outfile_rotated = os.path.join(BASE_DIR, 'find_bananas/banana_thumbnail_rotated.png')
 
 
 def is_locked(filepath):

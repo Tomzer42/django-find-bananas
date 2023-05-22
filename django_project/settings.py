@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'x1s&ss+#l()&^o)z)+v3ylykes=8lrb)qhr)jq20g^gn))qzek'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, '/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'find_bananas/static')
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "static"),
 # )
