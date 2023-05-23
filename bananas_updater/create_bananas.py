@@ -34,10 +34,10 @@ def is_locked(filepath):
   return locked
 
 def wait_for_file(filepath):
-  wait_time = 1
+  wait_time = 0.1
   while is_locked(filepath):
     time.sleep(wait_time)
-    print("On vient de faire un time sleep de 1 seconde")
+    print("On vient de faire un time sleep de 0.1 seconde")
 
 
 
@@ -61,29 +61,33 @@ def bananas_of_the_day(first_time = False):
   nb_bananas_round2 = rd.randint(50, 100)
   nb_bananas_round3 = rd.randint(100, 200)
 
+  print(nb_bananas_round1, nb_bananas_round2, nb_bananas_round3)
+
   for i in range(nb_bananas_round1):
-    img_thumb = Image.open(outfile, 'r').convert("RGBA")
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background1.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
+    print(i)
 
   for i in range(nb_bananas_round2):
-    img_thumb = Image.open(outfile, 'r').convert("RGBA")
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background2.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
+    time.sleep(0.01)
+    print(i)
 
   for i in range(nb_bananas_round3):
-    img_thumb = Image.open(outfile, 'r').convert("RGBA")
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background3.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
+    time.sleep(0.01)
+    print(i)
 
   #background.show()
   background1.save(image1)
@@ -109,6 +113,9 @@ def bananas_of_the_day(first_time = False):
     new_bananas.image_3 = dico_bananas["round3"]["image"]
     new_bananas.save()
     print("New bananas created")
+    print("Nb bananas1 : ", dico_bananas["round1"]["number"])
+    print("Nb bananas2 : ", dico_bananas["round2"]["number"])
+    print("Nb bananas3 : ", dico_bananas["round3"]["number"])
 
   except Exception as e:
     print(e)
