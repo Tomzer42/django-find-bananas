@@ -58,27 +58,49 @@ const validRound3 = (nbBanana1, nbBanana2, nbBanana3) => {
     document.getElementById('score').textContent = score_final;
 }
 const copyText = (nbBanana1, nbBanana2, nbBanana3) => {
-    document.getElementById("congrats").style.display ='block';
-    document.getElementById("result3").style.display ='block';
-    let guess1 = document.getElementById('guess_number1');
-    let guess2 = document.getElementById('guess_number2');
-    let guess3 = document.getElementById('guess_number3');
-    resultat1 = Math.abs(parseInt(guess1.value) - parseInt(nbBanana1));
-    resultat2 = Math.abs(parseInt(guess2.value) - parseInt(nbBanana2));
-    resultat3 = Math.abs(parseInt(guess3.value) - parseInt(nbBanana3));
-    score = resultat1 + resultat2 + resultat3;
-    const shareSentence = "FindBananas #1"
-                        + "\n\u2022 Round 1 : " + resultat1.toString() + " " + String.fromCodePoint( 127820 )
-                        + "\n\u2022 Round 2 : " + resultat2.toString() + " "  + String.fromCodePoint( 127820 )
-                        + "\n\u2022 Round 3 : " + resultat3.toString() + " "  + String.fromCodePoint( 127820 )
-                        + "\nTotal : " + score.toString() + " "  + String.fromCodePoint( 127820 ) + String.fromCodePoint( 127820 ) + String.fromCodePoint( 127820 )
-    navigator.clipboard
-    .writeText(shareSentence)
-    .then(() => {
-                alert("Copied !");
-              })
-              .catch(() => {
-                alert("something went wrong");
-              });
+  document.getElementById("congrats").style.display = 'block';
+  document.getElementById("result3").style.display = 'block';
+  let guess1 = document.getElementById('guess_number1');
+  let guess2 = document.getElementById('guess_number2');
+  let guess3 = document.getElementById('guess_number3');
+  resultat1 = Math.abs(parseInt(guess1.value) - parseInt(nbBanana1));
+  resultat2 = Math.abs(parseInt(guess2.value) - parseInt(nbBanana2));
+  resultat3 = Math.abs(parseInt(guess3.value) - parseInt(nbBanana3));
+  score = resultat1 + resultat2 + resultat3;
+  const shareSentence = "FindBananas #1"
+    + "\n\u2022 Round 1 : " + resultat1.toString() + " " + String.fromCodePoint(127820)
+    + "\n\u2022 Round 2 : " + resultat2.toString() + " " + String.fromCodePoint(127820)
+    + "\n\u2022 Round 3 : " + resultat3.toString() + " " + String.fromCodePoint(127820)
+    + "\nTotal : " + score.toString() + " " + String.fromCodePoint(127820) + String.fromCodePoint(127820) + String.fromCodePoint(127820);
 
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareSentence)
+      .then(() => {
+        alert("Copied!");
+      })
+      .catch(() => {
+        alert("Something went wrong");
+      });
+  } else {
+    // Fallback method
+    const textarea = document.createElement('textarea');
+    textarea.value = shareSentence;
+    textarea.style.position = 'fixed';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      const success = document.execCommand('copy');
+      if (success) {
+        alert("Copied!");
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      alert("Something went wrong");
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }
 }
+
