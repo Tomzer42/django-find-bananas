@@ -69,7 +69,6 @@ def bananas_of_the_day(first_time = False):
     img_w, img_h = img_thumb_rotate.size
     background1.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
-    print(i)
 
   for i in range(nb_bananas_round2):
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
@@ -77,8 +76,6 @@ def bananas_of_the_day(first_time = False):
     img_w, img_h = img_thumb_rotate.size
     background2.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
-    time.sleep(0.01)
-    print(i)
 
   for i in range(nb_bananas_round3):
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
@@ -86,8 +83,6 @@ def bananas_of_the_day(first_time = False):
     img_w, img_h = img_thumb_rotate.size
     background3.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
     img_thumb_rotate.close()
-    time.sleep(0.01)
-    print(i)
 
   #background.show()
   background1.save(image1)
