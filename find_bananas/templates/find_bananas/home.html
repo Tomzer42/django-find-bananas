@@ -52,7 +52,7 @@
                   <div class="form-group mx-sm-3 mb-2">
                     <input type="number" id="guess_number1" placeholder="20-50">
                   </div>
-                  <button onClick="validRound1({{dico.round1.number}})" type="submit" class="btn btn-primary mb-2">Valider</button>
+                  <button onClick="validRound1({{dico.round1.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
                 </form>
             </div>
             <div id="input2" style="display:none;">
@@ -65,7 +65,7 @@
                   <div class="form-group mx-sm-3 mb-2">
                     <input type="number" id="guess_number2" placeholder="50-100">
                   </div>
-                  <button onClick="validRound2({{dico.round2.number}})" type="submit" class="btn btn-primary mb-2">Valider</button>
+                  <button onClick="validRound2({{dico.round2.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
                 </form>
             </div>
             <div id="input3" style="display:none;">
@@ -73,12 +73,12 @@
                   {% csrf_token %}
                   <div class="form-group mb-2">
                     <label class="sr-only">How many bananas ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Combien de bananes ?">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
                   </div>
                   <div class="form-group mx-sm-3 mb-2">
                     <input type="number" id="guess_number3" placeholder="100-200">
                   </div>
-                  <button onClick="validRound3({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Valider</button>
+                  <button onClick="validRound3({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
                 </form>
             </div>
             <div id="result1" style="display:none;">
@@ -97,7 +97,7 @@
                 <p id="score"></p>
             </div>
             <div id="share" style="display:none;">
-                <button onClick="copyText({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Partager</button>
+                <button onClick="copyText({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Share</button>
             </div>
         </div>
     </div>
