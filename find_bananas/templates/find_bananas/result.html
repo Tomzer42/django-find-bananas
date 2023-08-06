@@ -1,0 +1,19 @@
+{% extends "find_bananas/base.html" %}
+{% load static %}
+{% block content %}
+
+    <!-- Collapsed content -->
+    <div class="content-section">
+        <div id="result3" style="display:block;">
+            <p id="text-result3">{{ result_round3 }}</p>
+            <p id="text-banana3">Le juste nombre : {{ dico.round3.number }}</p>
+        </div>
+        <div id="congrats" style="display:block;">
+            <p id="score">{{ final_score }}</p>
+        </div>
+        <div id="share" style="display:block;">
+            <button onClick="copyText({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}}, {{guess1}}, {{guess2}}, {{guess3}})" type="submit" class="btn btn-primary mb-2">Partager</button>
+        </div>
+    </div>
+    <script src="{% static 'find_bananas/functions.js' %}"></script>
+{% endblock content %}

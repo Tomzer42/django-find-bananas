@@ -1,6 +1,15 @@
 {% extends "find_bananas/base.html" %}
 {% load static %}
 {% block content %}
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span onClick="closeModal()" class="close" id="close-modal">&times;</span>
+        <h2>How to Play 🐒🍌</h2>
+        <p>A simple game, in 3 rounds, where you have to guess the exact number of bananas that will appear on your screen during 5 seconds.</p>
+      </div>
+    </div>
+
     <div class="play-section">
         <button data-toggle="collapse" data-target="#demo" type="button" class="btn btn-primary btn-lg" name="play">Play !</button>
     </div>
@@ -34,10 +43,11 @@
                 {% endwith %}
             </div>
             <div id="input1" style="display:none;">
-                <form onsubmit="return false" method="get" id="form1" class="form-inline">
+                <form method="post" id="form1" class="form-inline">
+                  {% csrf_token %}<!-- It's used to ensure the security of form submissions against CSRF attacks. By including this template tag within your HTML form, Django will automatically generate a hidden input field with the CSRF token value. When the form is submitted, the CSRF token is sent along with the request to the server for verification.-->
                   <div class="form-group mb-2">
-                    <label class="sr-only">Combien de bananes ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Combien de bananes ?">
+                    <label class="sr-only">How many bananas ?</label>
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
                   </div>
                   <div class="form-group mx-sm-3 mb-2">
                     <input type="number" id="guess_number1" placeholder="20-50">
@@ -46,10 +56,11 @@
                 </form>
             </div>
             <div id="input2" style="display:none;">
-                <form onsubmit="return false" method="get" id="form2" class="form-inline">
+                <form method="post" id="form2" class="form-inline">
+                  {% csrf_token %}
                   <div class="form-group mb-2">
-                    <label class="sr-only">Combien de bananes ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Combien de bananes ?">
+                    <label class="sr-only">How many bananas ?</label>
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
                   </div>
                   <div class="form-group mx-sm-3 mb-2">
                     <input type="number" id="guess_number2" placeholder="50-100">
@@ -58,9 +69,10 @@
                 </form>
             </div>
             <div id="input3" style="display:none;">
-                <form onsubmit="return false" method="get" id="form3" class="form-inline">
+                <form method="post" id="form3" class="form-inline">
+                  {% csrf_token %}
                   <div class="form-group mb-2">
-                    <label class="sr-only">Combien de bananes ?</label>
+                    <label class="sr-only">How many bananas ?</label>
                     <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Combien de bananes ?">
                   </div>
                   <div class="form-group mx-sm-3 mb-2">
