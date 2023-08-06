@@ -65,6 +65,7 @@ def bananas_of_the_day(first_time = False):
 
   for i in range(nb_bananas_round1):
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
+    wait_for_file(outfile_rotated) #Avoid cut bananas
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background1.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
@@ -72,6 +73,7 @@ def bananas_of_the_day(first_time = False):
 
   for i in range(nb_bananas_round2):
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
+    wait_for_file(outfile_rotated) #Avoid cut bananas
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background2.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
@@ -79,6 +81,7 @@ def bananas_of_the_day(first_time = False):
 
   for i in range(nb_bananas_round3):
     img_thumb.rotate(rd.randint(0, 360), expand=True).save(outfile_rotated)
+    wait_for_file(outfile_rotated) #Avoid cut bananas
     img_thumb_rotate = Image.open(outfile_rotated, 'r').convert("RGBA")
     img_w, img_h = img_thumb_rotate.size
     background3.paste(img_thumb_rotate, (rd.randint(0, 1440-img_w), rd.randint(0, 900-img_h)), img_thumb_rotate)
