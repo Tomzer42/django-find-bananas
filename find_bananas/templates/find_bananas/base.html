@@ -12,7 +12,26 @@
     <link rel="stylesheet" type="text/css" href="{% static 'find_bananas/main.css' %}">
 
   <meta charset="utf-8">
-  <title></title>
+  <meta name="description" content="How many bananas can you see ?">
+  <meta name="keywords" content="bananas, bananes, count, find, guess, compter, deviner">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Find bananas">
+  <meta property="og:description" content="How many bananas can you see ?">
+  <meta property="og:image" content="{% static 'images_to_store/meta-image-find-bananas.png' %}">
+  <meta property="og:url" content="https://www.find-bananas.com">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Find bananas">
+  <meta name="twitter:description" content="How many bananas can you see ?">
+  <meta name="twitter:image" content="{% static 'images_to_store/meta-image-find-bananas.png' %}">
+
+
+
+  <title>Find bananas</title>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCK7N7PVHQ"></script>
   <script>
@@ -22,6 +41,12 @@
 
     gtag('config', 'G-DCK7N7PVHQ');
   </script>
+
+  <link rel="icon" type="image/x-icon" href="{% static 'images_to_store/la-bananas.ico' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images_to_store/la-bananas (16x16).png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images_to_store/la-bananas (32x32).png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images_to_store/la-bananas-apple-touch-icon.png' %}">
+
 </head>
 <body>
   <header class="site-header">
