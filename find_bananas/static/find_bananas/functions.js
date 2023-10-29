@@ -1,9 +1,170 @@
+// JS Modal
+document.addEventListener("DOMContentLoaded", function () {
+  const modalContainer = document.getElementById("tutorialModal");
+  const modalSteps = document.querySelectorAll(".modal-step");
+  const dots = document.querySelectorAll(".dot");
+  const prevButton = document.querySelector(".modal-prev-button");
+  const nextButton = document.querySelector(".modal-next-button");
+  const closeModalButton = document.querySelector(".close-button");
+  const closeButton = document.createElement("span");
+
+  setTimeout(function() {
+      var modal = document.getElementById("tutorialModal");
+      modal.classList.add("active"); // Add the "active" class to apply styles
+      
+      var tutorialLink = document.getElementById("tutorialLink"); // Change "tutorialLink" to your actual link ID
+      tutorialLink.addEventListener("click", function (event) {
+          currentStep = 0;
+          event.preventDefault(); // Prevent the default link behavior
+          modal.style.display = "flex"; // Open the modal
+      });
+  }, 1000); // 2000 milliseconds = 2 seconds
+
+  let currentStep = 0;
+
+  function showStep(step) {
+      modalSteps.forEach((stepElement) => {
+          stepElement.classList.remove("active");
+      });
+
+      dots.forEach((dot, index) => {
+          if (index === step) {
+              dot.classList.add("active");
+          } else {
+              dot.classList.remove("active");
+          }
+      });
+
+      modalSteps[step].classList.add("active");
+  }
+
+  function nextStep() {
+      currentStep = (currentStep + 1) % modalSteps.length;
+      showStep(currentStep);
+  }
+
+  function prevStep() {
+      currentStep = (currentStep - 1 + modalSteps.length) % modalSteps.length;
+      showStep(currentStep);
+  }
+
+  dots.forEach((dot, index) => {
+      dot.addEventListener("click", function () {
+          showStep(index);
+          currentStep = index;
+      });
+  });
+
+  prevButton.addEventListener("click", prevStep);
+  nextButton.addEventListener("click", nextStep);
+
+  document.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowRight") {
+          nextStep();
+      } else if (event.key === "ArrowLeft") {
+          prevStep();
+      } else if (event.key === "Escape") {
+          closeModal();
+      }
+  });
+
+  function closeModal() {
+      modalContainer.style.display = "closing";
+      setTimeout(() => {
+          modalContainer.style.display = "none";
+          modalContainer.classList.remove("closing"); // Remove closing class after the transition
+          currentStep = 0;
+          showStep(currentStep);
+      }, 300); // Match the transition duration (0.3s)
+  }
+
+  closeButton.innerHTML = '<i class="fas fa-times"></i>';
+  closeButton.classList.add("close-button");
+  modalContainer.appendChild(closeButton);
+
+  closeButton.addEventListener("click", closeModal);
+  closeModalButton.addEventListener("click", closeModal);
+
+  modalContainer.addEventListener("click", function (event) {
+      if (event.target === modalContainer) {
+          closeModal();
+      }
+  });
+
+  // Show the initial step when the modal is opened
+  showStep(currentStep);
+
+}); /* End JS Modal */
+
+function toggleContainer() {
+  const playButton = document.querySelector('.white-button');
+  playButton.style.display = 'none';
+
+  const instruction = document.querySelector('.instruction');
+  instruction.style.animation = 'appear 0.4s ease-out forwards';
+  instruction.style.display = 'block';
+
+  setTimeout(function() {
+    instruction.style.animation = '';
+    instruction.style.display = 'none';
+
+    const countdown = document.querySelector('.countdown-container');
+    countdown.style.animation = 'appear 0.3s ease-out forwards';
+    countdown.style.display = 'flex';
+
+    let count = 3;
+
+    const countdownInterval = setInterval(() => {
+      count--;
+      if (count > 0) {
+        const countdownNumber = document.querySelector('.countdown-number');
+        countdownNumber.innerText = count;
+      } else {
+        clearInterval(countdownInterval);
+
+        countdown.style.animation = 'disappear 1s ease-in forwards';
+
+        const playSection = document.querySelector('.play-section');
+        playSection.style.display = 'none';
+
+        const container = document.getElementById('game');
+        container.classList.add('show');
+        showImage1(); /* Show banana image */
+
+        setTimeout(function() {
+          countdown.style.display = 'none';
+        }, 500);
+      }
+    }, 1000);
+  }, 3000);
+}
+
+/*function resizeGameContainer() {
+  const gameContainer = document.querySelector('.game-container');
+
+  const contentWidth = gameContainer.scrollWidth;
+  const contentHeight = gameContainer.scrollHeight;
+
+  gameContainer.style.width = `${contentWidth}px`;
+  gameContainer.style.height = `${contentHeight}px`;
+}
+
+function observeResize() {
+  const gameContainer = document.querySelector('.game-container');
+
+  let resizeObserver = new ResizeObserver(resizeGameContainer);
+
+  resizeObserver.observe(gameContainer);
+}
+
+document.addEventListener('DOMContentLoaded', observeResize);
+*/
+
 const showImage1 = () => {
     console.log('Début du showImage1')
     document.getElementById("image1").style.display ='block';
     setTimeout(() => {  document.getElementById("image1").style.display ='none';
-                        document.getElementById("round1").style.display ='none';
-                        document.getElementById("input1").style.display ='block';
+                        document.getElementById("input1").style.display ='flex';
                         document.getElementById("guess_number1").focus();}, 5000);
 }
 const showImage2 = () => {
@@ -26,10 +187,16 @@ const validRound1 = (nbBanana) => {
     event.preventDefault(); // Empêcher le refresh automatique d'un POST
     document.getElementById("round2").style.display ='block';
     document.getElementById("input1").style.display ='none';
-    document.getElementById("result1").style.display ='block';
+    document.getElementById("result1").style.display ='flex';
     let guess = document.getElementById('guess_number1');
-    resultat = "The banana gap : " + (parseInt(guess.value) - parseInt(nbBanana)).toString();
-    good_number = "The right number : " + nbBanana
+    let gapNumber = "";
+    if ((parseInt(guess.value) - parseInt(nbBanana)) > 0) {
+      gapNumber = "+" + (parseInt(guess.value) - parseInt(nbBanana)).toString();
+    } else {
+      gapNumber = (parseInt(guess.value) - parseInt(nbBanana)).toString();
+    }
+    resultat = gapNumber;
+    good_number = "The right number was: " + nbBanana;
     document.getElementById('text-result1').textContent = resultat;
     document.getElementById('text-banana1').textContent = good_number;
 }
