@@ -3,6 +3,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 import random as rd
 from django.utils import timezone
 import os
+import glob
 import time
 from django.utils import timezone
 
@@ -45,6 +46,14 @@ def bananas_of_the_day(first_time = False):
 
   now_france = timezone.localtime(timezone.now())
   date = now_france.strftime("%Y-%m-%d-%H-%M-%S")
+
+  image_directory = os.path.join(BASE_DIR, 'find_bananas/static/images/')
+
+  # Delete the 3 latest images if they exist
+  existing_images = glob.glob(os.path.join(image_directory, 'bananas_of_the_day_round*_*.png'))
+  existing_images.sort(key=os.path.getmtime)  # Sort by modification time
+  for image in existing_images[-3:]:  # Get the last 3 images
+      os.remove(image)  # Remove the image
 
   image1 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round1_{date}.png')
   image2 = os.path.join(BASE_DIR, f'find_bananas/static/images/bananas_of_the_day_round2_{date}.png')
