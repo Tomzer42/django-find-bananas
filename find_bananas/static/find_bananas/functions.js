@@ -49,6 +49,7 @@ const validRound3 = (nbBanana1, nbBanana2, nbBanana3) => {
     document.getElementById("congrats").style.display ='block';
     document.getElementById("result3").style.display ='block';
     document.getElementById("share").style.display ='block';
+    document.getElementById("tomorrow").style.display ='block';
     let guess1 = document.getElementById('guess_number1').value;
     let guess2 = document.getElementById('guess_number2').value;
     let guess3 = document.getElementById('guess_number3').value;
