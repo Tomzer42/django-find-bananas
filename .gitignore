@@ -1,6 +1,5 @@
 ## Images modifiées/générées
 
 find_bananas/banana_thumbnail_rotated.png
-find_bananas/static/images/*.png
 **.DS_Store
 **.pyc
