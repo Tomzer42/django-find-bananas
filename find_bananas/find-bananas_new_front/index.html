@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>find-bananas.games</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- <object type="text/html" data="header.html"></object> -->
+    <!-- #include virtual="/find-bananas.games/header.html" -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="/find-bananas.games/"><img src="/find-bananas.games/Assets/Find-Bananas logo.svg" alt="Logo"></a>
+            </div>
+            <ul class="links">
+                <li><a href="#" id="tutorialLink">Tutorial</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="fullPage">
+        <div class="main-container">
+            <h1 class="main-title">Are you ready to play?</h1>
+            <button class="white-button">
+                <span class="button-text">Play</span>
+                <img class="play-icon" src="/find-bananas.games/Assets/play-icon.svg" alt="Play Icon">
+            </button>
+            <div class="white-container">
+                <div class="bananas-count">
+                    <img src="/find-bananas.games/Assets/bananas-count.jpg" alt="Banana Count">
+                </div>                
+                <div class="banana-screen">
+                    <p>This was fast!<br><br><span>Give your answer on the right →</span></p>
+                </div>
+                <div class="right-content">
+                    <div class="answer-content">
+                        <h2>Your answer</h2>
+                        <div class="input-line">
+                            <input type="number" placeholder="20-50" min="0" max="1000">
+                            <img src="/find-bananas.games/Assets/la-bananas.svg" alt="la-bananas">
+                        </div>
+                        <button class="submit-button">Submit</button>
+                    </div>
+                    <p class="warning-box">The number should be between 0 and 500.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container" id="tutorialModal">
+        <div class="modal-content">
+            <div class="close-button"><i class="fas fa-times"></i></div>
+            <button class="modal-button modal-prev-button"><i class="fas fa-chevron-left"></i></button>
+            <div>
+                <div class="modal-step" data-step="1">
+                    <div class="circle-container">
+                        <img src="/find-bananas.games/Assets/Banana-3D-02.svg" alt="Step 1 Image">
+                    </div>
+                    <h2>Welcome to <span class="text-regular">Find</span>Bananas</h2>
+                    <p>A simple game, in 3 rounds where you have to guess <b>the exact number of bananas</b> that will appear on your screen during <b>5 seconds</b></p>
+                </div>
+                <div class="modal-step" data-step="2">
+                    <div class="circle-container">
+                        <img src="/find-bananas.games/Assets/Banana-3D-03.svg" alt="Step 1 Image">
+                    </div>
+                    <h2>Play, share<br>&amp; come back tomorrow</h2>
+                    <p>3 rounds per day is the most you can do. <b>Share your score</b> with friends and <b>come back tomorrow.</b></p>
+                </div>
+                <div class="modal-step" data-step="3">
+                    <div class="circle-container">
+                        <img src="/find-bananas.games/Assets/Banana-3D-04.svg" alt="Step 1 Image">
+                    </div>
+                    <h2>The banana gap</h2>
+                    <p>What counts in the end is the <b>banana gap between reality and your answer over the 3 rounds.</b></p>
+                </div>
+                <div class="dots-container">
+                    <span class="dot" data-step="1"></span>
+                    <span class="dot" data-step="2"></span>
+                    <span class="dot" data-step="3"></span>
+                </div>
+            </div>
+            <button class="modal-button modal-next-button"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+
+    <canvas id="gameCanvas"></canvas> <!-- Use this canvas element for rendering graphics -->
+    
+    <!-- Your JavaScript code for game logic goes here -->
+    <script src="find-bananas.js"></script>
+</body>
+</html>

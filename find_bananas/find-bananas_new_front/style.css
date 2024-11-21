@@ -1,0 +1,424 @@
+body {
+    font-family: Gotham, sans-serif;
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.5;
+    background-image: url(/find-bananas.games/Assets/background.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+header {
+    color: #fff;
+    padding: 10px 4rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-component {
+    width: 100%;
+}
+
+.text-regular{
+    font-weight: 400;
+}
+
+.logo img {
+    height: 25px; /* Adjust the logo height as needed */
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.links {
+    float: right;
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: right;
+}
+
+.links li {
+    margin: 0 10px; /* Adjust spacing between links */
+    justify-content: space-between;
+}
+
+.links li:last-child {
+    margin-right: 0; /* Remove margin from the last link */
+}
+
+.links li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.links li a:hover {
+    color: #f0f0f0;
+}
+
+
+/* Page content from here */
+
+.fullPage{
+    height: 100vh;
+    padding: 0 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container {
+    width: 80vw;
+    margin-bottom: 13rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title{
+    color: white;
+    font-size: 3rem;
+}
+
+.white-button {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: white;
+    color: #4B6DED;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.white-button:hover{
+    transform: scale3d(1.1, 1.1, 1.1); /* Increase size along all axes when hovering */
+    animation: bounce 0.4s infinite; /* Apply bouncing animation */
+}
+
+/* Animation for bouncing effect */
+@keyframes bounce {
+    0%, 100% {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+}
+
+.button-text {
+    margin-right: 13px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.play-button img {
+    width: 24px;
+    height: 24px;
+    fill: white; /* trying to change the svg color */
+}
+
+
+
+/* Game content from here  */
+
+.white-container {
+    display: none;
+    width: 100%;
+    height: 30rem;
+    padding: 1.625rem;
+    gap: 1.625rem;
+    flex-direction: row;
+    border-radius: 1.5rem;
+    background: var(--white, #FEFEFF);
+    box-shadow: 2px 4px 40px 0px #1936C9;
+}
+
+.banana-screen {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5625rem;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), linear-gradient(122deg, #4B6DED 0%, #3652E0 100%);
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.banana-screen span {
+    font-weight: 700;
+}
+
+.banana-screen.active { /* Useful later */
+    background-color: white;
+    border: 1px solid #45454531;
+}
+
+.right-content {
+    display: flex;
+    min-width: 15rem;
+    flex: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.answer-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.answer-content h2 {
+    font-size: 2rem;
+    margin: 0.3rem;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.3125rem;
+    align-self: stretch;
+}
+
+.input-line input {
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 0 0;
+    border-radius: 0.5625rem;
+    border: 2px solid var(--warning-01, #FDB817);
+    height: 2rem;
+    font-size: 1.5rem;
+}
+
+.input-line input::placeholder {
+    color: #45454531;
+}
+
+.input-line img {
+    height: 1.6rem;
+    transform: rotate(53.631deg);
+}
+
+.submit-button {
+    display: flex;
+    padding: 0.75rem 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.26931rem;
+    align-self: stretch;
+    border-radius: 0.80794rem;
+    border: 2px transparent;
+    background: var(--primary-gradient, linear-gradient(122deg, #4B6DED 0%, #3652E0 100%));
+    box-shadow: 1px 2px 4px 0px rgba(25, 54, 201, 0.25);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.submit-button:hover {
+    background: white;
+    border: 2px solid #3652E0;
+    color: #3652E0;
+}
+
+.warning-box {
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 0.5625rem;
+    background: var(--warning-02, #FFF8DD);
+}
+
+
+/* Tuto modal from here */
+
+.modal-container {
+    display: none; /* Changed by the js */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0; /* Set initial opacity to 0 */
+    transition: opacity 2s ease-in-out; /* Add transition for opacity */
+}
+
+.modal-container.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-container.closing {
+    opacity: 0; /* When the closing class is added, set opacity to 0 */
+}
+
+.modal-content {
+    width: 45%;
+    min-width: 25rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-step {
+    text-align: center;
+    display: none;
+}
+
+.modal-step h2{
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.modal-step p{
+    font-size: 1.3rem;
+}
+
+.modal-step.active {
+    display: block;
+}
+
+.circle-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    box-shadow: inset 0 0 6px #42424218;
+    /* border: 1px solid #45454531; */
+}
+
+.circle-container img {
+    width: 90%;
+    height: 90%;
+    display: block;
+    position: absolute;
+    top: 10%;
+    left: 6%;
+    right: -100%; /* Initial position: outside the circle on the right */
+    animation: slideIn 0.4s ease-in-out forwards; /* Apply the animation */
+}
+
+@keyframes slideIn {
+    0% {
+        right: -100%; /* Start position: outside the circle on the right */
+        transform: translateX(100px); /* No vertical translation at start and end */
+    }
+    50% {
+        right: 0; /* Middle position: inside the circle */
+        transform: translateX(-20px); /* Bounce effect: move the image up */
+    }
+    100% {
+        transform: translateX(0); /* No vertical translation at start and end */
+    }
+}
+
+.modal-step.active .circle-container img {
+    right: 0; /* Final position: inside the circle */
+}
+
+.dots-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #888;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #333;
+}
+
+.modal-button { /* Left & right arrows */
+    background-color: white;
+    color: #333;
+    border: 1px #333;
+    padding: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.modal-button:hover {
+    background-color: #3652E0;
+    color: white;
+}
+
+.modal-prev-button {
+    float: left;
+    margin-right: 20px;
+}
+
+.modal-next-button {
+    float: right;
+    margin-left: 20px;
+}
+
+.close-button {
+    position: absolute;
+    padding: 8px;
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333; /* You can set the color to your preference */
+}
+
+.close-button:hover {
+    background-color: #3652E0;
+    color: white;
+}
