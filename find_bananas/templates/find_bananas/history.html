@@ -1,0 +1,52 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'My results' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>{% translate 'My results' %}</h1>
+  {% if summary.games %}
+    <dl class="stats">
+      <div><dt>{% translate 'Games played' %}</dt><dd>{{ summary.games }}</dd></div>
+      <div><dt>{% translate 'Best score' %}</dt><dd>{{ summary.best }}</dd></div>
+      <div><dt>{% blocktranslate count n=summary.recent_count %}Average, last game{% plural %}Average, last {{ n }} games{% endblocktranslate %}</dt><dd>{{ summary.average_recent }}</dd></div>
+    </dl>
+    <p class="form-help">{% translate 'Score = total number of bananas you were off by. Lower is better.' %}</p>
+  {% else %}
+    <p class="empty">{% translate 'No results yet. Play today’s challenge and it will appear here.' %}</p>
+    <a class="btn btn-primary btn-big" href="{% url 'home' %}">{% translate 'Play' %}</a>
+  {% endif %}
+</div>
+
+{% if rows %}
+<div class="panel">
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th scope="col">{% translate 'Challenge' %}</th>
+        <th scope="col" class="num">{% translate 'Score' %}</th>
+        <th scope="col" class="num">{% translate 'Ranking' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>#{{ row.play.edition.number }} <span class="form-help">{{ row.play.edition.date|date:"SHORT_DATE_FORMAT" }}</span></td>
+          <td class="num">{{ row.play.score }}</td>
+          <td class="num">{% if row.ranking.top_percent %}{% blocktranslate with p=row.ranking.top_percent %}top {{ p }}%{% endblocktranslate %}{% else %}—{% endif %}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if page.has_other_pages %}
+    <nav class="pager" aria-label="{% translate 'Pages' %}">
+      {% if page.has_previous %}<a href="?page={{ page.previous_page_number }}">{% translate 'Newer' %}</a>{% else %}<span></span>{% endif %}
+      {% if page.has_next %}<a href="?page={{ page.next_page_number }}">{% translate 'Older' %}</a>{% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="panel">
+  <p class="form-help">{{ user.email }} · <a href="{% url 'password_reset' %}">{% translate 'Change password' %}</a> · <a href="{% url 'delete_account' %}">{% translate 'Delete my account' %}</a></p>
+</div>
+{% endblock %}

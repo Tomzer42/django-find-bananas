@@ -18,6 +18,7 @@ from django.db import IntegrityError, transaction
 from django.utils import timezone
 
 from . import scoring
+from .editions import ROUND_SPECS
 from .models import Edition, EditionRound, Play
 from .players import find_play, get_guest_key, ip_hash
 
@@ -156,7 +157,13 @@ def play_state(play: Play | None, edition: Edition) -> dict:
     """Everything the page needs to resume or display a play."""
     total = round_total(edition)
     state = {
-        "edition": {"number": edition.number, "date": edition.date.isoformat(), "rounds": total},
+        "edition": {
+            "number": edition.number,
+            "date": edition.date.isoformat(),
+            "rounds": total,
+            "ranges": [[spec.min_count, spec.max_count] for spec in ROUND_SPECS[:total]],
+            "ends_at": edition.ends_at.isoformat(),
+        },
         "status": "not_started",
         "rounds": [],
         "next_round": 1,

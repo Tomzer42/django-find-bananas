@@ -15,6 +15,7 @@ from .editions import get_live_edition
 from .models import Edition, Play
 from .players import find_play
 from .ratelimit import ratelimit
+from .strings import game_strings
 
 # A play started just before the daily switch can still be finished.
 FINISH_GRACE = timedelta(minutes=15)
@@ -31,7 +32,7 @@ def home(request):
     return render(
         request,
         "find_bananas/home.html",
-        {"edition": edition, "state": game.play_state(play, edition), "next_edition_at": edition.ends_at},
+        {"edition": edition, "state": game.play_state(play, edition), "strings": game_strings()},
     )
 
 

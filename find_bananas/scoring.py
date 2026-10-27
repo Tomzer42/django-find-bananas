@@ -64,7 +64,13 @@ def ranking_for(play: Play) -> dict:
         histogram = dict(histogram)
         histogram[play.score] = 1
     players = sum(histogram.values())
-    data = {"players": players, "ranked": play.ranked, "top_percent": None, "beaten_percent": None}
+    data = {
+        "players": players,
+        "min_players": settings.RANKING_MIN_PLAYERS,
+        "ranked": play.ranked,
+        "top_percent": None,
+        "beaten_percent": None,
+    }
     if not play.ranked or players < settings.RANKING_MIN_PLAYERS:
         return data
     better = sum(n for score, n in histogram.items() if score < play.score)

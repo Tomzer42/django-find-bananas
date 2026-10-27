@@ -1,78 +1,71 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-  <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'find_bananas/main.css' %}">
-
   <meta charset="utf-8">
-  <meta name="description" content="How many bananas can you see ?">
-  <meta name="keywords" content="bananas, bananes, count, find, guess, compter, deviner">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3380FF">
+  <title>{% block title %}Find Bananas{% endblock %}</title>
+  <meta name="description" content="{% translate 'A daily 30-second game: bananas appear for 5 seconds. How many did you see?' %}">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Find bananas">
-  <meta property="og:description" content="How many bananas can you see ?">
-  <meta property="og:image" content="{% static 'images_to_store/image_metadata.png' %}">
-  <meta property="og:url" content="https://www.find-bananas.com">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Find Bananas">
+  <meta property="og:title" content="{% translate 'Find Bananas — how many bananas can you see?' %}">
+  <meta property="og:description" content="{% translate 'A new challenge every day at noon. 3 rounds, 5 seconds each.' %}">
+  <meta property="og:url" content="{{ SITE_URL }}/">
+  <meta property="og:image" content="{{ SITE_URL }}{% static 'find_bananas/brand/meta-image-find-bananas.png' %}">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Find bananas">
-  <meta name="twitter:description" content="How many bananas can you see ?">
-  <meta name="twitter:image" content="{% static 'images_to_store/image_metadata.png' %}">
-
-
-
-  <title>Find bananas</title>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCK7N7PVHQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-DCK7N7PVHQ');
-  </script>
-
-  <link rel="icon" type="image/x-icon" href="{% static 'images_to_store/la-bananas.ico' %}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images_to_store/la-bananas (16x16).png' %}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images_to_store/la-bananas (32x32).png' %}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images_to_store/la-bananas-apple-touch-icon.png' %}">
-
+  <link rel="icon" href="{% static 'find_bananas/brand/la-bananas.ico' %}" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'find_bananas/brand/la-bananas_32x32.png' %}">
+  <link rel="apple-touch-icon" href="{% static 'find_bananas/brand/la-bananas-apple-touch-icon.png' %}">
+  <link rel="preload" href="{% static 'find_bananas/fonts/fredoka-latin.woff' %}" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="{% static 'find_bananas/main.css' %}">
+  {% block head %}{% endblock %}
 </head>
 <body>
-  <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-      <div class="container">
-        <div class="collapse navbar-collapse" id="navbarToggle">
-          <div class="navbar-nav mr-auto">
-            <a class="navbar-brand mr-4" style="color:#3380FF" href="/">FindBananas</a>
-            <!-- <a class="nav-item nav-link" href="/about">About</a> -->
-          </div>
-        </div>
-      </div>
+  <header class="topbar">
+    <a class="brand" href="{% url 'home' %}">
+      <img src="{% static 'find_bananas/brand/la-bananas_32x32.png' %}" alt="" width="28" height="28">
+      <span>Find Bananas</span>
+    </a>
+    <nav class="topnav" aria-label="{% translate 'Account' %}">
+      {% if user.is_authenticated %}
+        <a href="{% url 'history' %}">{% translate 'My results' %}</a>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="linklike">{% translate 'Log out' %}</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">{% translate 'Log in' %}</a>
+      {% endif %}
     </nav>
   </header>
-  <main role="main" class="container">
-    <div class="row justify-content-center">
-      <div class="col-10">
-        {% block content %}{% endblock %}
+
+  <main class="page">
+    {% if messages %}
+      <div class="flash" role="status">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <a href="{% url 'privacy' %}">{% translate 'Privacy' %}</a>
+  </footer>
+
+  {% if GA_MEASUREMENT_ID %}
+    {{ GA_MEASUREMENT_ID|json_script:"ga-id" }}
+    <div class="consent" id="consent" hidden>
+      <p>{% translate 'May we measure visits with Google Analytics? It sets cookies. The game works either way.' %}</p>
+      <div class="consent-actions">
+        <button type="button" class="btn btn-quiet" data-consent="no">{% translate 'No thanks' %}</button>
+        <button type="button" class="btn btn-secondary" data-consent="yes">{% translate 'Allow' %}</button>
       </div>
     </div>
-  </main>
-  <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="{% static 'find_bananas/consent.js' %}" defer></script>
+  {% endif %}
+  {% block scripts %}{% endblock %}
 </body>
 </html>

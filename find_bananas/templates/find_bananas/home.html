@@ -1,108 +1,83 @@
 {% extends "find_bananas/base.html" %}
-{% load static %}
+{% load static i18n %}
+
+{% block head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
+
 {% block content %}
+<div class="game" id="game" data-edition="{{ edition.number }}"
+     data-signup-url="{% url 'signup' %}?next=/" data-history-url="{% url 'history' %}"
+     data-authenticated="{{ user.is_authenticated|yesno:'true,false' }}">
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span onClick="closeModal()" class="close" id="close-modal">&times;</span>
-        <h2>How to Play 🐒🍌</h2>
-        <p>A simple game, in 3 rounds, where you have to guess the exact number of bananas that will appear on your screen during 5 seconds.</p>
-      </div>
+  <ol class="progress" id="progress" aria-label="{% translate 'Rounds' %}" hidden></ol>
+
+  <section class="screen" data-screen="intro">
+    <p class="edition">{% blocktranslate with number=edition.number %}Daily challenge #{{ number }}{% endblocktranslate %}</p>
+    <h1>{% translate 'How many bananas?' %}</h1>
+    <p class="lead">{% translate 'Bananas appear for 5 seconds. Count them, then type your guess. Three rounds, more bananas each time.' %}</p>
+    <button type="button" class="btn btn-primary btn-big" data-action="start">{% translate 'Play' %}</button>
+  </section>
+
+  <section class="screen" data-screen="ready" hidden>
+    <h2 data-field="ready-title"></h2>
+    <p class="lead" data-field="ready-range"></p>
+    <button type="button" class="btn btn-primary btn-big" data-action="show">{% translate 'Show the bananas' %}</button>
+  </section>
+
+  <section class="screen screen-view" data-screen="view" hidden>
+    <div class="frame" id="frame">
+      <p class="frame-loading" id="frame-loading">{% translate 'Loading…' %}</p>
     </div>
+    <div class="timer" aria-hidden="true"><span id="timer-bar"></span></div>
+  </section>
 
-    <div class="play-section">
-        <button data-toggle="collapse" data-target="#demo" type="button" class="btn btn-primary btn-lg" name="play">Play !</button>
+  <section class="screen" data-screen="guess" hidden>
+    <form id="guess-form" class="guess" novalidate>
+      <label for="guess-input" data-field="guess-label">{% translate 'How many bananas did you see?' %}</label>
+      <input id="guess-input" name="guess" type="number" inputmode="numeric" pattern="[0-9]*"
+             min="0" max="9999" autocomplete="off" required>
+      <p class="form-error" id="guess-error" role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary btn-big">{% translate 'Submit guess' %}</button>
+    </form>
+  </section>
+
+  <section class="screen" data-screen="reveal" hidden>
+    <p class="reveal-gap" data-field="reveal-gap"></p>
+    <dl class="reveal-facts">
+      <div><dt>{% translate 'Your guess' %}</dt><dd data-field="reveal-guess"></dd></div>
+      <div><dt>{% translate 'Bananas' %}</dt><dd data-field="reveal-count"></dd></div>
+    </dl>
+    <button type="button" class="btn btn-primary btn-big" data-action="next"></button>
+  </section>
+
+  <section class="screen" data-screen="result" hidden>
+    <p class="edition">{% blocktranslate with number=edition.number %}Daily challenge #{{ number }}{% endblocktranslate %}</p>
+    <div class="stamp">
+      <span class="stamp-score" data-field="score"></span>
+      <span class="stamp-label" data-field="score-label"></span>
     </div>
+    <p class="ranking" data-field="ranking"></p>
+    <table class="rounds">
+      <thead><tr><th scope="col">{% translate 'Round' %}</th><th scope="col">{% translate 'Guess' %}</th><th scope="col">{% translate 'Bananas' %}</th><th scope="col">{% translate 'Off by' %}</th></tr></thead>
+      <tbody data-field="rounds"></tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-big" data-action="share">{% translate 'Share my score' %}</button>
+    <p class="toast" id="toast" role="status" hidden></p>
+    <p class="next-edition" data-field="countdown"></p>
+    <p class="account-cta" data-field="account-cta"></p>
+  </section>
 
+  <section class="screen" data-screen="error" hidden>
+    <h2>{% translate 'Something went wrong' %}</h2>
+    <p class="lead" data-field="error-message"></p>
+    <button type="button" class="btn btn-secondary" data-action="reload">{% translate 'Reload the game' %}</button>
+  </section>
+</div>
 
-    <!-- Collapsed content -->
-    <div id="demo" class="collapse">
-        <div class="content-section">
-            <div id="round1" style="display:block;">
-                <button onClick="showImage1()" type="button" class="btn btn-primary btn-lg">Round 1</button>
-            </div>
-            <div id="round2" style="display:none;">
-                <button onClick="showImage2()" type="button" class="btn btn-primary btn-lg">Round 2</button>
-            </div>
-            <div id="round3" style="display:none;">
-                <button onClick="showImage3()" type="button" class="btn btn-primary btn-lg">Round 3</button>
-            </div>
-            <div id="image1" style="display:none;" class="pti-marg">
-                {% with image_name='images/bananas_of_the_day_round1_'|add:dico.date|add:'.png' %}
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
-                {% endwith %}
-            </div>
-            <div id="image2" style="display:none;" class="pti-marg">
-                {% with image_name='images/bananas_of_the_day_round2_'|add:dico.date|add:'.png' %}
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
-                {% endwith %}
-            </div>
-            <div id="image3" style="display:none;" class="pti-marg">
-                {% with image_name='images/bananas_of_the_day_round3_'|add:dico.date|add:'.png' %}
-                <img style="height: 100%; width: 100%; object-fit: contain" src="{% static image_name %}"/>
-                {% endwith %}
-            </div>
-            <div id="input1" style="display:none;">
-                <form method="post" id="form1" class="form-inline">
-                  {% csrf_token %}<!-- It's used to ensure the security of form submissions against CSRF attacks. By including this template tag within your HTML form, Django will automatically generate a hidden input field with the CSRF token value. When the form is submitted, the CSRF token is sent along with the request to the server for verification.-->
-                  <div class="form-group mb-2">
-                    <label class="sr-only">How many bananas ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
-                  </div>
-                  <div class="form-group mx-sm-3 mb-2">
-                    <input type="number" id="guess_number1" placeholder="20-50">
-                  </div>
-                  <button onClick="validRound1({{dico.round1.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
-                </form>
-            </div>
-            <div id="input2" style="display:none;">
-                <form method="post" id="form2" class="form-inline">
-                  {% csrf_token %}
-                  <div class="form-group mb-2">
-                    <label class="sr-only">How many bananas ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
-                  </div>
-                  <div class="form-group mx-sm-3 mb-2">
-                    <input type="number" id="guess_number2" placeholder="50-100">
-                  </div>
-                  <button onClick="validRound2({{dico.round2.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
-                </form>
-            </div>
-            <div id="input3" style="display:none;">
-                <form method="post" id="form3" class="form-inline">
-                  {% csrf_token %}
-                  <div class="form-group mb-2">
-                    <label class="sr-only">How many bananas ?</label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="How many bananas ?">
-                  </div>
-                  <div class="form-group mx-sm-3 mb-2">
-                    <input type="number" id="guess_number3" placeholder="100-200">
-                  </div>
-                  <button onClick="validRound3({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Validate</button>
-                </form>
-            </div>
-            <div id="result1" style="display:none;">
-                <p id="text-result1"></p>
-                <p id="text-banana1"></p>
-            </div>
-            <div id="result2" style="display:none;">
-                <p id="text-result2"></p>
-                <p id="text-banana2"></p>
-            </div>
-            <div id="result3" style="display:none;">
-                <p id="text-result3"></p>
-                <p id="text-banana3"></p>
-            </div>
-            <div id="congrats" style="display:none;">
-                <p id="score"></p>
-            </div>
-            <div id="share" style="display:none;">
-                <button onClick="copyText({{dico.round1.number}}, {{dico.round2.number}}, {{dico.round3.number}})" type="submit" class="btn btn-primary mb-2">Share</button>
-            </div>
-            <div id="tomorrow" style="display:none;">
-                <p id="text-tomorrow">Come back tomorrow for more bananas !</p>
-            </div>
-        </div>
-    </div>
-    <script src="{% static 'find_bananas/functions.js' %}"></script>
-{% endblock content %}
+{{ state|json_script:"initial-state" }}
+{{ strings|json_script:"i18n" }}
+{% endblock %}
+
+{% block scripts %}
+<script>window.SITE_URL = "{{ SITE_URL|escapejs }}";</script>
+<script src="{% static 'find_bananas/game.js' %}" defer></script>
+{% endblock %}
