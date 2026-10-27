@@ -19,7 +19,7 @@
   <link rel="icon" href="{% static 'find_bananas/brand/la-bananas.ico' %}" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'find_bananas/brand/la-bananas_32x32.png' %}">
   <link rel="apple-touch-icon" href="{% static 'find_bananas/brand/la-bananas-apple-touch-icon.png' %}">
-  <link rel="preload" href="{% static 'find_bananas/fonts/fredoka-latin.woff' %}" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="{% static 'find_bananas/fonts/cherrybombone-regular.woff' %}" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="{% static 'find_bananas/main.css' %}">
   {% block head %}{% endblock %}
 </head>
@@ -52,6 +52,14 @@
   </main>
 
   <footer class="footer">
+    <form class="lang" action="{% url 'set_language' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      {% for code, name in SITE_LANGUAGES %}
+        <button type="submit" name="language" value="{{ code }}" lang="{{ code }}"
+                {% if code == LANGUAGE_CODE %}aria-current="true"{% endif %}>{{ name }}</button>
+      {% endfor %}
+    </form>
     <a href="{% url 'privacy' %}">{% translate 'Privacy' %}</a>
   </footer>
 

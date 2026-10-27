@@ -8,6 +8,9 @@ at 12:00 (Paris time), the same for every player in the world.
 - Optional account (email + password) to keep your history.
 - Score = total number of bananas you were off by (lower is better).
 - After the game: your position among today's players, and a share button.
+- In French and English: the browser's language is detected (French browsers
+  get French, every other language gets English); a switch in the footer
+  overrides it.
 
 Design decisions, data model and scaling notes: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 Before going live: [docs/LAUNCH_CHECKLIST.md](docs/LAUNCH_CHECKLIST.md).
@@ -43,9 +46,28 @@ To replay locally, open a private window (a new guest) or delete your plays in
 DJANGO_DEBUG=1 python manage.py test
 ```
 
-37 tests cover the daily schedule (including daylight-saving changes), image
+42 tests cover the daily schedule (including daylight-saving changes), image
 generation, the server-side game rules, anti-cheat limits, ranking, accounts,
-privacy of the history and rate limits.
+privacy of the history, rate limits and language detection.
+
+## Translations
+
+Every visible text goes through Django's translation system, including the
+texts used by `game.js` (`find_bananas/strings.py`). French lives in
+`locale/fr/LC_MESSAGES/django.po`; the compiled `django.mo` is committed so
+deployment needs no extra tool.
+
+After changing or adding a text (requires GNU gettext: `brew install gettext`
+on macOS, `apt install gettext` on Linux):
+
+```bash
+DJANGO_DEBUG=1 python manage.py makemessages -l fr --ignore=".venv/*"
+# edit locale/fr/LC_MESSAGES/django.po (empty msgstr = untranslated)
+DJANGO_DEBUG=1 python manage.py compilemessages --ignore=".venv/*"
+```
+
+To add a language: add it to `LANGUAGES` in `django_project/settings.py`, then
+run the same two commands with `-l <code>`.
 
 ## How the daily challenge is produced
 
@@ -91,6 +113,7 @@ find_bananas/
   strings.py      texts used by the JavaScript (translatable)
   views.py        pages + JSON API
   assets/         banana sprite used to draw images (not public)
-  static/         CSS, JS, font, icons
+  static/         CSS, JS, font (Cherry Bomb One, OFL), icons
   templates/
+locale/fr/        French translations
 ```

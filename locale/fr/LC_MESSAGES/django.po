@@ -1,0 +1,600 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Find Bananas\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: accounts/forms.py:20
+msgid "Confirm password"
+msgstr "Confirme le mot de passe"
+
+#: accounts/forms.py:26
+msgid "An account already exists with this email."
+msgstr "Un compte existe déjà avec cet email."
+
+#: accounts/forms.py:33
+msgid "Email"
+msgstr "Email"
+
+#: accounts/forms.py:42
+msgid "Password"
+msgstr "Mot de passe"
+
+#: accounts/forms.py:52
+msgid "Wrong password."
+msgstr "Mot de passe incorrect."
+
+#: accounts/models.py:33
+msgid "email address"
+msgstr "adresse email"
+
+#: accounts/templates/registration/delete_account.html:13:1
+msgid "Keep my account"
+msgstr "Garder mon compte"
+
+#: accounts/templates/registration/delete_account.html:3:1
+#: accounts/templates/registration/delete_account.html:6:1
+#: accounts/templates/registration/delete_account.html:11:1
+#: find_bananas/templates/find_bananas/history.html:50:1
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
+#: accounts/templates/registration/delete_account.html:7:1
+msgid ""
+"Your account and all your results will be deleted. This cannot be undone."
+msgstr "Ton compte et tous tes résultats seront supprimés. C’est définitif."
+
+#: accounts/templates/registration/login.html:14:1
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+#: accounts/templates/registration/login.html:15:1
+msgid "No account?"
+msgstr "Pas de compte ?"
+
+#: accounts/templates/registration/login.html:15:1
+msgid "Create one"
+msgstr "Crée-le"
+
+#: accounts/templates/registration/login.html:3:1
+#: accounts/templates/registration/login.html:6:1
+#: accounts/templates/registration/login.html:11:1
+#: accounts/templates/registration/password_reset_complete.html:7:1
+#: accounts/templates/registration/signup.html:15:1
+#: find_bananas/templates/find_bananas/base.html:40:1
+msgid "Log in"
+msgstr "Se connecter"
+
+#: accounts/templates/registration/password_reset_complete.html:5:1
+msgid "Password saved"
+msgstr "Mot de passe enregistré"
+
+#: accounts/templates/registration/password_reset_complete.html:6:1
+msgid "You can now log in with your new password."
+msgstr "Tu peux maintenant te connecter avec ton nouveau mot de passe."
+
+#: accounts/templates/registration/password_reset_confirm.html:10:1
+msgid "Save the new password"
+msgstr "Enregistrer le nouveau mot de passe"
+
+#: accounts/templates/registration/password_reset_confirm.html:13:1
+msgid "This link no longer works"
+msgstr "Ce lien ne fonctionne plus"
+
+#: accounts/templates/registration/password_reset_confirm.html:14:1
+msgid "It was already used or has expired. Ask for a new one."
+msgstr "Il a déjà servi ou a expiré. Demandes-en un nouveau."
+
+#: accounts/templates/registration/password_reset_confirm.html:15:1
+msgid "Get a new link"
+msgstr "Recevoir un nouveau lien"
+
+#: accounts/templates/registration/password_reset_confirm.html:6:1
+msgid "Choose a new password"
+msgstr "Choisis un nouveau mot de passe"
+
+#: accounts/templates/registration/password_reset_done.html:5:1
+msgid "Check your email"
+msgstr "Regarde tes emails"
+
+#: accounts/templates/registration/password_reset_done.html:6:1
+msgid ""
+"If an account uses this address, a link to choose a new password is on its "
+"way. It works for 3 days."
+msgstr ""
+"Si un compte utilise cette adresse, un lien pour choisir un nouveau mot de "
+"passe arrive. Il est valable 3 jours."
+
+#: accounts/templates/registration/password_reset_done.html:7:1
+#: find_bananas/templates/find_bananas/429.html:8:1
+msgid "Back to the game"
+msgstr "Retour au jeu"
+
+#: accounts/templates/registration/password_reset_email.html:1:1
+msgid "Someone asked to reset the password of your Find Bananas account."
+msgstr ""
+"Quelqu’un a demandé à réinitialiser le mot de passe de ton compte Find "
+"Bananas."
+
+#: accounts/templates/registration/password_reset_email.html:3:1
+msgid "Choose a new password here (the link works for 3 days):"
+msgstr "Choisis un nouveau mot de passe ici (le lien est valable 3 jours) :"
+
+#: accounts/templates/registration/password_reset_email.html:6:1
+msgid ""
+"If you did not ask for this, ignore this email: your password stays the same."
+msgstr ""
+"Si tu n’as rien demandé, ignore cet email : ton mot de passe ne change pas."
+
+#: accounts/templates/registration/password_reset_form.html:11:1
+msgid "Send the link"
+msgstr "Envoyer le lien"
+
+#: accounts/templates/registration/password_reset_form.html:3:1
+#: accounts/templates/registration/password_reset_form.html:6:1
+msgid "Reset your password"
+msgstr "Réinitialiser ton mot de passe"
+
+#: accounts/templates/registration/password_reset_form.html:7:1
+msgid ""
+"Enter your email. If an account uses it, we will send a link to choose a new "
+"password."
+msgstr ""
+"Indique ton email. Si un compte l’utilise, nous t’enverrons un lien pour "
+"choisir un nouveau mot de passe."
+
+#: accounts/templates/registration/password_reset_subject.txt:1:1
+msgid "Your Find Bananas password"
+msgstr "Ton mot de passe Find Bananas"
+
+#: accounts/templates/registration/signup.html:12:1
+msgid "Create my account"
+msgstr "Créer mon compte"
+
+#: accounts/templates/registration/signup.html:15:1
+msgid "Already have an account?"
+msgstr "Déjà un compte ?"
+
+#: accounts/templates/registration/signup.html:3:1
+#: accounts/templates/registration/signup.html:6:1
+msgid "Create an account"
+msgstr "Créer un compte"
+
+#: accounts/templates/registration/signup.html:7:1
+msgid ""
+"Keep your daily results and see your progress. Only your email is needed. "
+"Today’s game on this device is added to your account."
+msgstr ""
+"Garde tes résultats et suis ta progression. Seul ton email est demandé. La "
+"partie du jour jouée sur cet appareil est ajoutée à ton compte."
+
+#: accounts/views.py:31
+msgid "Welcome! Your results are now saved to your account."
+msgstr "Bienvenue ! Tes résultats sont maintenant enregistrés dans ton compte."
+
+#: accounts/views.py:54
+msgid "Your account and its history have been deleted."
+msgstr "Ton compte et son historique ont été supprimés."
+
+#: find_bananas/strings.py:10
+msgid "Between {min} and {max} bananas. They stay on screen for 5 seconds."
+msgstr "Entre {min} et {max} bananes. Elles restent 5 secondes à l’écran."
+
+#: find_bananas/strings.py:11
+msgid "The bananas were already shown. How many did you see?"
+msgstr "Les bananes ont déjà été montrées. Tu en as vu combien ?"
+
+#: find_bananas/strings.py:12
+msgid "Exact!"
+msgstr "Exact !"
+
+#: find_bananas/strings.py:13
+msgid "{n} too many"
+msgstr "{n} de trop"
+
+#: find_bananas/strings.py:14
+msgid "{n} too few"
+msgstr "{n} de moins"
+
+#: find_bananas/strings.py:15
+msgid "Next round"
+msgstr "Round suivant"
+
+#: find_bananas/strings.py:16
+msgid "See my result"
+msgstr "Voir mon résultat"
+
+#: find_bananas/strings.py:17
+msgid "bananas off in total"
+msgstr "bananes d’écart au total"
+
+#: find_bananas/strings.py:18
+msgid "banana off in total"
+msgstr "banane d’écart au total"
+
+#: find_bananas/strings.py:19
+msgid "Perfect score"
+msgstr "Score parfait"
+
+#: find_bananas/strings.py:20
+msgid "Top {p}% of today’s {players} players"
+msgstr "Top {p} % des {players} joueurs du jour"
+
+#: find_bananas/strings.py:21
+msgid ""
+"You are the first player today. Your ranking appears once {min} people have "
+"played."
+msgstr ""
+"Tu es la première personne à jouer aujourd’hui. Ton classement s’affichera "
+"dès que {min} personnes auront joué."
+
+#: find_bananas/strings.py:22
+msgid ""
+"{players} players so far today. Your ranking appears once {min} people have "
+"played."
+msgstr ""
+"{players} joueurs pour l’instant aujourd’hui. Ton classement s’affichera dès "
+"que {min} personnes auront joué."
+
+#: find_bananas/strings.py:23
+msgid "This game took too long to count in today’s ranking."
+msgstr ""
+"Cette partie a pris trop de temps pour compter dans le classement du jour."
+
+#: find_bananas/strings.py:24
+msgid "Next challenge in {h} h {m} min"
+msgstr "Prochain défi dans {h} h {m} min"
+
+#: find_bananas/strings.py:25
+msgid "Next challenge in less than a minute"
+msgstr "Prochain défi dans moins d’une minute"
+
+#: find_bananas/strings.py:26
+msgid "Keep your results and track your progress:"
+msgstr "Garde tes résultats et suis ta progression :"
+
+#: find_bananas/strings.py:27
+msgid "create a free account"
+msgstr "crée un compte gratuit"
+
+#: find_bananas/strings.py:28
+msgid "See all my results"
+msgstr "Voir tous mes résultats"
+
+#: find_bananas/strings.py:29
+msgid "Find Bananas #{number}"
+msgstr "Find Bananas n°{number}"
+
+#: find_bananas/strings.py:30
+msgid "Round {n}: {gap} off"
+msgstr "Round {n} : {gap} d’écart"
+
+#: find_bananas/strings.py:31
+msgid "Total: {score} off"
+msgstr "Total : {score} d’écart"
+
+#: find_bananas/strings.py:32
+msgid "top {p}%"
+msgstr "top {p} %"
+
+#: find_bananas/strings.py:33
+msgid "Can you beat me?"
+msgstr "Tu fais mieux ?"
+
+#: find_bananas/strings.py:34
+msgid "Score copied. Paste it anywhere to challenge your friends."
+msgstr "Score copié. Colle-le où tu veux pour défier tes amis."
+
+#: find_bananas/strings.py:35
+msgid "Could not copy automatically. Copy the text below."
+msgstr "La copie automatique n’a pas marché. Copie le texte ci-dessous."
+
+#: find_bananas/strings.py:36
+msgid "Type a number between 0 and 9999."
+msgstr "Tape un nombre entre 0 et 9999."
+
+#: find_bananas/strings.py:38
+msgid ""
+"No connection. Check your network and try again: your progress is saved."
+msgstr ""
+"Pas de connexion. Vérifie ton réseau et réessaie : ta progression est "
+"enregistrée."
+
+#: find_bananas/strings.py:39
+msgid "This challenge has ended. Reload to play the new one."
+msgstr "Ce défi est terminé. Recharge la page pour jouer au nouveau."
+
+#: find_bananas/strings.py:40
+msgid "Too many attempts from your connection. Wait a few minutes and reload."
+msgstr ""
+"Trop de tentatives depuis ta connexion. Attends quelques minutes puis "
+"recharge la page."
+
+#: find_bananas/strings.py:41
+msgid "The bananas can only be shown once. Type your guess."
+msgstr "Les bananes ne s’affichent qu’une fois. Tape ta réponse."
+
+#: find_bananas/strings.py:42
+msgid "You already played today’s challenge with another account."
+msgstr "Tu as déjà joué au défi du jour avec un autre compte."
+
+#: find_bananas/strings.py:43
+msgid "The game could not continue. Reload the page: your progress is saved."
+msgstr ""
+"Le jeu n’a pas pu continuer. Recharge la page : ta progression est "
+"enregistrée."
+
+#: find_bananas/strings.py:9
+msgid "Round {n} of {total}"
+msgstr "Round {n} sur {total}"
+
+#: find_bananas/templates/404.html:3:1
+msgid "Page not found"
+msgstr "Page introuvable"
+
+#: find_bananas/templates/404.html:6:1
+msgid "No bananas here"
+msgstr "Pas de bananes ici"
+
+#: find_bananas/templates/404.html:7:1
+msgid "This page does not exist. Today’s challenge is on the home page."
+msgstr "Cette page n’existe pas. Le défi du jour est sur la page d’accueil."
+
+#: find_bananas/templates/404.html:8:1
+msgid "Play today’s challenge"
+msgstr "Jouer au défi du jour"
+
+#: find_bananas/templates/find_bananas/429.html:3:1
+#: find_bananas/templates/find_bananas/429.html:6:1
+msgid "Too many attempts"
+msgstr "Trop de tentatives"
+
+#: find_bananas/templates/find_bananas/429.html:7:1
+msgid ""
+"Too many requests came from your connection. Wait a few minutes, then try "
+"again."
+msgstr ""
+"Trop de requêtes depuis ta connexion. Attends quelques minutes, puis "
+"réessaie."
+
+#: find_bananas/templates/find_bananas/base.html:13:1
+msgid "Find Bananas — how many bananas can you see?"
+msgstr "Find Bananas — combien de bananes vois-tu ?"
+
+#: find_bananas/templates/find_bananas/base.html:14:1
+msgid "A new challenge every day at noon. 3 rounds, 5 seconds each."
+msgstr "Un nouveau défi chaque jour à midi. 3 rounds, 5 secondes chacun."
+
+#: find_bananas/templates/find_bananas/base.html:32:1
+msgid "Account"
+msgstr "Compte"
+
+#: find_bananas/templates/find_bananas/base.html:34:1
+#: find_bananas/templates/find_bananas/history.html:3:1
+#: find_bananas/templates/find_bananas/history.html:6:1
+msgid "My results"
+msgstr "Mes résultats"
+
+#: find_bananas/templates/find_bananas/base.html:37:1
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: find_bananas/templates/find_bananas/base.html:64:1
+#: find_bananas/templates/find_bananas/privacy.html:3:1
+#: find_bananas/templates/find_bananas/privacy.html:6:1
+msgid "Privacy"
+msgstr "Confidentialité"
+
+#: find_bananas/templates/find_bananas/base.html:70:1
+msgid ""
+"May we measure visits with Google Analytics? It sets cookies. The game works "
+"either way."
+msgstr ""
+"Pouvons-nous mesurer l’audience avec Google Analytics ? Cela dépose des "
+"cookies. Le jeu marche dans les deux cas."
+
+#: find_bananas/templates/find_bananas/base.html:72:1
+msgid "No thanks"
+msgstr "Non merci"
+
+#: find_bananas/templates/find_bananas/base.html:73:1
+msgid "Allow"
+msgstr "Accepter"
+
+#: find_bananas/templates/find_bananas/base.html:9:1
+msgid ""
+"A daily 30-second game: bananas appear for 5 seconds. How many did you see?"
+msgstr ""
+"Un jeu quotidien de 30 secondes : des bananes apparaissent 5 secondes. "
+"Combien en as-tu vu ?"
+
+#: find_bananas/templates/find_bananas/history.html:10:1
+msgid "Best score"
+msgstr "Meilleur score"
+
+#: find_bananas/templates/find_bananas/history.html:11:1
+#, python-format
+msgid "Average, last game"
+msgid_plural "Average, last %(n)s games"
+msgstr[0] "Moyenne, dernière partie"
+msgstr[1] "Moyenne, %(n)s dernières parties"
+
+#: find_bananas/templates/find_bananas/history.html:13:1
+msgid "Score = total number of bananas you were off by. Lower is better."
+msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
+
+#: find_bananas/templates/find_bananas/history.html:15:1
+msgid "No results yet. Play today’s challenge and it will appear here."
+msgstr "Pas encore de résultat. Joue au défi du jour et il apparaîtra ici."
+
+#: find_bananas/templates/find_bananas/history.html:16:1
+#: find_bananas/templates/find_bananas/home.html:17:1
+msgid "Play"
+msgstr "Jouer"
+
+#: find_bananas/templates/find_bananas/history.html:25:1
+msgid "Challenge"
+msgstr "Défi"
+
+#: find_bananas/templates/find_bananas/history.html:26:1
+msgid "Score"
+msgstr "Score"
+
+#: find_bananas/templates/find_bananas/history.html:27:1
+msgid "Ranking"
+msgstr "Classement"
+
+#: find_bananas/templates/find_bananas/history.html:35:1
+#, python-format
+msgid "top %(p)s%%"
+msgstr "top %(p)s %%"
+
+#: find_bananas/templates/find_bananas/history.html:41:1
+msgid "Pages"
+msgstr "Pages"
+
+#: find_bananas/templates/find_bananas/history.html:42:1
+msgid "Newer"
+msgstr "Plus récents"
+
+#: find_bananas/templates/find_bananas/history.html:43:1
+msgid "Older"
+msgstr "Plus anciens"
+
+#: find_bananas/templates/find_bananas/history.html:50:1
+msgid "Change password"
+msgstr "Changer de mot de passe"
+
+#: find_bananas/templates/find_bananas/history.html:9:1
+msgid "Games played"
+msgstr "Parties jouées"
+
+#: find_bananas/templates/find_bananas/home.html:11:1
+msgid "Rounds"
+msgstr "Rounds"
+
+#: find_bananas/templates/find_bananas/home.html:14:1
+#: find_bananas/templates/find_bananas/home.html:53:1
+#, python-format
+msgid "Daily challenge #%(number)s"
+msgstr "Défi du jour n°%(number)s"
+
+#: find_bananas/templates/find_bananas/home.html:15:1
+msgid "How many bananas?"
+msgstr "Combien de bananes ?"
+
+#: find_bananas/templates/find_bananas/home.html:16:1
+msgid ""
+"Bananas appear for 5 seconds. Count them, then type your guess. Three rounds,"
+" more bananas each time."
+msgstr ""
+"Des bananes apparaissent pendant 5 secondes. Compte-les, puis tape ta "
+"réponse. Trois rounds, avec plus de bananes à chaque fois."
+
+#: find_bananas/templates/find_bananas/home.html:23:1
+msgid "Show the bananas"
+msgstr "Afficher les bananes"
+
+#: find_bananas/templates/find_bananas/home.html:28:1
+msgid "Loading…"
+msgstr "Chargement…"
+
+#: find_bananas/templates/find_bananas/home.html:35:1
+msgid "How many bananas did you see?"
+msgstr "Tu as vu combien de bananes ?"
+
+#: find_bananas/templates/find_bananas/home.html:39:1
+msgid "Submit guess"
+msgstr "Valider"
+
+#: find_bananas/templates/find_bananas/home.html:46:1
+msgid "Your guess"
+msgstr "Ta réponse"
+
+#: find_bananas/templates/find_bananas/home.html:47:1
+#: find_bananas/templates/find_bananas/home.html:60:1
+msgid "Bananas"
+msgstr "Bananes"
+
+#: find_bananas/templates/find_bananas/home.html:60:1
+msgid "Round"
+msgstr "Round"
+
+#: find_bananas/templates/find_bananas/home.html:60:1
+msgid "Guess"
+msgstr "Réponse"
+
+#: find_bananas/templates/find_bananas/home.html:60:1
+msgid "Off by"
+msgstr "Écart"
+
+#: find_bananas/templates/find_bananas/home.html:63:1
+msgid "Share my score"
+msgstr "Partager mon score"
+
+#: find_bananas/templates/find_bananas/home.html:70:1
+msgid "Something went wrong"
+msgstr "Un problème est survenu"
+
+#: find_bananas/templates/find_bananas/home.html:72:1
+msgid "Reload the game"
+msgstr "Recharger le jeu"
+
+#: find_bananas/templates/find_bananas/privacy.html:10:1
+msgid "With an account"
+msgstr "Avec un compte"
+
+#: find_bananas/templates/find_bananas/privacy.html:11:1
+msgid ""
+"We store your email address, a secured version of your password, and your "
+"results, to show you your history. Your email is only used to reset your "
+"password."
+msgstr ""
+"Nous conservons ton adresse email, une version sécurisée de ton mot de passe "
+"et tes résultats, pour t’afficher ton historique. Ton email ne sert qu’à "
+"réinitialiser ton mot de passe."
+
+#: find_bananas/templates/find_bananas/privacy.html:12:1
+msgid "Your rights"
+msgstr "Tes droits"
+
+#: find_bananas/templates/find_bananas/privacy.html:13:1
+msgid ""
+"You can delete your account and all its results at any time from “My "
+"results”."
+msgstr ""
+"Tu peux supprimer ton compte et tous ses résultats à tout moment depuis « Mes"
+" résultats »."
+
+#: find_bananas/templates/find_bananas/privacy.html:14:1
+msgid "Analytics"
+msgstr "Mesure d’audience"
+
+#: find_bananas/templates/find_bananas/privacy.html:15:1
+msgid "Audience measurement is only loaded if you accept it."
+msgstr "La mesure d’audience n’est chargée que si tu l’acceptes."
+
+#: find_bananas/templates/find_bananas/privacy.html:7:1
+msgid "Find Bananas collects as little as possible."
+msgstr "Find Bananas collecte le moins de données possible."
+
+#: find_bananas/templates/find_bananas/privacy.html:8:1
+msgid "Without an account"
+msgstr "Sans compte"
+
+#: find_bananas/templates/find_bananas/privacy.html:9:1
+msgid ""
+"A session cookie remembers that you played today’s challenge and your "
+"answers. Your results are stored without your name or email, and count "
+"anonymously in the daily ranking. Your IP address is never stored: only a "
+"one-way fingerprint, different every day, used to limit cheating."
+msgstr ""
+"Un cookie de session retient que tu as joué au défi du jour et tes réponses. "
+"Tes résultats sont enregistrés sans nom ni email, et comptent anonymement "
+"dans le classement du jour. Ton adresse IP n’est jamais conservée : seulement"
+" une empreinte irréversible, différente chaque jour, qui sert à limiter la "
+"triche."

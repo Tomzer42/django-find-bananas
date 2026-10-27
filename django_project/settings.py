@@ -11,7 +11,6 @@ from pathlib import Path
 
 import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -155,12 +154,16 @@ EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "Find Bananas <no-reply@find-bananas.com>")
 
 
-# Internationalization. All user-facing strings go through gettext so that
-# adding a language later means adding a `locale/<lang>` folder, not
-# touching code. V1 ships in English only.
+# Internationalization. All user-facing strings go through gettext; adding a
+# language means adding a `locale/<lang>` folder and a line below.
+# LocaleMiddleware picks the language from the visitor's choice (cookie),
+# then from the browser's Accept-Language header, then LANGUAGE_CODE.
+# Language names stay in their own language, so they are not translated.
 
 LANGUAGE_CODE = "en"
-LANGUAGES = [("en", _("English"))]
+LANGUAGES = [("fr", "Français"), ("en", "English")]
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
+LANGUAGE_COOKIE_SAMESITE = "Lax"
 LOCALE_PATHS = [BASE_DIR / "locale"]
 USE_I18N = True
 USE_TZ = True

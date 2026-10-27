@@ -156,10 +156,14 @@ Préparé, sans être construit :
 - **Un instant de bascule unique** (midi, heure de Paris) pour tout le monde ;
   les calculs gèrent le changement d'heure (une édition dure alors 23 h ou
   25 h).
+- **Français et anglais dès la V1** : la langue du navigateur est détectée
+  (navigateur en français → français, toute autre langue → anglais) ; un
+  sélecteur en bas de page permet de changer, le choix est mémorisé dans un
+  cookie. Le message partagé est dans la langue de celui qui partage.
 - **Textes centralisés** : tous les textes visibles passent par le système de
   traduction de Django, y compris ceux du JavaScript (`strings.py`). Ajouter
-  une langue = ajouter un dossier `locale/<langue>` et l'activer dans
-  `LANGUAGES`, sans toucher au code.
+  une langue = l'ajouter à `LANGUAGES` et créer son fichier `locale/<langue>`,
+  sans toucher au code. Les fichiers compilés (`.mo`) sont versionnés.
 - **Éditions par marché et par objet** : `Edition.market` et `Edition.theme`
   existent déjà (valeurs `global` et `banana`). Une édition « canettes pour
   l'Italie » sera une nouvelle ligne ; il restera à choisir le marché d'un
@@ -219,7 +223,7 @@ Rien de cela n'exige de revoir le modèle de données.
 
 ## 10. Évolutions futures (non développées)
 
-- Traductions (français en premier), choix du marché du joueur.
+- Autres langues, choix du marché du joueur.
 - Éditions sponsorisées : objet et marque par édition / marché, interface
   d'administration des campagnes.
 - Image de partage générée (carte du score) pour les réseaux sociaux.
