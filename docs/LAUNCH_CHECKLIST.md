@@ -27,7 +27,7 @@ Cocher chaque point sur l'environnement de production.
 - [ ] Recharger après la partie : le résultat s'affiche, impossible de rejouer
 - [ ] Partager : feuille de partage native sur téléphone, copie sur ordinateur ; le message contient le lien
 - [ ] Ouvrir le lien partagé dans un autre navigateur : on arrive sur le jeu
-- [ ] Créer un compte depuis l'écran de résultat : la partie apparaît dans « My results »
+- [ ] Créer un compte depuis l'écran de résultat : la partie apparaît dans « Mon profil » (moyennes générales et par round)
 - [ ] Se déconnecter, se reconnecter : le résultat du jour est retrouvé
 - [ ] Mot de passe oublié : email reçu, lien fonctionnel
 - [ ] Supprimer un compte de test

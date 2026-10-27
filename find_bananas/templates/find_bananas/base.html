@@ -20,18 +20,19 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'find_bananas/brand/la-bananas_32x32.png' %}">
   <link rel="apple-touch-icon" href="{% static 'find_bananas/brand/la-bananas-apple-touch-icon.png' %}">
   <link rel="preload" href="{% static 'find_bananas/fonts/cherrybombone-regular.woff' %}" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="{% static 'find_bananas/fonts/nunito-latin.woff' %}" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="{% static 'find_bananas/main.css' %}">
   {% block head %}{% endblock %}
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="{% url 'home' %}">
-      <img src="{% static 'find_bananas/brand/la-bananas_32x32.png' %}" alt="" width="28" height="28">
+      <img src="{% static 'find_bananas/brand/logo-96.png' %}" alt="" width="44" height="44">
       <span>Find Bananas</span>
     </a>
     <nav class="topnav" aria-label="{% translate 'Account' %}">
       {% if user.is_authenticated %}
-        <a href="{% url 'history' %}">{% translate 'My results' %}</a>
+        <a href="{% url 'profile' %}">{% translate 'My profile' %}</a>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
           <button type="submit" class="linklike">{% translate 'Log out' %}</button>

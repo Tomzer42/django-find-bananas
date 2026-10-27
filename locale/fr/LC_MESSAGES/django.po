@@ -39,7 +39,7 @@ msgstr "Garder mon compte"
 #: accounts/templates/registration/delete_account.html:3:1
 #: accounts/templates/registration/delete_account.html:6:1
 #: accounts/templates/registration/delete_account.html:11:1
-#: find_bananas/templates/find_bananas/history.html:50:1
+#: find_bananas/templates/find_bananas/profile.html:58:1
 msgid "Delete my account"
 msgstr "Supprimer mon compte"
 
@@ -65,7 +65,7 @@ msgstr "Crée-le"
 #: accounts/templates/registration/login.html:11:1
 #: accounts/templates/registration/password_reset_complete.html:7:1
 #: accounts/templates/registration/signup.html:15:1
-#: find_bananas/templates/find_bananas/base.html:40:1
+#: find_bananas/templates/find_bananas/base.html:41:1
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -369,17 +369,17 @@ msgstr "Find Bananas — combien de bananes vois-tu ?"
 msgid "A new challenge every day at noon. 3 rounds, 5 seconds each."
 msgstr "Un nouveau défi chaque jour à midi. 3 rounds, 5 secondes chacun."
 
-#: find_bananas/templates/find_bananas/base.html:32:1
+#: find_bananas/templates/find_bananas/base.html:33:1
 msgid "Account"
 msgstr "Compte"
 
-#: find_bananas/templates/find_bananas/base.html:34:1
-#: find_bananas/templates/find_bananas/history.html:3:1
-#: find_bananas/templates/find_bananas/history.html:6:1
-msgid "My results"
-msgstr "Mes résultats"
+#: find_bananas/templates/find_bananas/base.html:35:1
+#: find_bananas/templates/find_bananas/profile.html:3:1
+#: find_bananas/templates/find_bananas/profile.html:6:1
+msgid "My profile"
+msgstr "Mon profil"
 
-#: find_bananas/templates/find_bananas/base.html:37:1
+#: find_bananas/templates/find_bananas/base.html:38:1
 msgid "Log out"
 msgstr "Se déconnecter"
 
@@ -412,67 +412,6 @@ msgstr ""
 "Un jeu quotidien de 30 secondes : des bananes apparaissent 5 secondes. "
 "Combien en as-tu vu ?"
 
-#: find_bananas/templates/find_bananas/history.html:10:1
-msgid "Best score"
-msgstr "Meilleur score"
-
-#: find_bananas/templates/find_bananas/history.html:11:1
-#, python-format
-msgid "Average, last game"
-msgid_plural "Average, last %(n)s games"
-msgstr[0] "Moyenne, dernière partie"
-msgstr[1] "Moyenne, %(n)s dernières parties"
-
-#: find_bananas/templates/find_bananas/history.html:13:1
-msgid "Score = total number of bananas you were off by. Lower is better."
-msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
-
-#: find_bananas/templates/find_bananas/history.html:15:1
-msgid "No results yet. Play today’s challenge and it will appear here."
-msgstr "Pas encore de résultat. Joue au défi du jour et il apparaîtra ici."
-
-#: find_bananas/templates/find_bananas/history.html:16:1
-#: find_bananas/templates/find_bananas/home.html:17:1
-msgid "Play"
-msgstr "Jouer"
-
-#: find_bananas/templates/find_bananas/history.html:25:1
-msgid "Challenge"
-msgstr "Défi"
-
-#: find_bananas/templates/find_bananas/history.html:26:1
-msgid "Score"
-msgstr "Score"
-
-#: find_bananas/templates/find_bananas/history.html:27:1
-msgid "Ranking"
-msgstr "Classement"
-
-#: find_bananas/templates/find_bananas/history.html:35:1
-#, python-format
-msgid "top %(p)s%%"
-msgstr "top %(p)s %%"
-
-#: find_bananas/templates/find_bananas/history.html:41:1
-msgid "Pages"
-msgstr "Pages"
-
-#: find_bananas/templates/find_bananas/history.html:42:1
-msgid "Newer"
-msgstr "Plus récents"
-
-#: find_bananas/templates/find_bananas/history.html:43:1
-msgid "Older"
-msgstr "Plus anciens"
-
-#: find_bananas/templates/find_bananas/history.html:50:1
-msgid "Change password"
-msgstr "Changer de mot de passe"
-
-#: find_bananas/templates/find_bananas/history.html:9:1
-msgid "Games played"
-msgstr "Parties jouées"
-
 #: find_bananas/templates/find_bananas/home.html:11:1
 msgid "Rounds"
 msgstr "Rounds"
@@ -494,6 +433,11 @@ msgid ""
 msgstr ""
 "Des bananes apparaissent pendant 5 secondes. Compte-les, puis tape ta "
 "réponse. Trois rounds, avec plus de bananes à chaque fois."
+
+#: find_bananas/templates/find_bananas/home.html:17:1
+#: find_bananas/templates/find_bananas/profile.html:24:1
+msgid "Play"
+msgstr "Jouer"
 
 #: find_bananas/templates/find_bananas/home.html:23:1
 msgid "Show the bananas"
@@ -565,10 +509,10 @@ msgstr "Tes droits"
 #: find_bananas/templates/find_bananas/privacy.html:13:1
 msgid ""
 "You can delete your account and all its results at any time from “My "
-"results”."
+"profile”."
 msgstr ""
-"Tu peux supprimer ton compte et tous ses résultats à tout moment depuis « Mes"
-" résultats »."
+"Tu peux supprimer ton compte et tous ses résultats à tout moment depuis « Mon"
+" profil »."
 
 #: find_bananas/templates/find_bananas/privacy.html:14:1
 msgid "Analytics"
@@ -598,3 +542,65 @@ msgstr ""
 "dans le classement du jour. Ton adresse IP n’est jamais conservée : seulement"
 " une empreinte irréversible, différente chaque jour, qui sert à limiter la "
 "triche."
+
+#: find_bananas/templates/find_bananas/profile.html:10:1
+msgid "Best score"
+msgstr "Meilleur score"
+
+#: find_bananas/templates/find_bananas/profile.html:11:1
+msgid "Average score"
+msgstr "Score moyen"
+
+#: find_bananas/templates/find_bananas/profile.html:14:1
+msgid "Average gap per round"
+msgstr "Écart moyen par round"
+
+#: find_bananas/templates/find_bananas/profile.html:17:1
+#, python-format
+msgid "Round %(n)s"
+msgstr "Round %(n)s"
+
+#: find_bananas/templates/find_bananas/profile.html:21:1
+msgid "Score = total number of bananas you were off by. Lower is better."
+msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
+
+#: find_bananas/templates/find_bananas/profile.html:23:1
+msgid "No results yet. Play today’s challenge and it will appear here."
+msgstr "Pas encore de résultat. Joue au défi du jour et il apparaîtra ici."
+
+#: find_bananas/templates/find_bananas/profile.html:33:1
+msgid "Challenge"
+msgstr "Défi"
+
+#: find_bananas/templates/find_bananas/profile.html:34:1
+msgid "Score"
+msgstr "Score"
+
+#: find_bananas/templates/find_bananas/profile.html:35:1
+msgid "Ranking"
+msgstr "Classement"
+
+#: find_bananas/templates/find_bananas/profile.html:43:1
+#, python-format
+msgid "top %(p)s%%"
+msgstr "top %(p)s %%"
+
+#: find_bananas/templates/find_bananas/profile.html:49:1
+msgid "Pages"
+msgstr "Pages"
+
+#: find_bananas/templates/find_bananas/profile.html:50:1
+msgid "Newer"
+msgstr "Plus récents"
+
+#: find_bananas/templates/find_bananas/profile.html:51:1
+msgid "Older"
+msgstr "Plus anciens"
+
+#: find_bananas/templates/find_bananas/profile.html:58:1
+msgid "Change password"
+msgstr "Changer de mot de passe"
+
+#: find_bananas/templates/find_bananas/profile.html:9:1
+msgid "Games played"
+msgstr "Parties jouées"

@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="game" id="game" data-edition="{{ edition.number }}"
-     data-signup-url="{% url 'signup' %}?next=/" data-history-url="{% url 'history' %}"
+     data-signup-url="{% url 'signup' %}?next=/" data-history-url="{% url 'profile' %}"
      data-authenticated="{{ user.is_authenticated|yesno:'true,false' }}">
 
   <ol class="progress" id="progress" aria-label="{% translate 'Rounds' %}" hidden></ol>

@@ -20,7 +20,9 @@ from .models import Edition, EditionRound
 logger = logging.getLogger(__name__)
 
 ASSET_DIR = Path(__file__).resolve().parent / "assets"
-CANVAS_SIZE = (1080, 1080)  # square: fits portrait phones and landscape screens alike
+# Landscape 3:2. Shown as is on computers and landscape screens; turned a
+# quarter turn on phones held upright, so every player sees the same image.
+CANVAS_SIZE = (1440, 960)
 BACKGROUND = (255, 255, 255)
 
 
@@ -30,13 +32,13 @@ class RoundSpec:
 
     min_count: int
     max_count: int
-    object_length: int  # px on the 1080px canvas; fixed per round so size never hints at the count
+    object_length: int  # px on the canvas; fixed per round so size never hints at the count
 
 
 ROUND_SPECS = [
-    RoundSpec(20, 50, 165),
-    RoundSpec(50, 100, 118),
-    RoundSpec(100, 200, 84),
+    RoundSpec(20, 50, 180),
+    RoundSpec(50, 100, 130),
+    RoundSpec(100, 200, 95),
 ]
 
 _random = secrets.SystemRandom()
@@ -144,37 +146,19 @@ def _object_sprite(length: int) -> Image.Image:
     return source.resize((length, max(1, round(source.height * ratio))), Image.LANCZOS)
 
 
-def _place_centers(count: int, length: int, width: int, height: int) -> list[tuple[float, float]]:
-    """Random centers kept at least `min_dist` apart, so objects may overlap
-    but none is hidden entirely under another. The distance is relaxed
-    progressively if the canvas gets crowded."""
-    margin = length * 0.5
-    min_dist = length * 0.55
-    centers: list[tuple[float, float]] = []
-    attempts = 0
-    while len(centers) < count:
-        x = _random.uniform(margin, width - margin)
-        y = _random.uniform(margin, height - margin)
-        if all((x - cx) ** 2 + (y - cy) ** 2 >= min_dist**2 for cx, cy in centers):
-            centers.append((x, y))
-            attempts = 0
-            continue
-        attempts += 1
-        if attempts > 400:
-            min_dist *= 0.95
-            attempts = 0
-    return centers
-
-
 def render_round(spec: RoundSpec, count: int | None = None) -> RenderedRound:
+    """Draw `count` objects, each at a random angle and a truly random
+    position (only kept inside the frame). Objects may overlap, and one can
+    hide another: that is part of the game, as in the original version."""
     count = count if count is not None else _random.randint(spec.min_count, spec.max_count)
     width, height = CANVAS_SIZE
     canvas = Image.new("RGB", CANVAS_SIZE, BACKGROUND)
-    for cx, cy in _place_centers(count, spec.object_length, width, height):
-        scale = _random.uniform(0.88, 1.12)
-        length = max(8, round(spec.object_length * scale))
-        sprite = _object_sprite(length).rotate(_random.uniform(0, 360), resample=Image.BICUBIC, expand=True)
-        canvas.paste(sprite, (round(cx - sprite.width / 2), round(cy - sprite.height / 2)), sprite)
+    sprite = _object_sprite(spec.object_length)
+    for _ in range(count):
+        rotated = sprite.rotate(_random.uniform(0, 360), resample=Image.BICUBIC, expand=True)
+        x = _random.randint(0, width - rotated.width)
+        y = _random.randint(0, height - rotated.height)
+        canvas.paste(rotated, (x, y), rotated)
     buffer = io.BytesIO()
     canvas.save(buffer, format="WEBP", quality=80, method=4)
     return RenderedRound(count=count, image=buffer.getvalue(), width=width, height=height)

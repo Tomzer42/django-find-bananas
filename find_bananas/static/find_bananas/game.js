@@ -121,6 +121,20 @@
     show("guess");
   }
 
+  // Make the image as large as the window allows. A landscape image on a
+  // screen held upright is turned a quarter turn: same image, more room.
+  function fitImage(img, frame) {
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    var iw = img.naturalWidth;
+    var ih = img.naturalHeight;
+    var turn = h > w && iw > ih;
+    var scale = turn ? Math.min(w / ih, h / iw) : Math.min(w / iw, h / ih);
+    img.style.width = Math.floor(iw * scale) + "px";
+    img.style.height = Math.floor(ih * scale) + "px";
+    img.classList.toggle("is-turned", turn);
+  }
+
   function showBananas() {
     if (busy) return;
     busy = true;
@@ -140,20 +154,22 @@
         var url = URL.createObjectURL(blob);
         var img = new Image();
         img.alt = "";
-        img.width = 1080;
-        img.height = 1080;
         img.src = url;
         return img.decode().then(function () { return { img: img, url: url }; });
       })
       .then(function (loaded) {
         loading.hidden = true;
         frame.appendChild(loaded.img);
+        fitImage(loaded.img, frame);
+        var refit = function () { fitImage(loaded.img, frame); };
+        window.addEventListener("resize", refit);
         // The 5 seconds start once the image is actually on screen.
         requestAnimationFrame(function () {
           bar.style.transition = "transform " + DISPLAY_MS + "ms linear";
           bar.style.transform = "scaleX(0)";
         });
         setTimeout(function () {
+          window.removeEventListener("resize", refit);
           loaded.img.remove();
           URL.revokeObjectURL(loaded.url);
           busy = false;

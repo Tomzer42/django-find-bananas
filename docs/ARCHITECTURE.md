@@ -20,7 +20,12 @@ Navigateur ──HTTPS──> Django (gunicorn + WhiteNoise) ──> PostgreSQL
 - Les fichiers statiques (CSS, JS, police, icônes) sont servis par WhiteNoise,
   avec des noms hachés et un cache navigateur long.
 - Les images des rounds sont générées par Pillow une fois par édition et
-  stockées en base (WebP, 80 à 140 Ko chacune).
+  stockées en base (WebP 1440×960, 80 à 140 Ko chacune). Les bananes sont
+  placées de façon totalement aléatoire : elles peuvent se chevaucher, voire
+  se cacher, comme dans la version d'origine.
+- Pendant les 5 secondes, l'image occupe toute la fenêtre. Sur un téléphone
+  tenu droit, elle est tournée d'un quart de tour pour utiliser toute la
+  hauteur : tous les joueurs voient exactement la même image.
 
 Pourquoi ne pas changer de stack : Django fournit déjà l'authentification, les
 sessions, l'admin, la protection CSRF, les migrations et l'i18n. Le jeu est

@@ -36,6 +36,20 @@ def total_score(rounds: list[dict]) -> int:
     return sum(round_gap(r["guess"], r["count"]) for r in rounds)
 
 
+def average_gap_per_round(all_rounds) -> list[dict]:
+    """Average distance to the real count, round by round, over a player's
+    completed games. `all_rounds` is an iterable of Play.rounds lists."""
+    sums: dict[int, int] = {}
+    counts: dict[int, int] = {}
+    for rounds in all_rounds:
+        for index, r in enumerate(rounds, start=1):
+            if r.get("guess") is None or r.get("count") is None:
+                continue
+            sums[index] = sums.get(index, 0) + round_gap(r["guess"], r["count"])
+            counts[index] = counts.get(index, 0) + 1
+    return [{"index": i, "average": round(sums[i] / counts[i], 1)} for i in sorted(counts)]
+
+
 def _histogram_cache_key(edition_id: int) -> str:
     return f"score-histogram:{edition_id}"
 

@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Min
+from django.db.models import Avg, Min
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -38,7 +38,7 @@ def home(request):
 
 @login_required
 @require_GET
-def history(request):
+def profile(request):
     plays = (
         Play.objects.filter(user=request.user, status=Play.Status.COMPLETED)
         .select_related("edition")
@@ -46,14 +46,14 @@ def history(request):
     )
     page = Paginator(plays, 30).get_page(request.GET.get("page"))
     rows = [{"play": p, "ranking": scoring.ranking_for(p)} for p in page]
-    recent = list(plays.values_list("score", flat=True)[:10])
+    totals = plays.aggregate(best=Min("score"), average=Avg("score"))
     summary = {
         "games": page.paginator.count,
-        "best": plays.aggregate(best=Min("score"))["best"],
-        "average_recent": round(sum(recent) / len(recent), 1) if recent else None,
-        "recent_count": len(recent),
+        "best": totals["best"],
+        "average": round(totals["average"], 1) if totals["average"] is not None else None,
+        "rounds": scoring.average_gap_per_round(plays.values_list("rounds", flat=True)),
     }
-    return render(request, "find_bananas/history.html", {"page": page, "rows": rows, "summary": summary})
+    return render(request, "find_bananas/profile.html", {"page": page, "rows": rows, "summary": summary})
 
 
 @require_GET

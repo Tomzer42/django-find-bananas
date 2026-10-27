@@ -1,11 +1,24 @@
 /* Find Bananas — one blue sky, one white card, bananas in yellow. */
 
-/* Cherry Bomb One by Satsuyako, SIL Open Font License (see fonts/OFL.txt).
-   Latin subset, one weight: never ask the browser for a fake bold. */
+/* Typography rule: Cherry Bomb One for the big moments only (logo, titles,
+   buttons, the numbers of the game). Everything you read goes in Nunito,
+   a rounded face that matches it. Both under the SIL Open Font License
+   (fonts/OFL-*.txt), Latin subsets, self-hosted. */
+
+/* Cherry Bomb One by Satsuyako. Single weight: it is drawn heavy, so never
+   ask the browser for a fake bold. */
 @font-face {
   font-family: "Cherry Bomb One";
   src: url("fonts/cherrybombone-regular.woff") format("woff");
   font-weight: 400;
+  font-display: swap;
+}
+
+/* Nunito by Vernon Adams et al., variable weight 400 to 800. */
+@font-face {
+  font-family: "Nunito";
+  src: url("fonts/nunito-latin.woff") format("woff");
+  font-weight: 400 800;
   font-display: swap;
 }
 
@@ -22,7 +35,7 @@
   --danger: #b42318;
 
   --font-display: "Cherry Bomb One", ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Nunito", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --radius-card: 28px;
   --radius-control: 16px;
@@ -77,10 +90,16 @@ a {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: var(--paper);
   text-decoration: none;
-  font: 400 1.125rem/1 var(--font-display);
+  font: 400 1.5rem/1 var(--font-display);
+}
+
+.brand img {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-12deg);
 }
 
 .topnav {
@@ -214,7 +233,7 @@ h2 {
 .edition {
   margin: 0 0 8px;
   color: var(--muted);
-  font: 400 1rem/1.2 var(--font-display);
+  font: 700 1rem/1.2 var(--font-body);
 }
 
 .flash {
@@ -297,7 +316,7 @@ h2 {
   border-radius: 50%;
   background: var(--mist);
   color: var(--muted);
-  font: 400 0.95rem/1 var(--font-display);
+  font: 800 0.95rem/1 var(--font-body);
 }
 
 .progress li.current {
@@ -310,49 +329,56 @@ h2 {
   color: var(--peel);
 }
 
-/* The playing screen takes the whole card: the image is the game. */
-.game[data-screen="view"] {
-  padding: 12px;
-}
-
-.game[data-screen="view"] .progress {
-  margin-bottom: 12px;
+/* The playing screen: the image takes the whole window for 5 seconds.
+   game.js sizes the image and turns it a quarter turn when a landscape
+   image meets a screen held upright. */
+.screen-view {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #fff;
 }
 
 .frame {
-  position: relative;
-  width: 100%;
-  max-width: min(100%, calc(100dvh - 210px));
-  margin: 0 auto;
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
+  position: absolute;
+  inset: max(8px, env(safe-area-inset-top)) 8px 28px 8px;
   overflow: hidden;
-  background: #fff;
-  display: grid;
-  place-items: center;
 }
 
 .frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  transform: translate(-50%, -50%);
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
   pointer-events: none;
 }
 
+.frame img.is-turned {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
 .frame-loading {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
   margin: 0;
+  text-align: center;
   color: var(--muted);
   font-family: var(--font-display);
+  font-size: 1.25rem;
 }
 
 .timer {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: max(10px, env(safe-area-inset-bottom));
   height: 8px;
-  margin: 12px auto 0;
-  max-width: min(100%, calc(100dvh - 210px));
   border-radius: 4px;
   background: var(--mist);
   overflow: hidden;
@@ -471,9 +497,9 @@ h2 {
 }
 
 .stamp-label {
-  max-width: 170px;
+  max-width: 190px;
   text-align: center;
-  font: 400 0.875rem/1.2 var(--font-display);
+  font: 800 0.9375rem/1.2 var(--font-body);
 }
 
 @keyframes stamp-in {
@@ -608,6 +634,11 @@ h2 {
 
 /* --- History ------------------------------------------------------------ */
 
+.stats-title {
+  margin: 20px 0 10px;
+  font-size: 1.125rem;
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -710,10 +741,6 @@ h2 {
   .game,
   .panel {
     padding: 36px 40px;
-  }
-
-  .game[data-screen="view"] {
-    padding: 16px;
   }
 }
 

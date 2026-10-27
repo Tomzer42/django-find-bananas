@@ -1,3 +1,5 @@
+import uuid
+
 from django.core import mail
 from django.core.cache import cache
 from django.test import Client, TestCase
@@ -32,8 +34,8 @@ class AccountTests(GameClientMixin, TestCase):
         self.assertRedirects(response, "/")
         user = User.objects.get(email="tom@example.com")
         self.assertEqual(Play.objects.get().user, user)
-        history = self.client.get("/history/")
-        self.assertContains(history, "#1")
+        profile = self.client.get("/profile/")
+        self.assertContains(profile, "#1")
 
     def test_email_is_case_insensitive_and_unique(self):
         self.signup("Tom@Example.com")
@@ -60,11 +62,11 @@ class AccountTests(GameClientMixin, TestCase):
         self.signup("a@example.com")
         self.play_full_game(self.edition, [30, 75, 150])
         self.client.post("/account/logout/")
-        self.assertRedirects(self.client.get("/history/"), "/account/login/?next=/history/")
+        self.assertRedirects(self.client.get("/profile/"), "/account/login/?next=/profile/")
 
         intruder = Client()
         self.signup("b@example.com", client=intruder)
-        page = intruder.get("/history/").content.decode()
+        page = intruder.get("/profile/").content.decode()
         self.assertNotIn("a@example.com", page)
         self.assertIn("No results yet", page)
 
@@ -101,3 +103,21 @@ class AccountTests(GameClientMixin, TestCase):
             {"email": "t@example.com", "password1": PASSWORD, "password2": PASSWORD, "next": "https://evil.example"},
         )
         self.assertRedirects(response, "/")
+
+    def test_profile_shows_overall_and_per_round_averages(self):
+        self.signup()
+        self.play_full_game(self.edition, [32, 75, 140])  # gaps 2, 0, 10 -> score 12
+        second = make_edition(counts=(20, 60, 100), number=2, live=False)
+        Play.objects.create(
+            edition=second, user=User.objects.get(), guest_key=uuid.uuid4(), status=Play.Status.COMPLETED,
+            score=8, ranked=True,
+            rounds=[{"guess": 24, "count": 20}, {"guess": 60, "count": 60}, {"guess": 96, "count": 100}],
+        )
+        summary = self.client.get("/profile/").context["summary"]
+        self.assertEqual(summary["games"], 2)
+        self.assertEqual(summary["best"], 8)
+        self.assertEqual(summary["average"], 10.0)
+        self.assertEqual(
+            summary["rounds"],
+            [{"index": 1, "average": 3.0}, {"index": 2, "average": 0.0}, {"index": 3, "average": 7.0}],
+        )
