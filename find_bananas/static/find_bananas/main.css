@@ -88,6 +88,7 @@ a {
 }
 
 .brand {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -654,6 +655,21 @@ h2 {
 }
 
 /* --- History ------------------------------------------------------------ */
+
+.profile-name {
+  overflow-wrap: anywhere;
+}
+
+.logout {
+  margin: 16px 0 0;
+}
+
+.account-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 8px 0 0;
+}
 
 .stats-title {
   margin: 20px 0 10px;

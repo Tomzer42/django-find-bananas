@@ -5,7 +5,7 @@ saw. Three rounds, more bananas each time. A new challenge goes live every day
 at 12:00 (Paris time), the same for every player in the world.
 
 - Play immediately, no account needed.
-- Optional account (email + password) to keep your history.
+- Optional account (email, password and a public username) to keep your history.
 - Score = total number of bananas you were off by (lower is better).
 - After the game: your position among today's players, and a share button.
 - In French and English: the browser's language is detected (French browsers

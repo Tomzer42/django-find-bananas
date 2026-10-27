@@ -3,7 +3,7 @@
 {% block title %}{% translate 'My profile' %} — Find Bananas{% endblock %}
 {% block content %}
 <div class="panel">
-  <h1>{% translate 'My profile' %}</h1>
+  <h1 class="profile-name">{{ user.username|default:_('My profile') }}</h1>
   {% if summary.games %}
     <dl class="stats">
       <div><dt>{% translate 'Games played' %}</dt><dd>{{ summary.games }}</dd></div>
@@ -55,6 +55,15 @@
 {% endif %}
 
 <div class="panel">
-  <p class="form-help">{{ user.email }} · <a href="{% url 'password_reset' %}">{% translate 'Change password' %}</a> · <a href="{% url 'delete_account' %}">{% translate 'Delete my account' %}</a></p>
+  <p class="form-help">{{ user.email }}</p>
+  <p class="account-links">
+    <a href="{% url 'choose_username' %}">{% translate 'Change username' %}</a>
+    <a href="{% url 'password_reset' %}">{% translate 'Change password' %}</a>
+    <a href="{% url 'delete_account' %}">{% translate 'Delete my account' %}</a>
+  </p>
+  <form method="post" action="{% url 'logout' %}" class="logout">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-quiet">{% translate 'Log out' %}</button>
+  </form>
 </div>
 {% endblock %}

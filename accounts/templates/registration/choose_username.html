@@ -1,0 +1,22 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% if first_time %}{% translate 'Choose your username' %}{% else %}{% translate 'Change your username' %}{% endif %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  {% if first_time %}
+    <h1>{% translate 'Choose your username' %}</h1>
+    <p class="lead">{% translate 'It is how other players will see you. You can change it later from your profile.' %}</p>
+  {% else %}
+    <h1>{% translate 'Change your username' %}</h1>
+  {% endif %}
+  <form method="post" class="form" novalidate>
+    {% csrf_token %}
+    {% include "find_bananas/_form.html" %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary btn-big">{% if first_time %}{% translate 'Continue' %}{% else %}{% translate 'Save the username' %}{% endif %}</button>
+  </form>
+  {% if not first_time %}
+    <div class="form-links"><p><a href="{% url 'profile' %}">{% translate 'Back to my profile' %}</a></p></div>
+  {% endif %}
+</div>
+{% endblock %}

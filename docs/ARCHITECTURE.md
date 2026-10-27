@@ -91,7 +91,17 @@ Choix notables :
   rattachées au compte, sauf pour les éditions déjà jouées avec ce compte
   (le compte garde alors sa propre partie).
 - Un joueur connecté retrouve « déjà joué aujourd'hui » sur tous ses appareils.
-- Données collectées : email et mot de passe haché. Rien d'autre.
+- Données collectées : email, mot de passe haché et pseudo. Rien d'autre.
+- **Pseudo** : public, choisi à l'inscription, modifiable depuis « Mon profil ».
+  3 à 20 caractères (lettres sans accents, chiffres, `_`, `-`), unique sans
+  tenir compte des majuscules (contrainte en base). Les noms réservés et
+  vulgaires sont refusés par `accounts/usernames.py` : une liste de mots
+  refusés partout (mots longs sans ambiguïté) et une liste de mots refusés
+  seulement comme mot entier (« con » bloque « Tom_con » mais pas
+  « Constance »). Le filtre ne sera jamais parfait : un pseudo peut être
+  renommé depuis `/admin/`. Un compte sans pseudo (créé avant cette règle,
+  ou demain après une connexion Google) est redirigé vers la page de choix
+  du pseudo, sans interrompre une partie en cours.
 - Suppression de compte en libre-service ; elle efface aussi ses parties.
 
 ## 5. Score et comparaison

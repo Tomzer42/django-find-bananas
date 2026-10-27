@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 
 from find_bananas.ratelimit import ratelimit
 
-from .forms import DeleteAccountForm, LoginForm, SignupForm
+from .forms import DeleteAccountForm, LoginForm, SignupForm, UsernameForm
 
 
 def _safe_next(request, fallback="home"):
@@ -42,6 +42,24 @@ class LoginView(auth_views.LoginView):
 @method_decorator(ratelimit("password-reset", limit=5, window_seconds=3600, json=False), name="dispatch")
 class PasswordResetView(auth_views.PasswordResetView):
     pass
+
+
+@login_required
+@ratelimit("username", limit=10, window_seconds=3600, json=False)
+def choose_username(request):
+    """Shown to accounts without a username; also used to change it."""
+    form = UsernameForm(request.user, request.POST or None)
+    first_time = not request.user.username
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        if not first_time:
+            messages.success(request, _("Your username has been changed."))
+        return redirect(_safe_next(request, "profile" if not first_time else "home"))
+    return render(
+        request,
+        "registration/choose_username.html",
+        {"form": form, "first_time": first_time, "next": _safe_next(request, "")},
+    )
 
 
 @login_required

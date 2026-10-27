@@ -17,10 +17,12 @@ class AccountTests(GameClientMixin, TestCase):
         cache.clear()
         self.edition = make_edition(counts=(30, 75, 150))
 
-    def signup(self, email="tom@example.com", client=None):
+    def signup(self, email="tom@example.com", client=None, username=None):
         client = client or self.client
+        username = username or email.split("@")[0].replace(".", "_") + "_fan"
         return client.post(
-            "/account/signup/", {"email": email, "password1": PASSWORD, "password2": PASSWORD, "next": "/"}
+            "/account/signup/",
+            {"email": email, "username": username, "password1": PASSWORD, "password2": PASSWORD, "next": "/"},
         )
 
     def test_guest_can_play_without_account(self):
@@ -100,7 +102,8 @@ class AccountTests(GameClientMixin, TestCase):
     def test_open_redirect_is_blocked(self):
         response = self.client.post(
             "/account/signup/",
-            {"email": "t@example.com", "password1": PASSWORD, "password2": PASSWORD, "next": "https://evil.example"},
+            {"email": "t@example.com", "username": "Tom", "password1": PASSWORD, "password2": PASSWORD,
+             "next": "https://evil.example"},
         )
         self.assertRedirects(response, "/")
 
@@ -121,3 +124,66 @@ class AccountTests(GameClientMixin, TestCase):
             summary["rounds"],
             [{"index": 1, "average": 3.0}, {"index": 2, "average": 0.0}, {"index": 3, "average": 7.0}],
         )
+
+
+class UsernameTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def signup(self, username, email="u@example.com", client=None):
+        return (client or self.client).post(
+            "/account/signup/",
+            {"email": email, "username": username, "password1": PASSWORD, "password2": PASSWORD},
+        )
+
+    def test_signup_requires_a_username(self):
+        response = self.signup("")
+        self.assertContains(response, "errorlist")
+        self.assertFalse(User.objects.exists())
+        self.signup("Banana_King")
+        self.assertEqual(User.objects.get().username, "Banana_King")
+
+    def test_username_is_unique_regardless_of_case(self):
+        self.signup("Tom", email="a@example.com")
+        response = self.signup("tOM", email="b@example.com", client=Client())
+        self.assertContains(response, "already taken")
+        self.assertEqual(User.objects.count(), 1)
+
+    def test_format_reserved_and_vulgar_names_are_refused(self):
+        for bad in ["ab", "x" * 21, "Léa", "tom tom", "admin", "Find_Bananas", "connard", "F_u_c_k", "sh1t", "Tom_con"]:
+            response = self.signup(bad, email=f"{abs(hash(bad))}@example.com", client=Client())
+            self.assertContains(response, "errorlist", msg_prefix=bad)
+        self.assertFalse(User.objects.exists())
+
+    def test_innocent_names_are_accepted(self):
+        for i, name in enumerate(["Constance", "Computer", "Scunthorpe", "Nazim", "Hitchcock", "Pascal"]):
+            self.signup(name, email=f"ok{i}@example.com", client=Client())
+        self.assertEqual(User.objects.count(), 6)
+
+    def test_account_without_username_must_choose_one_but_game_api_still_works(self):
+        user = User.objects.create_user("old@example.com", PASSWORD)
+        self.client.force_login(user)
+        self.assertRedirects(
+            self.client.get("/profile/"), "/account/username/?next=/profile/", fetch_redirect_response=False
+        )
+        edition = make_edition()
+        self.assertEqual(self.client.post(f"/api/editions/{edition.number}/start").status_code, 200)
+        self.client.post("/account/username/", {"username": "OldTimer", "next": "/profile/"})
+        user.refresh_from_db()
+        self.assertEqual(user.username, "OldTimer")
+        self.assertEqual(self.client.get("/profile/").status_code, 200)
+
+    def test_change_username_from_profile_and_profile_title(self):
+        self.signup("FirstName")
+        self.assertContains(self.client.get("/profile/"), '<h1 class="profile-name">FirstName</h1>')
+        self.client.post("/account/username/", {"username": "Second_Name"})
+        self.assertContains(self.client.get("/profile/"), '<h1 class="profile-name">Second_Name</h1>')
+        # Keeping your own name with another case is allowed.
+        self.client.post("/account/username/", {"username": "second_name"})
+        self.assertEqual(User.objects.get().username, "second_name")
+
+    def test_empty_usernames_do_not_collide(self):
+        User.objects.create_user("a@example.com", PASSWORD, username="")
+        User.objects.create_user("b@example.com", PASSWORD)
+        self.assertEqual(User.objects.filter(username__isnull=True).count(), 2)
+

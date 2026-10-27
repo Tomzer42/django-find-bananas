@@ -40,7 +40,7 @@ class LanguageTests(TestCase):
     def test_django_messages_are_translated_too(self):
         response = self.client.post(
             "/account/signup/",
-            {"email": "a@example.com", "password1": "short", "password2": "short"},
+            {"email": "a@example.com", "username": "Lea", "password1": "short", "password2": "short"},
             HTTP_ACCEPT_LANGUAGE="fr",
         )
         self.assertContains(response, "Ce mot de passe est trop court")

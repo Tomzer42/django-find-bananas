@@ -4,7 +4,7 @@
 {% block content %}
 <div class="panel">
   <h1>{% translate 'Create an account' %}</h1>
-  <p class="lead">{% translate 'Keep your daily results and see your progress. Only your email is needed. Today’s game on this device is added to your account.' %}</p>
+  <p class="lead">{% translate 'Keep your daily results and see your progress. Only an email and a username are needed. Today’s game on this device is added to your account.' %}</p>
   <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% include "find_bananas/_form.html" %}

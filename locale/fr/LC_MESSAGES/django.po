@@ -8,29 +8,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/forms.py:20
+#: accounts/forms.py:16
+msgid "This username is already taken."
+msgstr "Ce pseudo est déjà pris."
+
+#: accounts/forms.py:22
+msgid "Username"
+msgstr "Pseudo"
+
+#: accounts/forms.py:24
+msgid ""
+"Visible to other players. 3 to 20 characters: letters, digits, “_” and “-”."
+msgstr ""
+"Visible par les autres joueurs. 3 à 20 caractères : lettres, chiffres, « _ » "
+"et « - »."
+
+#: accounts/forms.py:42
 msgid "Confirm password"
 msgstr "Confirme le mot de passe"
 
-#: accounts/forms.py:26
+#: accounts/forms.py:48
 msgid "An account already exists with this email."
 msgstr "Un compte existe déjà avec cet email."
 
-#: accounts/forms.py:33
+#: accounts/forms.py:78
 msgid "Email"
 msgstr "Email"
 
-#: accounts/forms.py:42
+#: accounts/forms.py:87
 msgid "Password"
 msgstr "Mot de passe"
 
-#: accounts/forms.py:52
+#: accounts/forms.py:97
 msgid "Wrong password."
 msgstr "Mot de passe incorrect."
 
-#: accounts/models.py:33
+#: accounts/models.py:41
 msgid "email address"
 msgstr "adresse email"
+
+#: accounts/models.py:45
+msgid "username"
+msgstr "pseudo"
+
+#: accounts/templates/registration/choose_username.html:16:1
+msgid "Continue"
+msgstr "Continuer"
+
+#: accounts/templates/registration/choose_username.html:16:1
+msgid "Save the username"
+msgstr "Enregistrer le pseudo"
+
+#: accounts/templates/registration/choose_username.html:19:1
+msgid "Back to my profile"
+msgstr "Retour à mon profil"
+
+#: accounts/templates/registration/choose_username.html:3:1
+#: accounts/templates/registration/choose_username.html:7:1
+msgid "Choose your username"
+msgstr "Choisis ton pseudo"
+
+#: accounts/templates/registration/choose_username.html:3:1
+#: accounts/templates/registration/choose_username.html:10:1
+msgid "Change your username"
+msgstr "Changer de pseudo"
+
+#: accounts/templates/registration/choose_username.html:8:1
+msgid ""
+"It is how other players will see you. You can change it later from your "
+"profile."
+msgstr ""
+"C’est ce que les autres joueurs verront. Tu pourras le changer plus tard "
+"depuis ton profil."
 
 #: accounts/templates/registration/delete_account.html:13:1
 msgid "Keep my account"
@@ -39,7 +88,7 @@ msgstr "Garder mon compte"
 #: accounts/templates/registration/delete_account.html:3:1
 #: accounts/templates/registration/delete_account.html:6:1
 #: accounts/templates/registration/delete_account.html:11:1
-#: find_bananas/templates/find_bananas/profile.html:58:1
+#: find_bananas/templates/find_bananas/profile.html:62:1
 msgid "Delete my account"
 msgstr "Supprimer mon compte"
 
@@ -65,7 +114,7 @@ msgstr "Crée-le"
 #: accounts/templates/registration/login.html:11:1
 #: accounts/templates/registration/password_reset_complete.html:7:1
 #: accounts/templates/registration/signup.html:15:1
-#: find_bananas/templates/find_bananas/base.html:41:1
+#: find_bananas/templates/find_bananas/base.html:37:1
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -166,17 +215,40 @@ msgstr "Créer un compte"
 
 #: accounts/templates/registration/signup.html:7:1
 msgid ""
-"Keep your daily results and see your progress. Only your email is needed. "
-"Today’s game on this device is added to your account."
+"Keep your daily results and see your progress. Only an email and a username "
+"are needed. Today’s game on this device is added to your account."
 msgstr ""
-"Garde tes résultats et suis ta progression. Seul ton email est demandé. La "
-"partie du jour jouée sur cet appareil est ajoutée à ton compte."
+"Garde tes résultats et suis ta progression. Seuls un email et un pseudo sont "
+"demandés. La partie du jour jouée sur cet appareil est ajoutée à ton compte."
+
+#: accounts/usernames.py:84
+#, python-format
+msgid "Your username must be %(min)s to %(max)s characters long."
+msgstr "Ton pseudo doit faire entre %(min)s et %(max)s caractères."
+
+#: accounts/usernames.py:90
+msgid "Use only letters without accents, digits, “_” and “-”."
+msgstr ""
+"Utilise seulement des lettres sans accents, des chiffres, « _ » et « - »."
+
+#: accounts/usernames.py:94
+msgid "This username is reserved. Choose another one."
+msgstr "Ce pseudo est réservé. Choisis-en un autre."
+
+#: accounts/usernames.py:97
+msgid "This username is not allowed. Choose one that everyone can see."
+msgstr ""
+"Ce pseudo n’est pas autorisé. Choisis-en un que tout le monde peut voir."
 
 #: accounts/views.py:31
 msgid "Welcome! Your results are now saved to your account."
 msgstr "Bienvenue ! Tes résultats sont maintenant enregistrés dans ton compte."
 
-#: accounts/views.py:54
+#: accounts/views.py:56
+msgid "Your username has been changed."
+msgstr "Ton pseudo a été modifié."
+
+#: accounts/views.py:72
 msgid "Your account and its history have been deleted."
 msgstr "Ton compte et son historique ont été supprimés."
 
@@ -371,21 +443,16 @@ msgstr "Compte"
 
 #: find_bananas/templates/find_bananas/base.html:35:1
 #: find_bananas/templates/find_bananas/profile.html:3:1
-#: find_bananas/templates/find_bananas/profile.html:6:1
 msgid "My profile"
 msgstr "Mon profil"
 
-#: find_bananas/templates/find_bananas/base.html:38:1
-msgid "Log out"
-msgstr "Se déconnecter"
-
-#: find_bananas/templates/find_bananas/base.html:64:1
+#: find_bananas/templates/find_bananas/base.html:60:1
 #: find_bananas/templates/find_bananas/privacy.html:3:1
 #: find_bananas/templates/find_bananas/privacy.html:6:1
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: find_bananas/templates/find_bananas/base.html:70:1
+#: find_bananas/templates/find_bananas/base.html:66:1
 msgid ""
 "May we measure visits with Google Analytics? It sets cookies. The game works "
 "either way."
@@ -393,11 +460,11 @@ msgstr ""
 "Pouvons-nous mesurer l’audience avec Google Analytics ? Cela dépose des "
 "cookies. Le jeu marche dans les deux cas."
 
-#: find_bananas/templates/find_bananas/base.html:72:1
+#: find_bananas/templates/find_bananas/base.html:68:1
 msgid "No thanks"
 msgstr "Non merci"
 
-#: find_bananas/templates/find_bananas/base.html:73:1
+#: find_bananas/templates/find_bananas/base.html:69:1
 msgid "Allow"
 msgstr "Accepter"
 
@@ -490,12 +557,14 @@ msgstr "Avec un compte"
 
 #: find_bananas/templates/find_bananas/privacy.html:11:1
 msgid ""
-"We store your email address, a secured version of your password, and your "
-"results, to show you your history. Your email is only used to reset your "
+"We store your email address, a secured version of your password, your "
+"username and your results, to show you your history. Your username is visible"
+" to other players; your email never is, and is only used to reset your "
 "password."
 msgstr ""
-"Nous conservons ton adresse email, une version sécurisée de ton mot de passe "
-"et tes résultats, pour t’afficher ton historique. Ton email ne sert qu’à "
+"Nous conservons ton adresse email, une version sécurisée de ton mot de passe,"
+" ton pseudo et tes résultats, pour t’afficher ton historique. Ton pseudo est "
+"visible par les autres joueurs. Ton email ne l’est jamais et ne sert qu’à "
 "réinitialiser ton mot de passe."
 
 #: find_bananas/templates/find_bananas/privacy.html:12:1
@@ -593,9 +662,17 @@ msgstr "Plus récents"
 msgid "Older"
 msgstr "Plus anciens"
 
-#: find_bananas/templates/find_bananas/profile.html:58:1
+#: find_bananas/templates/find_bananas/profile.html:60:1
+msgid "Change username"
+msgstr "Changer de pseudo"
+
+#: find_bananas/templates/find_bananas/profile.html:61:1
 msgid "Change password"
 msgstr "Changer de mot de passe"
+
+#: find_bananas/templates/find_bananas/profile.html:66:1
+msgid "Log out"
+msgstr "Se déconnecter"
 
 #: find_bananas/templates/find_bananas/profile.html:9:1
 msgid "Games played"
