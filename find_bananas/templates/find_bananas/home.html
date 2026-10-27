@@ -11,7 +11,7 @@
   <ol class="progress" id="progress" aria-label="{% translate 'Rounds' %}" hidden></ol>
 
   <section class="screen" data-screen="intro">
-    <p class="edition">{% blocktranslate with number=edition.number %}Daily challenge #{{ number }}{% endblocktranslate %}</p>
+    <p class="edition">{% blocktranslate with number=edition.number %}Challenge #{{ number }}{% endblocktranslate %}</p>
     <h1>{% translate 'How many bananas?' %}</h1>
     <p class="lead">{% translate 'Bananas appear for 5 seconds. Count them, then type your guess. Three rounds, more bananas each time.' %}</p>
     <button type="button" class="btn btn-primary btn-big" data-action="start">{% translate 'Play' %}</button>
@@ -51,7 +51,7 @@
   </section>
 
   <section class="screen" data-screen="result" hidden>
-    <p class="edition">{% blocktranslate with number=edition.number %}Daily challenge #{{ number }}{% endblocktranslate %}</p>
+    <p class="edition">{% blocktranslate with number=edition.number %}Challenge #{{ number }}{% endblocktranslate %}</p>
     <div class="stamp">
       <span class="stamp-score" data-field="score"></span>
       <span class="stamp-label" data-field="score-label"></span>

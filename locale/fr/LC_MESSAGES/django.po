@@ -18,10 +18,11 @@ msgstr "Pseudo"
 
 #: accounts/forms.py:24
 msgid ""
-"Visible to other players. 3 to 20 characters: letters, digits, “_” and “-”."
+"Visible to other players. 3 to 20 characters: letters, digits, “_” and “-”. "
+"Spaces become “_”."
 msgstr ""
 "Visible par les autres joueurs. 3 à 20 caractères : lettres, chiffres, « _ » "
-"et « - »."
+"et « - ». Les espaces deviennent « _ »."
 
 #: accounts/forms.py:42
 msgid "Confirm password"
@@ -221,24 +222,24 @@ msgstr ""
 "Garde tes résultats et suis ta progression. Seuls un email et un pseudo sont "
 "demandés. La partie du jour jouée sur cet appareil est ajoutée à ton compte."
 
-#: accounts/usernames.py:84
+#: accounts/usernames.py:102
+msgid "This username is not allowed. Choose one that everyone can see."
+msgstr ""
+"Ce pseudo n’est pas autorisé. Choisis-en un que tout le monde peut voir."
+
+#: accounts/usernames.py:89
 #, python-format
 msgid "Your username must be %(min)s to %(max)s characters long."
 msgstr "Ton pseudo doit faire entre %(min)s et %(max)s caractères."
 
-#: accounts/usernames.py:90
+#: accounts/usernames.py:95
 msgid "Use only letters without accents, digits, “_” and “-”."
 msgstr ""
 "Utilise seulement des lettres sans accents, des chiffres, « _ » et « - »."
 
-#: accounts/usernames.py:94
+#: accounts/usernames.py:99
 msgid "This username is reserved. Choose another one."
 msgstr "Ce pseudo est réservé. Choisis-en un autre."
-
-#: accounts/usernames.py:97
-msgid "This username is not allowed. Choose one that everyone can see."
-msgstr ""
-"Ce pseudo n’est pas autorisé. Choisis-en un que tout le monde peut voir."
 
 #: accounts/views.py:31
 msgid "Welcome! Your results are now saved to your account."
@@ -482,8 +483,8 @@ msgstr "Rounds"
 #: find_bananas/templates/find_bananas/home.html:14:1
 #: find_bananas/templates/find_bananas/home.html:54:1
 #, python-format
-msgid "Daily challenge #%(number)s"
-msgstr "Défi du jour n°%(number)s"
+msgid "Challenge #%(number)s"
+msgstr "Défi n°%(number)s"
 
 #: find_bananas/templates/find_bananas/home.html:15:1
 msgid "How many bananas?"

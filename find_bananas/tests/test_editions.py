@@ -11,7 +11,7 @@ from find_bananas.editions import (
     edition_bounds,
     edition_date_at,
     ensure_edition,
-    object_density_ok,
+    redraw_edition,
     render_round,
 )
 from find_bananas.models import Edition
@@ -49,7 +49,6 @@ class EditionGenerationTests(TestCase):
             self.assertEqual(image.format, "WEBP")
             self.assertEqual(image.size, (rendered.width, rendered.height))
             self.assertLess(len(rendered.image), 300 * 1024)
-            self.assertTrue(object_density_ok(spec))
 
     def test_ensure_edition_is_idempotent_and_numbered(self):
         first = ensure_edition(date(2026, 11, 1))
@@ -66,3 +65,20 @@ class EditionGenerationTests(TestCase):
         self.assertEqual(Edition.objects.count(), 2)
         call_command("generate_editions", "--ahead", "1", stdout=StringIO())
         self.assertEqual(Edition.objects.count(), 2)
+
+    @override_settings(DEBUG=True)
+    def test_redraw_keeps_counts(self):
+        edition = ensure_edition(date(2026, 11, 1))
+        before = list(edition.rounds.values_list("count", "image"))
+        call_command("generate_editions", "--ahead", "0", "--redraw", stdout=StringIO())
+        redraw_edition(edition)
+        after = list(edition.rounds.values_list("count", "image"))
+        self.assertEqual([c for c, _ in before], [c for c, _ in after])
+        self.assertNotEqual([bytes(i) for _, i in before], [bytes(i) for _, i in after])
+
+    def test_redraw_refused_in_production(self):
+        from django.core.management.base import CommandError
+
+        with self.assertRaises(CommandError):
+            call_command("generate_editions", "--redraw", stdout=StringIO())
+

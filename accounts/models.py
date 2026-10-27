@@ -64,6 +64,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         # An empty username is stored as NULL so the uniqueness rule ignores it.
+        if self.username:
+            from .usernames import normalize_username
+
+            self.username = normalize_username(self.username)
         if not self.username:
             self.username = None
         super().save(*args, **kwargs)

@@ -32,14 +32,17 @@ class RoundSpec:
 
     min_count: int
     max_count: int
-    object_length: int  # px on the canvas; fixed per round so size never hints at the count
 
 
 ROUND_SPECS = [
-    RoundSpec(20, 50, 180),
-    RoundSpec(50, 100, 130),
-    RoundSpec(100, 200, 95),
+    RoundSpec(20, 50),
+    RoundSpec(50, 100),
+    RoundSpec(100, 200),
 ]
+
+# Length of a banana on the canvas, in px. The same in every round: only the
+# number of bananas makes a round harder.
+OBJECT_LENGTH = 130
 
 _random = secrets.SystemRandom()
 
@@ -153,7 +156,7 @@ def render_round(spec: RoundSpec, count: int | None = None) -> RenderedRound:
     count = count if count is not None else _random.randint(spec.min_count, spec.max_count)
     width, height = CANVAS_SIZE
     canvas = Image.new("RGB", CANVAS_SIZE, BACKGROUND)
-    sprite = _object_sprite(spec.object_length)
+    sprite = _object_sprite(OBJECT_LENGTH)
     for _ in range(count):
         rotated = sprite.rotate(_random.uniform(0, 360), resample=Image.BICUBIC, expand=True)
         x = _random.randint(0, width - rotated.width)
@@ -164,8 +167,12 @@ def render_round(spec: RoundSpec, count: int | None = None) -> RenderedRound:
     return RenderedRound(count=count, image=buffer.getvalue(), width=width, height=height)
 
 
-def object_density_ok(spec: RoundSpec) -> bool:
-    """Sanity check used by tests: the busiest round still leaves room."""
-    w, h = CANVAS_SIZE
-    sprite = _object_sprite(spec.object_length)
-    return spec.max_count * sprite.width * sprite.height < 0.9 * w * h
+def redraw_edition(edition: Edition) -> None:
+    """Draw new images for an edition, keeping its banana counts, so plays
+    already recorded stay valid. Used locally after a change to the drawing;
+    never needed in production."""
+    for round_ in edition.rounds.all():
+        rendered = render_round(ROUND_SPECS[round_.index - 1], count=round_.count)
+        round_.image, round_.width, round_.height = rendered.image, rendered.width, rendered.height
+        round_.save(update_fields=["image", "width", "height"])
+

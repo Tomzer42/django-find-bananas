@@ -76,9 +76,14 @@ def is_vulgar(name: str) -> bool:
     return any(c in BLOCKED_WORDS for c in candidates)
 
 
+def normalize_username(value: str) -> str:
+    """Spaces typed by the player become "_": "Banana King" -> "Banana_King"."""
+    return re.sub(r"\s+", "_", (value or "").strip())
+
+
 def validate_username(value: str) -> str:
     """Return the cleaned username or raise ValidationError."""
-    name = (value or "").strip()
+    name = normalize_username(value)
     if not MIN_LENGTH <= len(name) <= MAX_LENGTH:
         raise ValidationError(
             _("Your username must be %(min)s to %(max)s characters long."),

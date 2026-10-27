@@ -32,9 +32,9 @@
     </a>
     <nav class="topnav" aria-label="{% translate 'Account' %}">
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}">{% translate 'My profile' %}</a>
+        <a class="btn btn-quiet btn-small" href="{% url 'profile' %}">{% translate 'My profile' %}</a>
       {% else %}
-        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">{% translate 'Log in' %}</a>
+        <a class="btn btn-quiet btn-small" href="{% url 'login' %}?next={{ request.path|urlencode }}">{% translate 'Log in' %}</a>
       {% endif %}
     </nav>
   </header>

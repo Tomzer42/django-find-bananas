@@ -288,6 +288,25 @@ h2 {
   color: var(--night);
 }
 
+.btn-small {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.topnav .btn {
+  color: var(--night);
+  padding: 8px 16px;
+  font: 400 0.9375rem/1 var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.topnav .btn:hover {
+  text-decoration: none;
+  background: var(--paper);
+}
+
 .btn-big {
   width: 100%;
   min-height: 60px;

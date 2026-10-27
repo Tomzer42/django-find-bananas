@@ -21,7 +21,7 @@ def username_field():
     return forms.CharField(
         label=_("Username"),
         max_length=MAX_LENGTH,
-        help_text=_("Visible to other players. 3 to 20 characters: letters, digits, “_” and “-”."),
+        help_text=_("Visible to other players. 3 to 20 characters: letters, digits, “_” and “-”. Spaces become “_”."),
         widget=forms.TextInput(attrs={"autocomplete": "username", "autocapitalize": "none", "spellcheck": "false"}),
     )
 

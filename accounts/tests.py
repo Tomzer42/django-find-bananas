@@ -150,7 +150,7 @@ class UsernameTests(TestCase):
         self.assertEqual(User.objects.count(), 1)
 
     def test_format_reserved_and_vulgar_names_are_refused(self):
-        for bad in ["ab", "x" * 21, "Léa", "tom tom", "admin", "Find_Bananas", "connard", "F_u_c_k", "sh1t", "Tom_con"]:
+        for bad in ["ab", "x" * 21, "Léa", "tom!", "admin", "Find_Bananas", "connard", "F_u_c_k", "sh1t", "Tom_con"]:
             response = self.signup(bad, email=f"{abs(hash(bad))}@example.com", client=Client())
             self.assertContains(response, "errorlist", msg_prefix=bad)
         self.assertFalse(User.objects.exists())
@@ -181,6 +181,13 @@ class UsernameTests(TestCase):
         # Keeping your own name with another case is allowed.
         self.client.post("/account/username/", {"username": "second_name"})
         self.assertEqual(User.objects.get().username, "second_name")
+
+    def test_spaces_become_underscores(self):
+        self.signup("  Banana   King ")
+        self.assertEqual(User.objects.get().username, "Banana_King")
+        # ...and the result is checked for uniqueness like any other name.
+        response = self.signup("Banana King", email="other@example.com", client=Client())
+        self.assertContains(response, "already taken")
 
     def test_empty_usernames_do_not_collide(self):
         User.objects.create_user("a@example.com", PASSWORD, username="")
