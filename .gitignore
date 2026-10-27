@@ -1,6 +1,16 @@
-## Images modifiées/générées
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
 
-find_bananas/banana_thumbnail_rotated.png
-find_bananas/static/images/*.png
-**.DS_Store
-**.pyc
+# Local data and build output
+db.sqlite3
+staticfiles/
+media/
+.env
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
