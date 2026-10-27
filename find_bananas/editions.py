@@ -5,6 +5,7 @@ import logging
 import secrets
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta
+from datetime import timezone as dt_timezone
 from functools import lru_cache
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -49,11 +50,15 @@ def _edition_tz():
 
 
 def edition_bounds(edition_date: date):
-    """Start and end of an edition as aware datetimes (DST-safe)."""
+    """Start and end of an edition, as UTC instants.
+
+    Converted to UTC on purpose: Python compares and subtracts two datetimes
+    sharing the same ZoneInfo by wall-clock time, which is wrong across a
+    daylight-saving change."""
     tz = _edition_tz()
     start = datetime.combine(edition_date, time(settings.EDITION_HOUR), tzinfo=tz)
     end = datetime.combine(edition_date + timedelta(days=1), time(settings.EDITION_HOUR), tzinfo=tz)
-    return start, end
+    return start.astimezone(dt_timezone.utc), end.astimezone(dt_timezone.utc)
 
 
 def edition_date_at(moment: datetime) -> date:

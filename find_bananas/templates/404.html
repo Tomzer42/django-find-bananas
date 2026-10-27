@@ -1,0 +1,10 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'Page not found' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>{% translate 'No bananas here' %}</h1>
+  <p class="lead">{% translate 'This page does not exist. Today’s challenge is on the home page.' %}</p>
+  <a class="btn btn-primary btn-big" href="/">{% translate 'Play today’s challenge' %}</a>
+</div>
+{% endblock %}
