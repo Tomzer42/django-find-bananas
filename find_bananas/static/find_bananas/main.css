@@ -329,20 +329,38 @@ h2 {
   color: var(--peel);
 }
 
-/* The playing screen: the image takes the whole window for 5 seconds.
-   game.js sizes the image and turns it a quarter turn when a landscape
-   image meets a screen held upright. */
+/* The playing screen: for 5 seconds the image sits on the blue sky, in a
+   white card as large as the window allows, with a small margin around it.
+   game.js sizes the card and turns the image a quarter turn when a
+   landscape image meets a screen held upright. */
 .screen-view {
+  --view-margin: clamp(12px, 3vmin, 40px);
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: #fff;
+  padding: var(--view-margin);
+  padding-top: max(var(--view-margin), env(safe-area-inset-top));
+  padding-bottom: max(var(--view-margin), env(safe-area-inset-bottom));
+  background: var(--sky);
+}
+
+.view-stack {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 .frame {
-  position: absolute;
-  inset: max(8px, env(safe-area-inset-top)) 8px 28px 8px;
+  position: relative;
+  width: min(100%, 600px);
+  aspect-ratio: 3 / 2;
+  border-radius: 20px;
   overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 0 var(--sky-deep);
 }
 
 .frame img {
@@ -367,6 +385,7 @@ h2 {
   left: 0;
   right: 0;
   margin: 0;
+  transform: translateY(-50%);
   text-align: center;
   color: var(--muted);
   font-family: var(--font-display);
@@ -374,21 +393,23 @@ h2 {
 }
 
 .timer {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: max(10px, env(safe-area-inset-bottom));
+  width: min(100%, 600px);
   height: 8px;
+  flex: none;
   border-radius: 4px;
-  background: var(--mist);
+  background: rgba(255, 255, 255, 0.35);
   overflow: hidden;
 }
 
 .timer span {
   display: block;
   height: 100%;
-  background: var(--banana-deep);
+  background: var(--banana);
   transform-origin: left center;
+}
+
+.screen[data-screen="ready"] h2 {
+  margin-bottom: 24px;
 }
 
 .guess {

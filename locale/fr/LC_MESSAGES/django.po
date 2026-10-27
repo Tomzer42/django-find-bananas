@@ -181,50 +181,46 @@ msgid "Your account and its history have been deleted."
 msgstr "Ton compte et son historique ont été supprimés."
 
 #: find_bananas/strings.py:10
-msgid "Between {min} and {max} bananas. They stay on screen for 5 seconds."
-msgstr "Entre {min} et {max} bananes. Elles restent 5 secondes à l’écran."
-
-#: find_bananas/strings.py:11
 msgid "The bananas were already shown. How many did you see?"
 msgstr "Les bananes ont déjà été montrées. Tu en as vu combien ?"
 
-#: find_bananas/strings.py:12
+#: find_bananas/strings.py:11
 msgid "Exact!"
 msgstr "Exact !"
 
-#: find_bananas/strings.py:13
+#: find_bananas/strings.py:12
 msgid "{n} too many"
 msgstr "{n} de trop"
 
-#: find_bananas/strings.py:14
+#: find_bananas/strings.py:13
 msgid "{n} too few"
 msgstr "{n} de moins"
 
-#: find_bananas/strings.py:15
+#: find_bananas/strings.py:14
 msgid "Next round"
 msgstr "Round suivant"
 
-#: find_bananas/strings.py:16
+#: find_bananas/strings.py:15
 msgid "See my result"
 msgstr "Voir mon résultat"
 
-#: find_bananas/strings.py:17
+#: find_bananas/strings.py:16
 msgid "bananas off in total"
 msgstr "bananes d’écart au total"
 
-#: find_bananas/strings.py:18
+#: find_bananas/strings.py:17
 msgid "banana off in total"
 msgstr "banane d’écart au total"
 
-#: find_bananas/strings.py:19
+#: find_bananas/strings.py:18
 msgid "Perfect score"
 msgstr "Score parfait"
 
-#: find_bananas/strings.py:20
+#: find_bananas/strings.py:19
 msgid "Top {p}% of today’s {players} players"
 msgstr "Top {p} % des {players} joueurs du jour"
 
-#: find_bananas/strings.py:21
+#: find_bananas/strings.py:20
 msgid ""
 "You are the first player today. Your ranking appears once {min} people have "
 "played."
@@ -232,7 +228,7 @@ msgstr ""
 "Tu es la première personne à jouer aujourd’hui. Ton classement s’affichera "
 "dès que {min} personnes auront joué."
 
-#: find_bananas/strings.py:22
+#: find_bananas/strings.py:21
 msgid ""
 "{players} players so far today. Your ranking appears once {min} people have "
 "played."
@@ -240,89 +236,89 @@ msgstr ""
 "{players} joueurs pour l’instant aujourd’hui. Ton classement s’affichera dès "
 "que {min} personnes auront joué."
 
-#: find_bananas/strings.py:23
+#: find_bananas/strings.py:22
 msgid "This game took too long to count in today’s ranking."
 msgstr ""
 "Cette partie a pris trop de temps pour compter dans le classement du jour."
 
-#: find_bananas/strings.py:24
+#: find_bananas/strings.py:23
 msgid "Next challenge in {h} h {m} min"
 msgstr "Prochain défi dans {h} h {m} min"
 
-#: find_bananas/strings.py:25
+#: find_bananas/strings.py:24
 msgid "Next challenge in less than a minute"
 msgstr "Prochain défi dans moins d’une minute"
 
-#: find_bananas/strings.py:26
+#: find_bananas/strings.py:25
 msgid "Keep your results and track your progress:"
 msgstr "Garde tes résultats et suis ta progression :"
 
-#: find_bananas/strings.py:27
+#: find_bananas/strings.py:26
 msgid "create a free account"
 msgstr "crée un compte gratuit"
 
-#: find_bananas/strings.py:28
+#: find_bananas/strings.py:27
 msgid "See all my results"
 msgstr "Voir tous mes résultats"
 
-#: find_bananas/strings.py:29
+#: find_bananas/strings.py:28
 msgid "Find Bananas #{number}"
 msgstr "Find Bananas n°{number}"
 
-#: find_bananas/strings.py:30
+#: find_bananas/strings.py:29
 msgid "Round {n}: {gap} off"
 msgstr "Round {n} : {gap} d’écart"
 
-#: find_bananas/strings.py:31
+#: find_bananas/strings.py:30
 msgid "Total: {score} off"
 msgstr "Total : {score} d’écart"
 
-#: find_bananas/strings.py:32
+#: find_bananas/strings.py:31
 msgid "top {p}%"
 msgstr "top {p} %"
 
-#: find_bananas/strings.py:33
+#: find_bananas/strings.py:32
 msgid "Can you beat me?"
 msgstr "Tu fais mieux ?"
 
-#: find_bananas/strings.py:34
+#: find_bananas/strings.py:33
 msgid "Score copied. Paste it anywhere to challenge your friends."
 msgstr "Score copié. Colle-le où tu veux pour défier tes amis."
 
-#: find_bananas/strings.py:35
+#: find_bananas/strings.py:34
 msgid "Could not copy automatically. Copy the text below."
 msgstr "La copie automatique n’a pas marché. Copie le texte ci-dessous."
 
-#: find_bananas/strings.py:36
+#: find_bananas/strings.py:35
 msgid "Type a number between 0 and 9999."
 msgstr "Tape un nombre entre 0 et 9999."
 
-#: find_bananas/strings.py:38
+#: find_bananas/strings.py:37
 msgid ""
 "No connection. Check your network and try again: your progress is saved."
 msgstr ""
 "Pas de connexion. Vérifie ton réseau et réessaie : ta progression est "
 "enregistrée."
 
-#: find_bananas/strings.py:39
+#: find_bananas/strings.py:38
 msgid "This challenge has ended. Reload to play the new one."
 msgstr "Ce défi est terminé. Recharge la page pour jouer au nouveau."
 
-#: find_bananas/strings.py:40
+#: find_bananas/strings.py:39
 msgid "Too many attempts from your connection. Wait a few minutes and reload."
 msgstr ""
 "Trop de tentatives depuis ta connexion. Attends quelques minutes puis "
 "recharge la page."
 
-#: find_bananas/strings.py:41
+#: find_bananas/strings.py:40
 msgid "The bananas can only be shown once. Type your guess."
 msgstr "Les bananes ne s’affichent qu’une fois. Tape ta réponse."
 
-#: find_bananas/strings.py:42
+#: find_bananas/strings.py:41
 msgid "You already played today’s challenge with another account."
 msgstr "Tu as déjà joué au défi du jour avec un autre compte."
 
-#: find_bananas/strings.py:43
+#: find_bananas/strings.py:42
 msgid "The game could not continue. Reload the page: your progress is saved."
 msgstr ""
 "Le jeu n’a pas pu continuer. Recharge la page : ta progression est "
@@ -417,7 +413,7 @@ msgid "Rounds"
 msgstr "Rounds"
 
 #: find_bananas/templates/find_bananas/home.html:14:1
-#: find_bananas/templates/find_bananas/home.html:53:1
+#: find_bananas/templates/find_bananas/home.html:54:1
 #, python-format
 msgid "Daily challenge #%(number)s"
 msgstr "Défi du jour n°%(number)s"
@@ -439,7 +435,7 @@ msgstr ""
 msgid "Play"
 msgstr "Jouer"
 
-#: find_bananas/templates/find_bananas/home.html:23:1
+#: find_bananas/templates/find_bananas/home.html:22:1
 msgid "Show the bananas"
 msgstr "Afficher les bananes"
 
@@ -447,44 +443,44 @@ msgstr "Afficher les bananes"
 msgid "Loading…"
 msgstr "Chargement…"
 
-#: find_bananas/templates/find_bananas/home.html:35:1
+#: find_bananas/templates/find_bananas/home.html:36:1
 msgid "How many bananas did you see?"
 msgstr "Tu as vu combien de bananes ?"
 
-#: find_bananas/templates/find_bananas/home.html:39:1
+#: find_bananas/templates/find_bananas/home.html:40:1
 msgid "Submit guess"
 msgstr "Valider"
 
-#: find_bananas/templates/find_bananas/home.html:46:1
+#: find_bananas/templates/find_bananas/home.html:47:1
 msgid "Your guess"
 msgstr "Ta réponse"
 
-#: find_bananas/templates/find_bananas/home.html:47:1
-#: find_bananas/templates/find_bananas/home.html:60:1
+#: find_bananas/templates/find_bananas/home.html:48:1
+#: find_bananas/templates/find_bananas/home.html:61:1
 msgid "Bananas"
 msgstr "Bananes"
 
-#: find_bananas/templates/find_bananas/home.html:60:1
+#: find_bananas/templates/find_bananas/home.html:61:1
 msgid "Round"
 msgstr "Round"
 
-#: find_bananas/templates/find_bananas/home.html:60:1
+#: find_bananas/templates/find_bananas/home.html:61:1
 msgid "Guess"
 msgstr "Réponse"
 
-#: find_bananas/templates/find_bananas/home.html:60:1
+#: find_bananas/templates/find_bananas/home.html:61:1
 msgid "Off by"
 msgstr "Écart"
 
-#: find_bananas/templates/find_bananas/home.html:63:1
+#: find_bananas/templates/find_bananas/home.html:64:1
 msgid "Share my score"
 msgstr "Partager mon score"
 
-#: find_bananas/templates/find_bananas/home.html:70:1
+#: find_bananas/templates/find_bananas/home.html:71:1
 msgid "Something went wrong"
 msgstr "Un problème est survenu"
 
-#: find_bananas/templates/find_bananas/home.html:72:1
+#: find_bananas/templates/find_bananas/home.html:73:1
 msgid "Reload the game"
 msgstr "Recharger le jeu"
 
@@ -551,18 +547,18 @@ msgstr "Meilleur score"
 msgid "Average score"
 msgstr "Score moyen"
 
-#: find_bananas/templates/find_bananas/profile.html:14:1
+#: find_bananas/templates/find_bananas/profile.html:13:1
+msgid "Score = total number of bananas you were off by. Lower is better."
+msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
+
+#: find_bananas/templates/find_bananas/profile.html:15:1
 msgid "Average gap per round"
 msgstr "Écart moyen par round"
 
-#: find_bananas/templates/find_bananas/profile.html:17:1
+#: find_bananas/templates/find_bananas/profile.html:18:1
 #, python-format
 msgid "Round %(n)s"
 msgstr "Round %(n)s"
-
-#: find_bananas/templates/find_bananas/profile.html:21:1
-msgid "Score = total number of bananas you were off by. Lower is better."
-msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
 
 #: find_bananas/templates/find_bananas/profile.html:23:1
 msgid "No results yet. Play today’s challenge and it will appear here."

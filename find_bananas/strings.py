@@ -7,7 +7,6 @@ from django.utils.translation import gettext as _
 def game_strings() -> dict:
     return {
         "roundTitle": _("Round {n} of {total}"),
-        "roundRange": _("Between {min} and {max} bananas. They stay on screen for 5 seconds."),
         "guessLabelAfterReload": _("The bananas were already shown. How many did you see?"),
         "exact": _("Exact!"),
         "tooMany": _("{n} too many"),

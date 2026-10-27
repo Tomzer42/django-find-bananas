@@ -102,9 +102,7 @@
   // --- screens -------------------------------------------------------------
 
   function goReady(n) {
-    var range = state.edition.ranges[n - 1] || ["?", "?"];
     field("ready-title").textContent = fmt(T.roundTitle, { n: n, total: state.edition.rounds });
-    field("ready-range").textContent = fmt(T.roundRange, { min: range[0], max: range[1] });
     renderProgress(n);
     show("ready");
   }
@@ -121,18 +119,34 @@
     show("guess");
   }
 
-  // Make the image as large as the window allows. A landscape image on a
-  // screen held upright is turned a quarter turn: same image, more room.
+  // Make the white card, and the image in it, as large as the window allows
+  // inside the margin. A landscape image on a screen held upright is turned
+  // a quarter turn: same image, more room.
   function fitImage(img, frame) {
-    var w = frame.clientWidth;
-    var h = frame.clientHeight;
+    var stack = document.getElementById("view-stack");
+    var timer = document.getElementById("timer");
+    var w = stack.clientWidth;
+    var h = stack.clientHeight - timer.offsetHeight - 12;
     var iw = img.naturalWidth;
     var ih = img.naturalHeight;
     var turn = h > w && iw > ih;
     var scale = turn ? Math.min(w / ih, h / iw) : Math.min(w / iw, h / ih);
+    var shownW = Math.floor((turn ? ih : iw) * scale);
+    var shownH = Math.floor((turn ? iw : ih) * scale);
+    frame.style.width = shownW + "px";
+    frame.style.height = shownH + "px";
+    frame.style.aspectRatio = "auto";
+    timer.style.width = shownW + "px";
     img.style.width = Math.floor(iw * scale) + "px";
     img.style.height = Math.floor(ih * scale) + "px";
     img.classList.toggle("is-turned", turn);
+  }
+
+  function resetFrame(frame) {
+    frame.style.width = "";
+    frame.style.height = "";
+    frame.style.aspectRatio = "";
+    document.getElementById("timer").style.width = "";
   }
 
   function showBananas() {
@@ -144,6 +158,7 @@
     var loading = document.getElementById("frame-loading");
     var bar = document.getElementById("timer-bar");
     frame.querySelectorAll("img").forEach(function (img) { img.remove(); });
+    resetFrame(frame);
     loading.hidden = false;
     bar.style.transition = "none";
     bar.style.transform = "scaleX(1)";
