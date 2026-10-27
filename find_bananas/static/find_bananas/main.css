@@ -83,8 +83,9 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px var(--gutter);
-  padding-top: max(12px, env(safe-area-inset-top));
+  /* 16px on phones, growing with the window up to 48px on computers. */
+  padding: clamp(12px, 2vw, 24px) clamp(var(--gutter), 3.5vw, 48px);
+  padding-top: max(clamp(12px, 2vw, 24px), env(safe-area-inset-top));
 }
 
 .brand {
