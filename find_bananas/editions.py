@@ -28,16 +28,23 @@ BACKGROUND = (255, 255, 255)
 
 @dataclass(frozen=True)
 class RoundSpec:
-    """Difficulty of a round. The ranges are the original game's."""
+    """Difficulty of a round. The ranges are the original game's.
+
+    `tiers` are the largest gaps for a green, yellow and orange result
+    (anything above is red), i.e. about 10 %, 15 % and 20 % of the average
+    count of the round. They colour the reveal, the result table and the
+    shared score.
+    """
 
     min_count: int
     max_count: int
+    tiers: tuple[int, int, int]
 
 
 ROUND_SPECS = [
-    RoundSpec(20, 50),
-    RoundSpec(50, 100),
-    RoundSpec(100, 200),
+    RoundSpec(20, 50, tiers=(4, 6, 8)),
+    RoundSpec(50, 100, tiers=(8, 11, 15)),
+    RoundSpec(100, 200, tiers=(15, 23, 30)),
 ]
 
 # Length of a banana on the canvas, in px. The same in every round: only the

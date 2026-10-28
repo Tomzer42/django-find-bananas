@@ -111,6 +111,19 @@ rounds (0 = parfait, plus bas = mieux). Tous les joueurs d'une édition voient
 les mêmes images, la comparaison des scores bruts au sein d'une édition est
 donc équitable.
 
+**Code couleur d'un round** (affichage et partage) : selon l'écart, comparé à
+environ 10 %, 15 % et 20 % du nombre moyen de bananes du round. Les seuils sont
+dans `ROUND_SPECS` (`editions.py`) et envoyés au navigateur avec la partie.
+
+| Round | 🟢 vert | 🟡 jaune | 🟠 orange | 🔴 rouge |
+|---|---|---|---|---|
+| 1 (20 à 50) | ≤ 4 | ≤ 6 | ≤ 8 | au-delà |
+| 2 (50 à 100) | ≤ 8 | ≤ 11 | ≤ 15 | au-delà |
+| 3 (100 à 200) | ≤ 15 | ≤ 23 | ≤ 30 | au-delà |
+| Total | ≤ 27 | ≤ 40 | ≤ 53 | au-delà |
+
+Un compte exact (🎯) déclenche des confettis et un mot qui traverse l'écran.
+
 **Population de référence** : les parties *terminées* et *classées* de la même
 édition. Les visiteurs qui n'ont pas fini ne comptent pas.
 

@@ -339,12 +339,12 @@ msgid "Find Bananas #{number}"
 msgstr "Find Bananas n°{number}"
 
 #: find_bananas/strings.py:29
-msgid "Round {n}: {gap} off"
-msgstr "Round {n} : {gap} d’écart"
+msgid "R{n}: {gap}"
+msgstr "R{n} : {gap}"
 
 #: find_bananas/strings.py:30
-msgid "Total: {score} off"
-msgstr "Total : {score} d’écart"
+msgid "Total: {score} 🍌 off"
+msgstr "Total : {score} 🍌 d’écart"
 
 #: find_bananas/strings.py:31
 msgid "top {p}%"
@@ -355,43 +355,123 @@ msgid "Can you beat me?"
 msgstr "Tu fais mieux ?"
 
 #: find_bananas/strings.py:33
+msgid "Total"
+msgstr "Total"
+
+#: find_bananas/strings.py:34
 msgid "Score copied. Paste it anywhere to challenge your friends."
 msgstr "Score copié. Colle-le où tu veux pour défier tes amis."
 
-#: find_bananas/strings.py:34
+#: find_bananas/strings.py:35
 msgid "Could not copy automatically. Copy the text below."
 msgstr "La copie automatique n’a pas marché. Copie le texte ci-dessous."
 
-#: find_bananas/strings.py:35
+#: find_bananas/strings.py:36
 msgid "Type a number between 0 and 9999."
 msgstr "Tape un nombre entre 0 et 9999."
 
-#: find_bananas/strings.py:37
+#: find_bananas/strings.py:40
+msgid "Are you a genius?"
+msgstr "T’es un génie ?"
+
+#: find_bananas/strings.py:41
+msgid "That’s impressive!"
+msgstr "Impressionnant !"
+
+#: find_bananas/strings.py:42
+msgid "You nailed it!"
+msgstr "Bien vu !"
+
+#: find_bananas/strings.py:43
+msgid "Are you the god of bananas?"
+msgstr "Serais-tu le dieu des bananes ?"
+
+#: find_bananas/strings.py:46
+msgid "Not so bad!"
+msgstr "Pas mal du tout !"
+
+#: find_bananas/strings.py:47
+msgid "Pretty good!"
+msgstr "Plutôt bien !"
+
+#: find_bananas/strings.py:48
+msgid "Could be worse!"
+msgstr "Ça aurait pu être pire !"
+
+#: find_bananas/strings.py:49
+msgid "I can feel your love for bananas!"
+msgstr "Je sens ton amour pour les bananes !"
+
+#: find_bananas/strings.py:52
+msgid "Hope you’re better at counting money…"
+msgstr "J’espère que tu comptes mieux ton argent…"
+
+#: find_bananas/strings.py:53
+msgid "Forgot your glasses on that one?"
+msgstr "T’as oublié tes lunettes ?"
+
+#: find_bananas/strings.py:54
+msgid "Not so good!"
+msgstr "Pas terrible !"
+
+#: find_bananas/strings.py:55
+msgid "At least there’s room to improve!"
+msgstr "Au moins, tu as de la marge de progression !"
+
+#: find_bananas/strings.py:58
+msgid "That’s impressively bad!"
+msgstr "Impressionnant… de nullité !"
+
+#: find_bananas/strings.py:59
+msgid "Are you drunk?"
+msgstr "T’as bu ?"
+
+#: find_bananas/strings.py:60
+msgid "Try with your eyes open."
+msgstr "Essaie avec les yeux ouverts."
+
+#: find_bananas/strings.py:61
+msgid "You embarrassed me…"
+msgstr "Tu me fais honte…"
+
+#: find_bananas/strings.py:65
+msgid "SPOT ON!"
+msgstr "PILE POIL !"
+
+#: find_bananas/strings.py:65
+msgid "BOOOOOOM!"
+msgstr "BOOOOOOM !"
+
+#: find_bananas/strings.py:65
+msgid "BULLSEYE!"
+msgstr "BINGO !"
+
+#: find_bananas/strings.py:67
 msgid ""
 "No connection. Check your network and try again: your progress is saved."
 msgstr ""
 "Pas de connexion. Vérifie ton réseau et réessaie : ta progression est "
 "enregistrée."
 
-#: find_bananas/strings.py:38
+#: find_bananas/strings.py:68
 msgid "This challenge has ended. Reload to play the new one."
 msgstr "Ce défi est terminé. Recharge la page pour jouer au nouveau."
 
-#: find_bananas/strings.py:39
+#: find_bananas/strings.py:69
 msgid "Too many attempts from your connection. Wait a few minutes and reload."
 msgstr ""
 "Trop de tentatives depuis ta connexion. Attends quelques minutes puis "
 "recharge la page."
 
-#: find_bananas/strings.py:40
+#: find_bananas/strings.py:70
 msgid "The bananas can only be shown once. Type your guess."
 msgstr "Les bananes ne s’affichent qu’une fois. Tape ta réponse."
 
-#: find_bananas/strings.py:41
+#: find_bananas/strings.py:71
 msgid "You already played today’s challenge with another account."
 msgstr "Tu as déjà joué au défi du jour avec un autre compte."
 
-#: find_bananas/strings.py:42
+#: find_bananas/strings.py:72
 msgid "The game could not continue. Reload the page: your progress is saved."
 msgstr ""
 "Le jeu n’a pas pu continuer. Recharge la page : ta progression est "
@@ -481,7 +561,7 @@ msgid "Rounds"
 msgstr "Rounds"
 
 #: find_bananas/templates/find_bananas/home.html:14:1
-#: find_bananas/templates/find_bananas/home.html:54:1
+#: find_bananas/templates/find_bananas/home.html:55:1
 #, python-format
 msgid "Challenge #%(number)s"
 msgstr "Défi n°%(number)s"
@@ -519,36 +599,36 @@ msgstr "Tu as vu combien de bananes ?"
 msgid "Submit guess"
 msgstr "Valider"
 
-#: find_bananas/templates/find_bananas/home.html:47:1
+#: find_bananas/templates/find_bananas/home.html:48:1
 msgid "Your guess"
 msgstr "Ta réponse"
 
-#: find_bananas/templates/find_bananas/home.html:48:1
-#: find_bananas/templates/find_bananas/home.html:61:1
+#: find_bananas/templates/find_bananas/home.html:49:1
+#: find_bananas/templates/find_bananas/home.html:62:1
 msgid "Bananas"
 msgstr "Bananes"
 
-#: find_bananas/templates/find_bananas/home.html:61:1
+#: find_bananas/templates/find_bananas/home.html:62:1
 msgid "Round"
 msgstr "Round"
 
-#: find_bananas/templates/find_bananas/home.html:61:1
+#: find_bananas/templates/find_bananas/home.html:62:1
 msgid "Guess"
 msgstr "Réponse"
 
-#: find_bananas/templates/find_bananas/home.html:61:1
+#: find_bananas/templates/find_bananas/home.html:62:1
 msgid "Off by"
 msgstr "Écart"
 
-#: find_bananas/templates/find_bananas/home.html:64:1
+#: find_bananas/templates/find_bananas/home.html:66:1
 msgid "Share my score"
 msgstr "Partager mon score"
 
-#: find_bananas/templates/find_bananas/home.html:71:1
+#: find_bananas/templates/find_bananas/home.html:73:1
 msgid "Something went wrong"
 msgstr "Un problème est survenu"
 
-#: find_bananas/templates/find_bananas/home.html:73:1
+#: find_bananas/templates/find_bananas/home.html:75:1
 msgid "Reload the game"
 msgstr "Recharger le jeu"
 

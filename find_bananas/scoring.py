@@ -36,6 +36,19 @@ def total_score(rounds: list[dict]) -> int:
     return sum(round_gap(r["guess"], r["count"]) for r in rounds)
 
 
+TIERS = ("green", "yellow", "orange", "red")
+
+
+def tier(gap: int, limits) -> str:
+    """Colour of a gap given the (green, yellow, orange) upper limits.
+    The same rule is applied to the total with the summed limits."""
+    gap = abs(gap)
+    for name, limit in zip(TIERS, limits):
+        if gap <= limit:
+            return name
+    return "red"
+
+
 def average_gap_per_round(all_rounds) -> list[dict]:
     """Average distance to the real count, round by round, over a player's
     completed games. `all_rounds` is an iterable of Play.rounds lists."""

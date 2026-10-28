@@ -12,6 +12,9 @@
   var edition = root.dataset.edition;
   var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
   var DISPLAY_MS = 5000;
+  var TIERS = ["green", "yellow", "orange"];
+  var EMOJI = { green: "🟢", yellow: "🟡", orange: "🟠", red: "🔴", exact: "🎯" };
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var busy = false;
   var countdownTimer = null;
 
@@ -21,6 +24,40 @@
     return template.replace(/\{(\w+)\}/g, function (_, key) {
       return values[key] !== undefined ? values[key] : "";
     });
+  }
+
+  function pick(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  // Colour of a gap: green, yellow, orange (up to the given limits) or red.
+  function tierOf(gap, limits) {
+    gap = Math.abs(gap);
+    for (var i = 0; i < TIERS.length; i++) {
+      if (gap <= limits[i]) return TIERS[i];
+    }
+    return "red";
+  }
+
+  function roundTier(r) {
+    return tierOf(r.gap, state.edition.tiers[r.index - 1]);
+  }
+
+  // The total uses the round limits added together (27 / 40 / 53).
+  function totalTier() {
+    var sums = [0, 0, 0];
+    state.edition.tiers.forEach(function (limits) {
+      limits.forEach(function (value, i) { sums[i] += value; });
+    });
+    return tierOf(state.score, sums);
+  }
+
+  function dot(tier) {
+    var span = document.createElement("span");
+    span.className = "dot";
+    span.dataset.tier = tier;
+    span.setAttribute("aria-hidden", "true");
+    return span;
   }
 
   function field(name) {
@@ -43,8 +80,11 @@
     for (var i = 1; i <= total; i++) {
       var li = document.createElement("li");
       li.textContent = i;
-      var answered = state.rounds[i - 1] && state.rounds[i - 1].answered;
-      if (answered) li.className = "done";
+      var played = state.rounds[i - 1];
+      if (played && played.answered) {
+        li.className = "done";
+        li.dataset.tier = roundTier(played);
+      }
       else if (i === current) li.className = "current";
       list.appendChild(li);
     }
@@ -238,14 +278,124 @@
   }
 
   function goReveal(round) {
+    var exact = round.gap === 0;
+    var tier = exact ? "green" : roundTier(round);
+    var shout = exact ? pick(T.exactShouts) : null;
+    var comment = field("reveal-comment");
+    comment.textContent = exact ? shout : pick(T.comments[tier]);
+    comment.dataset.tier = tier;
     field("reveal-gap").textContent = gapText(round.gap);
-    field("reveal-gap").classList.toggle("is-exact", round.gap === 0);
     field("reveal-guess").textContent = round.guess;
     field("reveal-count").textContent = round.count;
     root.querySelector('[data-action="next"]').textContent =
       state.status === "completed" ? T.seeResult : T.nextRound;
     renderProgress(round.index);
     show("reveal");
+    cardEffect(tier);
+    if (exact) {
+      confetti();
+      shoutAcross(shout);
+    }
+  }
+
+  // --- reveal effects --------------------------------------------------------
+
+  // The card flashes in the round's colour for a second while it moves: a
+  // happy bounce for green and yellow, a shake for orange and red.
+  function cardEffect(tier) {
+    root.dataset.tier = tier;
+    root.classList.remove("fx-bounce", "fx-shake");
+    void root.offsetWidth; // restart the animation
+    root.classList.add(tier === "green" || tier === "yellow" ? "fx-bounce" : "fx-shake");
+  }
+
+  root.addEventListener("animationend", function (event) {
+    if (event.target === root && event.animationName === "card-flash") {
+      root.classList.remove("fx-bounce", "fx-shake");
+    }
+  });
+
+  // Big word crossing the screen on an exact count.
+  function shoutAcross(text) {
+    var layer = document.createElement("div");
+    layer.className = "shout-layer";
+    layer.setAttribute("aria-hidden", "true");
+    var word = document.createElement("div");
+    word.className = "shout";
+    word.textContent = text;
+    layer.appendChild(word);
+    document.body.appendChild(layer);
+    word.addEventListener("animationend", function () { layer.remove(); });
+  }
+
+  // Lightweight confetti (a few bananas among them), drawn on a canvas that
+  // removes itself after about 3 seconds.
+  function confetti() {
+    if (reduceMotion) return;
+    var canvas = document.createElement("canvas");
+    canvas.className = "confetti";
+    canvas.setAttribute("aria-hidden", "true");
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext("2d");
+    var ratio = Math.min(window.devicePixelRatio || 1, 2);
+    var W = window.innerWidth;
+    var H = window.innerHeight;
+    canvas.width = W * ratio;
+    canvas.height = H * ratio;
+    ctx.scale(ratio, ratio);
+
+    var colors = ["#ffd23f", "#f2b705", "#3380ff", "#2fb463", "#ff9a3c", "#f2545b", "#ffffff"];
+    var box = root.getBoundingClientRect();
+    var originX = box.left + box.width / 2;
+    var originY = box.top + Math.min(box.height * 0.3, 200);
+    var pieces = [];
+    for (var i = 0; i < 160; i++) {
+      var angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.1;
+      var speed = 7 + Math.random() * 10;
+      pieces.push({
+        x: originX, y: originY,
+        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        size: 7 + Math.random() * 7,
+        color: colors[i % colors.length],
+        rot: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.35,
+        banana: i % 10 === 0,
+      });
+    }
+    var start = null;
+    var last = null;
+    var DURATION = 3000;
+    function frame(now) {
+      if (start === null) { start = now; last = now; }
+      var t = now - start;
+      var k = Math.min((now - last) / 16.67, 3); // same speed at 60 or 120 Hz
+      last = now;
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalAlpha = t > DURATION - 700 ? Math.max(0, (DURATION - t) / 700) : 1;
+      pieces.forEach(function (p) {
+        p.vy += 0.32 * k;
+        p.vx *= Math.pow(0.985, k);
+        p.vy *= Math.pow(0.985, k);
+        p.x += p.vx * k;
+        p.y += p.vy * k;
+        p.rot += p.spin * k;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        if (p.banana) {
+          ctx.font = Math.round(p.size * 2.4) + "px serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("🍌", 0, 0);
+        } else {
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+        }
+        ctx.restore();
+      });
+      if (t < DURATION) requestAnimationFrame(frame);
+      else canvas.remove();
+    }
+    requestAnimationFrame(frame);
   }
 
   function goResult() {
@@ -259,13 +409,30 @@
     rows.innerHTML = "";
     state.rounds.forEach(function (r) {
       var tr = document.createElement("tr");
-      [r.index, r.guess, r.count, Math.abs(r.gap)].forEach(function (value) {
+      [r.index, r.guess, r.count].forEach(function (value) {
         var td = document.createElement("td");
         td.textContent = value;
         tr.appendChild(td);
       });
+      var gapCell = document.createElement("td");
+      gapCell.appendChild(dot(roundTier(r)));
+      gapCell.appendChild(document.createTextNode(Math.abs(r.gap)));
+      tr.appendChild(gapCell);
       rows.appendChild(tr);
     });
+    var foot = field("rounds-total");
+    foot.innerHTML = "";
+    var totalRow = document.createElement("tr");
+    var label = document.createElement("th");
+    label.scope = "row";
+    label.colSpan = 3;
+    label.textContent = T.totalLabel;
+    var totalCell = document.createElement("td");
+    totalCell.appendChild(dot(totalTier()));
+    totalCell.appendChild(document.createTextNode(score));
+    totalRow.appendChild(label);
+    totalRow.appendChild(totalCell);
+    foot.appendChild(totalRow);
 
     var ranking = state.ranking || {};
     var rankingText = "";
@@ -316,13 +483,14 @@
   function shareText() {
     var lines = [fmt(T.shareTitle, { number: state.edition.number }) + " 🍌"];
     state.rounds.forEach(function (r) {
-      lines.push(fmt(T.shareRound, { n: r.index, gap: Math.abs(r.gap) }) + (r.gap === 0 ? " 🎯" : ""));
+      var mark = r.gap === 0 ? EMOJI.exact : EMOJI[roundTier(r)];
+      lines.push(fmt(T.shareRound, { n: r.index, gap: Math.abs(r.gap) }) + " " + mark);
     });
     var total = fmt(T.shareTotal, { score: state.score });
     if (state.ranking && state.ranking.top_percent !== null && state.ranking.top_percent !== undefined) {
       total += " · " + fmt(T.shareTop, { p: state.ranking.top_percent });
     }
-    lines.push(total);
+    lines.push(total + " " + EMOJI[totalTier()]);
     lines.push(T.shareChallenge + " " + window.SITE_URL + "/");
     return lines.join("\n");
   }

@@ -162,6 +162,7 @@ def play_state(play: Play | None, edition: Edition) -> dict:
             "date": edition.date.isoformat(),
             "rounds": total,
             "ranges": [[spec.min_count, spec.max_count] for spec in ROUND_SPECS[:total]],
+            "tiers": [list(spec.tiers) for spec in ROUND_SPECS[:total]],
             "ends_at": edition.ends_at.isoformat(),
         },
         "status": "not_started",

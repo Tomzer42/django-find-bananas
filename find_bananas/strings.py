@@ -26,13 +26,43 @@ def game_strings() -> dict:
         "signupLink": _("create a free account"),
         "historyLink": _("See all my results"),
         "shareTitle": _("Find Bananas #{number}"),
-        "shareRound": _("Round {n}: {gap} off"),
-        "shareTotal": _("Total: {score} off"),
+        "shareRound": _("R{n}: {gap}"),
+        "shareTotal": _("Total: {score} 🍌 off"),
         "shareTop": _("top {p}%"),
         "shareChallenge": _("Can you beat me?"),
+        "totalLabel": _("Total"),
         "copied": _("Score copied. Paste it anywhere to challenge your friends."),
         "copyFailed": _("Could not copy automatically. Copy the text below."),
         "guessRequired": _("Type a number between 0 and 9999."),
+        # Comment shown above the gap, picked at random in the round's colour.
+        "comments": {
+            "green": [
+                _("Are you a genius?"),
+                _("That’s impressive!"),
+                _("You nailed it!"),
+                _("Are you the god of bananas?"),
+            ],
+            "yellow": [
+                _("Not so bad!"),
+                _("Pretty good!"),
+                _("Could be worse!"),
+                _("I can feel your love for bananas!"),
+            ],
+            "orange": [
+                _("Hope you’re better at counting money…"),
+                _("Forgot your glasses on that one?"),
+                _("Not so good!"),
+                _("At least there’s room to improve!"),
+            ],
+            "red": [
+                _("That’s impressively bad!"),
+                _("Are you drunk?"),
+                _("Try with your eyes open."),
+                _("You embarrassed me…"),
+            ],
+        },
+        # Scrolls across the screen with the confetti on an exact count.
+        "exactShouts": [_("SPOT ON!"), _("BOOOOOOM!"), _("BULLSEYE!")],
         "errors": {
             "network": _("No connection. Check your network and try again: your progress is saved."),
             "edition_over": _("This challenge has ended. Reload to play the new one."),

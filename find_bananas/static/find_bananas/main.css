@@ -34,6 +34,16 @@
   --muted: #4b5f8a;
   --danger: #b42318;
 
+  /* Result colours: strong for dots and pills, soft for the 1 s card flash. */
+  --tier-green: #2fb463;
+  --tier-green-soft: #b9f0cb;
+  --tier-yellow: #ffd23f;
+  --tier-yellow-soft: #fff0b0;
+  --tier-orange: #ff9a3c;
+  --tier-orange-soft: #ffd7b0;
+  --tier-red: #f2545b;
+  --tier-red-soft: #ffc4c6;
+
   --font-display: "Cherry Bomb One", ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
   --font-body: "Nunito", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -485,12 +495,118 @@ h2 {
   font: 400 2.25rem/1.1 var(--font-display);
 }
 
-.reveal-gap.is-exact {
-  color: var(--peel);
-  background: var(--banana);
-  border-radius: var(--radius-control);
-  padding: 12px;
+/* Comment above the gap, in the round's colour. */
+.reveal-comment {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 12px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font: 800 1.0625rem/1.25 var(--font-body);
+  color: var(--night);
+  background: var(--mist);
+  text-wrap: balance;
 }
+
+.reveal-comment[data-tier="green"] { background: var(--tier-green); color: #fff; }
+.reveal-comment[data-tier="yellow"] { background: var(--tier-yellow); color: var(--peel); }
+.reveal-comment[data-tier="orange"] { background: var(--tier-orange); color: #4a2400; }
+.reveal-comment[data-tier="red"] { background: var(--tier-red); color: #fff; }
+
+/* The game card flashes in the round's colour for 1 s while it moves. */
+.game[data-tier="green"] { --flash: var(--tier-green-soft); }
+.game[data-tier="yellow"] { --flash: var(--tier-yellow-soft); }
+.game[data-tier="orange"] { --flash: var(--tier-orange-soft); }
+.game[data-tier="red"] { --flash: var(--tier-red-soft); }
+
+.game.fx-bounce {
+  animation: card-flash 1000ms ease-out, card-bounce 650ms cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.game.fx-shake {
+  animation: card-flash 1000ms ease-out, card-shake 500ms ease-in-out;
+}
+
+@keyframes card-flash {
+  0% { background-color: var(--paper); }
+  12% { background-color: var(--flash); }
+  65% { background-color: var(--flash); }
+  100% { background-color: var(--paper); }
+}
+
+@keyframes card-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.035) translateY(-6px); }
+  70% { transform: scale(0.99); }
+  100% { transform: none; }
+}
+
+@keyframes card-shake {
+  0%, 100% { transform: none; }
+  15% { transform: translateX(-10px) rotate(-1deg); }
+  30% { transform: translateX(9px) rotate(1deg); }
+  45% { transform: translateX(-7px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* Exact count: confetti and a big word crossing the screen. */
+.confetti,
+.shout-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.confetti {
+  width: 100%;
+  height: 100%;
+}
+
+.shout-layer {
+  overflow: hidden;
+}
+
+.shout {
+  position: absolute;
+  top: 26%;
+  left: 0;
+  white-space: nowrap;
+  font: 400 clamp(3.5rem, 15vw, 9rem)/1 var(--font-display);
+  color: var(--banana);
+  -webkit-text-stroke: 3px var(--peel);
+  paint-order: stroke fill;
+  text-shadow: 0 6px 0 var(--peel);
+  transform: translateX(100vw);
+  animation: shout-across 2600ms linear forwards;
+}
+
+@keyframes shout-across {
+  from { transform: translateX(100vw) rotate(-4deg); }
+  to { transform: translateX(-100%) rotate(-4deg); }
+}
+
+/* Small coloured dot before a gap in the result table. */
+.dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  vertical-align: 0.02em;
+  background: var(--mist);
+}
+
+.progress li[data-tier="green"] { background: var(--tier-green); color: #fff; }
+.progress li[data-tier="yellow"] { background: var(--tier-yellow); color: var(--peel); }
+.progress li[data-tier="orange"] { background: var(--tier-orange); color: #4a2400; }
+.progress li[data-tier="red"] { background: var(--tier-red); color: #fff; }
+
+.dot[data-tier="green"] { background: var(--tier-green); }
+.dot[data-tier="yellow"] { background: var(--tier-yellow); }
+.dot[data-tier="orange"] { background: var(--tier-orange); }
+.dot[data-tier="red"] { background: var(--tier-red); }
 
 .reveal-facts {
   display: grid;
@@ -587,6 +703,19 @@ h2 {
 
 .rounds td:last-child {
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.rounds tfoot th,
+.rounds tfoot td {
+  padding: 10px 4px 0;
+  border-top: 2px solid var(--mist);
+  font-weight: 800;
+}
+
+.rounds tfoot th {
+  text-align: right;
+  color: var(--muted);
 }
 
 .toast {
@@ -804,6 +933,23 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .stamp {
     animation: none;
+  }
+
+  /* Keep the colour, drop the movement. */
+  .game.fx-bounce,
+  .game.fx-shake {
+    animation: card-flash 1000ms ease-out;
+  }
+
+  .shout {
+    left: 50%;
+    animation: shout-fade 2000ms ease-out forwards;
+  }
+
+  @keyframes shout-fade {
+    0% { opacity: 0; transform: translateX(-50%); }
+    15%, 70% { opacity: 1; transform: translateX(-50%); }
+    100% { opacity: 0; transform: translateX(-50%); }
   }
 
   .btn-primary:active {

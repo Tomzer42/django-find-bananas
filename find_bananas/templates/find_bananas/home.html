@@ -42,6 +42,7 @@
   </section>
 
   <section class="screen" data-screen="reveal" hidden>
+    <p class="reveal-comment" data-field="reveal-comment" role="status"></p>
     <p class="reveal-gap" data-field="reveal-gap"></p>
     <dl class="reveal-facts">
       <div><dt>{% translate 'Your guess' %}</dt><dd data-field="reveal-guess"></dd></div>
@@ -60,6 +61,7 @@
     <table class="rounds">
       <thead><tr><th scope="col">{% translate 'Round' %}</th><th scope="col">{% translate 'Guess' %}</th><th scope="col">{% translate 'Bananas' %}</th><th scope="col">{% translate 'Off by' %}</th></tr></thead>
       <tbody data-field="rounds"></tbody>
+      <tfoot data-field="rounds-total"></tfoot>
     </table>
     <button type="button" class="btn btn-primary btn-big" data-action="share">{% translate 'Share my score' %}</button>
     <p class="toast" id="toast" role="status" hidden></p>

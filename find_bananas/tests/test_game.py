@@ -188,3 +188,24 @@ class RankingTests(GameClientMixin, TestCase):
         Play.objects.filter(score=1).update(ranked=False)
         ranking = self.play_full_game(self.edition, [30, 75, 150])["state"]["ranking"]
         self.assertEqual(ranking["players"], 5)
+
+
+class TierTests(GameClientMixin, TestCase):
+    def test_tier_limits(self):
+        from find_bananas.editions import ROUND_SPECS
+        from find_bananas.scoring import tier
+
+        r1, r2, r3 = (spec.tiers for spec in ROUND_SPECS)
+        self.assertEqual([tier(g, r1) for g in (0, 4, 5, 6, 7, 8, 9)],
+                         ["green", "green", "yellow", "yellow", "orange", "orange", "red"])
+        self.assertEqual([tier(g, r2) for g in (-8, 9, 11, 12, 15, 16)],
+                         ["green", "yellow", "yellow", "orange", "orange", "red"])
+        self.assertEqual([tier(g, r3) for g in (15, 16, 23, 24, 30, 31)],
+                         ["green", "yellow", "yellow", "orange", "orange", "red"])
+        total = [sum(x) for x in zip(r1, r2, r3)]
+        self.assertEqual(total, [27, 40, 53])
+
+    def test_state_sends_tiers(self):
+        edition = make_edition()
+        state = self.api(edition, "/state").json()
+        self.assertEqual(state["edition"]["tiers"], [[4, 6, 8], [8, 11, 15], [15, 23, 30]])
