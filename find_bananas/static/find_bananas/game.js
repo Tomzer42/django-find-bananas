@@ -514,6 +514,19 @@
     field("ranking").textContent = rankingText;
     field("ranking").classList.toggle("is-pending", !hasPercent);
 
+    // Daily streak (shown from 2 days in a row, or when there is a record).
+    var streak = state.streak || { current: 0, best: 0 };
+    var streakEl = field("streak");
+    var streakText = "";
+    if (streak.current >= 2) {
+      streakText = fmt(T.streakCurrent, { n: streak.current });
+      if (streak.best > streak.current) streakText += " · " + fmt(T.streakRecord, { best: streak.best });
+    } else if (streak.best >= 2) {
+      streakText = fmt(T.streakBestOnly, { best: streak.best });
+    }
+    streakEl.textContent = streakText;
+    streakEl.hidden = !streakText;
+
     var cta = field("account-cta");
     cta.innerHTML = "";
     var link = document.createElement("a");
@@ -522,10 +535,14 @@
       link.textContent = T.historyLink;
       cta.appendChild(link);
     } else {
+      // A streak is the best reason to create an account: without one it
+      // only lives in this browser.
+      var invite = streak.current >= 2 ? fmt(T.signupStreakCta, { n: streak.current }) : T.signupCta;
       link.href = root.dataset.signupUrl;
       link.textContent = T.signupLink;
-      cta.appendChild(document.createTextNode(T.signupCta + " "));
+      cta.appendChild(document.createTextNode(invite + " "));
       cta.appendChild(link);
+      cta.classList.toggle("is-streak", streak.current >= 2);
     }
 
     updateCountdown();
@@ -551,7 +568,9 @@
   // --- sharing -------------------------------------------------------------
 
   function shareText() {
-    var lines = [fmt(T.shareTitle, { number: state.edition.number }) + " 🍌"];
+    var title = fmt(T.shareTitle, { number: state.edition.number }) + " 🍌";
+    if (state.streak && state.streak.current >= 2) title += " · 🔥 " + state.streak.current;
+    var lines = [title];
     state.rounds.forEach(function (r) {
       var mark = r.gap === 0 ? EMOJI.exact : EMOJI[roundTier(r)];
       lines.push(fmt(T.shareRound, { n: r.index, gap: Math.abs(r.gap) }) + " " + mark);

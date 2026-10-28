@@ -104,6 +104,17 @@ Choix notables :
   du pseudo, sans interrompre une partie en cours.
 - Suppression de compte en libre-service ; elle efface aussi ses parties.
 
+**Série de jours** (`streaks.py`) : nombre de défis consécutifs terminés, pour
+un compte ou, sans compte, pour l'identifiant invité du navigateur. La série
+en cours reste valable jusqu'à la fin du défi suivant (avoir joué hier suffit
+tant qu'on n'a pas encore joué aujourd'hui). Les parties invitées étant
+rattachées au compte à l'inscription, la série survit à la création du
+compte. Affichée sur l'écran de résultat (dès 2 jours), dans le profil (en
+cours et record) et dans le partage (« 🔥 5 »). Pour un invité avec une série,
+l'invitation à créer un compte devient « Ne perds pas ta série de 5 jours ».
+Calculée à la demande à partir des parties enregistrées (aucune colonne
+dédiée) : à mettre en cache ou à stocker si les historiques deviennent longs.
+
 ## 5. Score et comparaison
 
 **Score** : règle d'origine conservée, somme des écarts absolus des trois

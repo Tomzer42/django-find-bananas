@@ -10,7 +10,11 @@
       <div><dt>{% translate 'Best score' %}</dt><dd>{{ summary.best }}</dd></div>
       <div><dt>{% translate 'Average score' %}</dt><dd>{{ summary.average }}</dd></div>
     </dl>
-    <p class="form-help">{% translate 'Score = total number of bananas you were off by. Lower is better.' %}</p>
+    <dl class="stats stats-2">
+      <div><dt>{% translate '🔥 Current streak' %}</dt><dd>{{ summary.streak.current }}</dd></div>
+      <div><dt>{% translate 'Best streak' %}</dt><dd>{{ summary.streak.best }}</dd></div>
+    </dl>
+    <p class="form-help">{% translate 'Score = total number of bananas you were off by. Lower is better.' %} {% translate 'A streak counts the daily challenges played in a row.' %}</p>
     {% if summary.rounds %}
       <h2 class="stats-title">{% translate 'Average gap per round' %}</h2>
       <dl class="stats">

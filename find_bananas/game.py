@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 
-from . import scoring
+from . import scoring, streaks
 from .editions import ROUND_SPECS
 from .models import Edition, EditionRound, Play
 from .players import find_play, get_guest_key, ip_hash
@@ -170,12 +170,19 @@ def play_state(play: Play | None, edition: Edition) -> dict:
         "next_round": 1,
         "score": None,
         "ranking": None,
+        "streak": None,
     }
     if play is None:
         return state
     state["rounds"] = [public_round(i, r) for i, r in enumerate(play.rounds, start=1)]
     if play.is_completed:
-        state.update(status="completed", next_round=None, score=play.score, ranking=scoring.ranking_for(play))
+        state.update(
+            status="completed",
+            next_round=None,
+            score=play.score,
+            ranking=scoring.ranking_for(play),
+            streak=streaks.for_play(play),
+        )
         return state
     state["status"] = "in_progress"
     answered = sum(1 for r in state["rounds"] if r["answered"])

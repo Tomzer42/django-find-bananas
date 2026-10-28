@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET, require_POST
 
-from . import game, scoring
+from . import game, scoring, streaks
 from .editions import get_live_edition
 from .models import Edition, Play
 from .players import find_play
@@ -52,6 +52,7 @@ def profile(request):
         "best": totals["best"],
         "average": round(totals["average"], 1) if totals["average"] is not None else None,
         "rounds": scoring.average_gap_per_round(plays.values_list("rounds", flat=True)),
+        "streak": streaks.for_user(request.user),
     }
     return render(request, "find_bananas/profile.html", {"page": page, "rows": rows, "summary": summary})
 

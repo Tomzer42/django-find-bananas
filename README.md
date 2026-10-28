@@ -46,9 +46,9 @@ To replay locally, open a private window (a new guest) or delete your plays in
 DJANGO_DEBUG=1 python manage.py test
 ```
 
-55 tests cover the daily schedule (including daylight-saving changes), image
+63 tests cover the daily schedule (including daylight-saving changes), image
 generation, the server-side game rules, anti-cheat limits, ranking, accounts,
-privacy of the history, rate limits and language detection.
+privacy of the history, rate limits, language detection and daily streaks.
 
 ## Translations
 
