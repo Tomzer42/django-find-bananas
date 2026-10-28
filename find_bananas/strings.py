@@ -25,8 +25,6 @@ def game_strings() -> dict:
         "signupCta": _("Keep your results and track your progress:"),
         "signupStreakCta": _("Don’t lose your {n}-day streak:"),
         "streakCurrent": _("🔥 {n} days in a row!"),
-        "streakRecord": _("Record: {best}"),
-        "streakBestOnly": _("🔥 Your best streak: {best} days"),
         "signupLink": _("create a free account"),
         "historyLink": _("See all my results"),
         "shareTitle": _("Find Bananas #{number}"),

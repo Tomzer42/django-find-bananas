@@ -49,6 +49,25 @@ def tier(gap: int, limits) -> str:
     return "red"
 
 
+def bananas_seen(plays) -> int:
+    """Total number of bananas shown to a player: every round image served,
+    finished or not, over all their plays."""
+    from .models import EditionRound
+
+    shown = {}
+    for edition_id, rounds in plays.values_list("edition_id", "rounds"):
+        shown[edition_id] = max(shown.get(edition_id, 0), len(rounds))
+    if not shown:
+        return 0
+    total = 0
+    for edition_id, index, count in EditionRound.objects.filter(edition_id__in=shown).values_list(
+        "edition_id", "index", "count"
+    ):
+        if index <= shown[edition_id]:
+            total += count
+    return total
+
+
 def average_gap_per_round(all_rounds) -> list[dict]:
     """Average distance to the real count, round by round, over a player's
     completed games. `all_rounds` is an iterable of Play.rounds lists."""

@@ -53,6 +53,7 @@ def profile(request):
         "average": round(totals["average"], 1) if totals["average"] is not None else None,
         "rounds": scoring.average_gap_per_round(plays.values_list("rounds", flat=True)),
         "streak": streaks.for_user(request.user),
+        "bananas_seen": scoring.bananas_seen(Play.objects.filter(user=request.user)),
     }
     return render(request, "find_bananas/profile.html", {"page": page, "rows": rows, "summary": summary})
 

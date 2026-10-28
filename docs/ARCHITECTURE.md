@@ -109,11 +109,16 @@ un compte ou, sans compte, pour l'identifiant invité du navigateur. La série
 en cours reste valable jusqu'à la fin du défi suivant (avoir joué hier suffit
 tant qu'on n'a pas encore joué aujourd'hui). Les parties invitées étant
 rattachées au compte à l'inscription, la série survit à la création du
-compte. Affichée sur l'écran de résultat (dès 2 jours), dans le profil (en
-cours et record) et dans le partage (« 🔥 5 »). Pour un invité avec une série,
+compte. Seule la série en cours compte : une fois cassée, elle repart de
+zéro, aucun record n'est conservé. Affichée sur l'écran de résultat (dès
+2 jours), dans le profil et dans le partage (« 🔥 5 »). Pour un invité avec une série,
 l'invitation à créer un compte devient « Ne perds pas ta série de 5 jours ».
 Calculée à la demande à partir des parties enregistrées (aucune colonne
 dédiée) : à mettre en cache ou à stocker si les historiques deviennent longs.
+
+**Bananes côtoyées** (profil) : total des bananes apparues à l'écran du
+joueur, c'est-à-dire la somme des nombres de bananes de chaque image servie,
+partie terminée ou non. Un compteur qui ne fait que grandir.
 
 ## 5. Score et comparaison
 

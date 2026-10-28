@@ -514,16 +514,10 @@
     field("ranking").textContent = rankingText;
     field("ranking").classList.toggle("is-pending", !hasPercent);
 
-    // Daily streak (shown from 2 days in a row, or when there is a record).
-    var streak = state.streak || { current: 0, best: 0 };
+    // Daily streak, shown from 2 days in a row.
+    var streak = state.streak || { current: 0 };
     var streakEl = field("streak");
-    var streakText = "";
-    if (streak.current >= 2) {
-      streakText = fmt(T.streakCurrent, { n: streak.current });
-      if (streak.best > streak.current) streakText += " · " + fmt(T.streakRecord, { best: streak.best });
-    } else if (streak.best >= 2) {
-      streakText = fmt(T.streakBestOnly, { best: streak.best });
-    }
+    var streakText = streak.current >= 2 ? fmt(T.streakCurrent, { n: streak.current }) : "";
     streakEl.textContent = streakText;
     streakEl.hidden = !streakText;
 

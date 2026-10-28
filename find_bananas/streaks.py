@@ -1,4 +1,4 @@
-"""Daily streaks: how many challenges in a row a player has finished.
+"""Daily streak: how many challenges in a row a player has finished.
 
 A streak is counted in editions (one per day), for an account or, without an
 account, for the guest identifier kept in the browser. Guest plays are
@@ -28,18 +28,13 @@ def plays_of(play: Play):
 
 
 def compute(dates: set[date], today: date) -> dict:
-    """Current and best streak from the set of edition dates played."""
+    """Current streak from the set of edition dates played. Only the current
+    run matters: once broken, it starts again from zero (no record kept)."""
     anchor = today if today in dates else today - timedelta(days=1)
     current = 0
     while anchor - timedelta(days=current) in dates:
         current += 1
-    best = run = 0
-    previous = None
-    for day in sorted(dates):
-        run = run + 1 if previous is not None and day - previous == timedelta(days=1) else 1
-        best = max(best, run)
-        previous = day
-    return {"current": current, "best": best, "played_today": today in dates}
+    return {"current": current, "played_today": today in dates}
 
 
 def for_play(play: Play) -> dict:

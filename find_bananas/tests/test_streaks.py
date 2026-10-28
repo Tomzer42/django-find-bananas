@@ -16,25 +16,19 @@ D = date(2026, 11, 10)
 
 class ComputeTests(TestCase):
     def test_empty(self):
-        self.assertEqual(streaks.compute(set(), D), {"current": 0, "best": 0, "played_today": False})
+        self.assertEqual(streaks.compute(set(), D), {"current": 0, "played_today": False})
 
     def test_played_today_and_before(self):
         dates = {D, D - timedelta(1), D - timedelta(2), D - timedelta(5)}
-        self.assertEqual(streaks.compute(dates, D), {"current": 3, "best": 3, "played_today": True})
+        self.assertEqual(streaks.compute(dates, D), {"current": 3, "played_today": True})
 
     def test_still_alive_when_today_not_played_yet(self):
         dates = {D - timedelta(1), D - timedelta(2)}
         self.assertEqual(streaks.compute(dates, D)["current"], 2)
 
-    def test_broken_after_a_missed_day(self):
+    def test_back_to_zero_after_a_missed_day(self):
         dates = {D - timedelta(2), D - timedelta(3)}
-        result = streaks.compute(dates, D)
-        self.assertEqual(result["current"], 0)
-        self.assertEqual(result["best"], 2)
-
-    def test_best_is_the_longest_run(self):
-        dates = {D - timedelta(d) for d in (0, 1, 4, 5, 6, 7, 10)}
-        self.assertEqual(streaks.compute(dates, D), {"current": 2, "best": 4, "played_today": True})
+        self.assertEqual(streaks.compute(dates, D)["current"], 0)
 
 
 class StreakInGameTests(GameClientMixin, TestCase):
@@ -57,7 +51,7 @@ class StreakInGameTests(GameClientMixin, TestCase):
         self._past_play(2, guest_key=guest_key)
         self._past_play(4, guest_key=guest_key)
         state = self.play_full_game(self.today, [30, 75, 150])["state"]
-        self.assertEqual(state["streak"], {"current": 3, "best": 3, "played_today": True})
+        self.assertEqual(state["streak"], {"current": 3, "played_today": True})
 
     def test_other_players_do_not_count(self):
         self._past_play(1, guest_key=uuid.uuid4())
@@ -77,3 +71,19 @@ class StreakInGameTests(GameClientMixin, TestCase):
         self.assertEqual(summary["streak"]["current"], 2)
         state = self.api(self.today, "/state").json()
         self.assertEqual(state["streak"]["current"], 2)
+
+    def test_bananas_spotted_in_profile(self):
+        self.client.post("/account/signup/", {
+            "email": "b@example.com", "username": "Spotter", "password1": "banana-split-42",
+            "password2": "banana-split-42",
+        })
+        self.play_full_game(self.today, [30, 75, 150])  # 30 + 75 + 150 shown
+        older = make_edition(counts=(20, 60, 110), number=2, live=False)
+        # A game left after round 2: only the two images shown count.
+        Play.objects.create(
+            edition=older, user=Play.objects.get().user, guest_key=uuid.uuid4(),
+            rounds=[{"guess": 20, "count": 20}, {"guess": None, "count": None}],
+        )
+        summary = self.client.get("/profile/").context["summary"]
+        self.assertEqual(summary["bananas_seen"], 30 + 75 + 150 + 20 + 60)
+
