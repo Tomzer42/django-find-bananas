@@ -372,7 +372,7 @@ msgstr "Tape un nombre entre 0 et 9999."
 
 #: find_bananas/strings.py:40
 msgid "Are you a genius?"
-msgstr "T’es un génie ?"
+msgstr "Wow, t’as triché ?"
 
 #: find_bananas/strings.py:41
 msgid "That’s impressive!"
@@ -380,98 +380,130 @@ msgstr "Impressionnant !"
 
 #: find_bananas/strings.py:42
 msgid "You nailed it!"
-msgstr "Bien vu !"
+msgstr "T’as dead ça chacal !"
 
 #: find_bananas/strings.py:43
-msgid "Are you the god of bananas?"
-msgstr "Serais-tu le dieu des bananes ?"
+msgid "That’s a banana split!"
+msgstr "Le dieu des bananes !"
 
-#: find_bananas/strings.py:46
-msgid "Not so bad!"
-msgstr "Pas mal du tout !"
+#: find_bananas/strings.py:44
+msgid "Oh my god of bananas!"
+msgstr "What a crackito !"
 
-#: find_bananas/strings.py:47
-msgid "Pretty good!"
-msgstr "Plutôt bien !"
+#: find_bananas/strings.py:45
+msgid "Bananas banger!"
+msgstr "Bananas banger !"
 
 #: find_bananas/strings.py:48
+msgid "Not so bad!"
+msgstr "Pas mal chacal !"
+
+#: find_bananas/strings.py:49
+msgid "Pretty good!"
+msgstr "Mention bien."
+
+#: find_bananas/strings.py:50
 msgid "Could be worse!"
 msgstr "Ça aurait pu être pire !"
 
-#: find_bananas/strings.py:49
-msgid "I can feel your love for bananas!"
-msgstr "Je sens ton amour pour les bananes !"
+#: find_bananas/strings.py:51
+msgid "I feel your love of bananas!"
+msgstr "Pas de quoi peler un kiwi !"
 
 #: find_bananas/strings.py:52
-msgid "Hope you’re better at counting money…"
-msgstr "J’espère que tu comptes mieux ton argent…"
-
-#: find_bananas/strings.py:53
-msgid "Forgot your glasses on that one?"
-msgstr "T’as oublié tes lunettes ?"
-
-#: find_bananas/strings.py:54
-msgid "Not so good!"
-msgstr "Pas terrible !"
+msgid "Yellow like a banana."
+msgstr "Jaune comme une banane."
 
 #: find_bananas/strings.py:55
-msgid "At least there’s room to improve!"
-msgstr "Au moins, tu as de la marge de progression !"
+msgid "Better at counting bills?"
+msgstr "Tu comptes mieux les billets ?"
+
+#: find_bananas/strings.py:56
+msgid "Forgot your glasses on that one?"
+msgstr "L’ophtalmo est une solution."
+
+#: find_bananas/strings.py:57
+msgid "Not so good…"
+msgstr "Pas terrible…"
 
 #: find_bananas/strings.py:58
+msgid "At least you can get better!"
+msgstr "Belle marge de progression…"
+
+#: find_bananas/strings.py:59
+msgid "Not a big fan of bananas?"
+msgstr "Pas fan des bananes ?"
+
+#: find_bananas/strings.py:60
+msgid "Orange is not banana…"
+msgstr "Orange n’est pas banane…"
+
+#: find_bananas/strings.py:63
 msgid "That’s impressively bad!"
 msgstr "Impressionnant… de nullité !"
 
-#: find_bananas/strings.py:59
+#: find_bananas/strings.py:64
 msgid "Are you drunk?"
-msgstr "T’as bu ?"
-
-#: find_bananas/strings.py:60
-msgid "Try with your eyes open."
-msgstr "Essaie avec les yeux ouverts."
-
-#: find_bananas/strings.py:61
-msgid "You embarrassed me…"
-msgstr "Tu me fais honte…"
+msgstr "T’es bourré(e) ?"
 
 #: find_bananas/strings.py:65
+msgid "Try with your eyes open."
+msgstr "Et avec les yeux ouverts ?"
+
+#: find_bananas/strings.py:66
+msgid "You embarrassed me…"
+msgstr "J’ai honte pour toi…"
+
+#: find_bananas/strings.py:67
+msgid "Maybe start cheating…"
+msgstr "Tu as pensé à tricher ?"
+
+#: find_bananas/strings.py:71
 msgid "SPOT ON!"
 msgstr "PILE POIL !"
 
-#: find_bananas/strings.py:65
+#: find_bananas/strings.py:71
 msgid "BOOOOOOM!"
 msgstr "BOOOOOOM !"
 
-#: find_bananas/strings.py:65
+#: find_bananas/strings.py:71
 msgid "BULLSEYE!"
 msgstr "BINGO !"
 
-#: find_bananas/strings.py:67
+#: find_bananas/strings.py:71
+msgid "LET’S GOOO!"
+msgstr "DANS LE MILLE !"
+
+#: find_bananas/strings.py:71
+msgid "SHEEEESH!"
+msgstr "SBRAAAAH !"
+
+#: find_bananas/strings.py:73
 msgid ""
 "No connection. Check your network and try again: your progress is saved."
 msgstr ""
 "Pas de connexion. Vérifie ton réseau et réessaie : ta progression est "
 "enregistrée."
 
-#: find_bananas/strings.py:68
+#: find_bananas/strings.py:74
 msgid "This challenge has ended. Reload to play the new one."
 msgstr "Ce défi est terminé. Recharge la page pour jouer au nouveau."
 
-#: find_bananas/strings.py:69
+#: find_bananas/strings.py:75
 msgid "Too many attempts from your connection. Wait a few minutes and reload."
 msgstr ""
 "Trop de tentatives depuis ta connexion. Attends quelques minutes puis "
 "recharge la page."
 
-#: find_bananas/strings.py:70
+#: find_bananas/strings.py:76
 msgid "The bananas can only be shown once. Type your guess."
 msgstr "Les bananes ne s’affichent qu’une fois. Tape ta réponse."
 
-#: find_bananas/strings.py:71
+#: find_bananas/strings.py:77
 msgid "You already played today’s challenge with another account."
 msgstr "Tu as déjà joué au défi du jour avec un autre compte."
 
-#: find_bananas/strings.py:72
+#: find_bananas/strings.py:78
 msgid "The game could not continue. Reload the page: your progress is saved."
 msgstr ""
 "Le jeu n’a pas pu continuer. Recharge la page : ta progression est "
