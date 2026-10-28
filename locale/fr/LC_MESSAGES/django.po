@@ -749,14 +749,6 @@ msgstr "Bananes côtoyées 🍌"
 msgid "Score = total number of bananas you were off by. Lower is better."
 msgstr "Score = nombre total de bananes d’écart. Plus il est bas, mieux c’est."
 
-#: find_bananas/templates/find_bananas/profile.html:17:1
-msgid "A streak counts the daily challenges played in a row."
-msgstr "Une série compte les défis joués d’affilée, sans manquer un jour."
-
-#: find_bananas/templates/find_bananas/profile.html:17:1
-msgid "Bananas spotted: every banana that appeared on your screen."
-msgstr "Bananes côtoyées : toutes les bananes apparues sur ton écran."
-
 #: find_bananas/templates/find_bananas/profile.html:19:1
 msgid "Average gap per round"
 msgstr "Écart moyen par round"
