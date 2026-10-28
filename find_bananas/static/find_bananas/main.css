@@ -410,28 +410,21 @@ h2 {
   pointer-events: none;
 }
 
-.frame img.is-fading {
-  opacity: 0;
-  transition: opacity 300ms ease-out;
+/* While the frame grows from the round card, it is lifted above the page
+   (game.js sets its position each frame) and the timer waits. */
+.frame.is-growing {
+  position: fixed;
+  z-index: 55;
+  aspect-ratio: auto;
 }
 
-.frame img.is-fading.is-visible {
-  opacity: 1;
-}
-
-/* While the white card grows from the round card to the image frame, the
-   real frame and timer wait hidden underneath. */
-.game.is-growing .frame,
 .game.is-growing .timer {
   visibility: hidden;
 }
 
-.grow-ghost {
-  position: fixed;
-  z-index: 55;
-  background: var(--paper);
-  border-radius: var(--radius-card);
-  box-shadow: 0 6px 0 var(--sky-deep);
+/* "Show the bananas" while the image downloads. */
+.btn.is-loading {
+  opacity: 0.75;
   pointer-events: none;
 }
 
@@ -995,10 +988,6 @@ h2 {
 
   .reveal-comment.is-popping {
     animation: none;
-  }
-
-  .frame img.is-fading {
-    transition: none;
   }
 
   .shout {

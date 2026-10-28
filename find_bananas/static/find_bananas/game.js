@@ -187,37 +187,49 @@
     img.classList.toggle("is-turned", fit.turn);
   }
 
-  // A white card grows from the round card to the image frame.
-  function growFrom(from, frame) {
+  // The frame, bananas already inside, grows from the round card to its
+  // final place while the bananas fade in. Driven frame by frame so the
+  // image always covers the frame (never squashed) as its shape changes.
+  function growFrame(frame, img, from) {
     return new Promise(function (resolve) {
-      if (reduceMotion) { resolve(); return; }
       var to = frame.getBoundingClientRect();
-      var ghost = document.createElement("div");
-      ghost.className = "grow-ghost";
-      ghost.style.left = from.left + "px";
-      ghost.style.top = from.top + "px";
-      ghost.style.width = from.width + "px";
-      ghost.style.height = from.height + "px";
-      document.body.appendChild(ghost);
-      ghost.getBoundingClientRect(); // commit the start position
-      var ease = "480ms cubic-bezier(0.2, 0.8, 0.2, 1)";
-      ghost.style.transition = ["left", "top", "width", "height", "border-radius"].map(function (prop) {
-        return prop + " " + ease;
-      }).join(", ");
-      ghost.style.left = to.left + "px";
-      ghost.style.top = to.top + "px";
-      ghost.style.width = to.width + "px";
-      ghost.style.height = to.height + "px";
-      ghost.style.borderRadius = "20px";
-      var done = false;
-      function finish() {
-        if (done) return;
-        done = true;
-        ghost.remove();
+      var iw = img.naturalWidth;
+      var ih = img.naturalHeight;
+      var turn = img.classList.contains("is-turned");
+      function place(rect, radius, opacity) {
+        frame.style.left = rect.left + "px";
+        frame.style.top = rect.top + "px";
+        frame.style.width = rect.width + "px";
+        frame.style.height = rect.height + "px";
+        frame.style.borderRadius = radius + "px";
+        var s = turn ? Math.max(rect.width / ih, rect.height / iw) : Math.max(rect.width / iw, rect.height / ih);
+        img.style.width = iw * s + "px";
+        img.style.height = ih * s + "px";
+        img.style.opacity = opacity;
+      }
+      if (reduceMotion) { img.style.opacity = 1; resolve(); return; }
+      frame.classList.add("is-growing");
+      var DURATION = 520;
+      var start = null;
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function step(now) {
+        if (start === null) start = now;
+        var t = Math.min(1, (now - start) / DURATION);
+        var e = 1 - Math.pow(1 - t, 3); // ease-out
+        place({
+          left: lerp(from.left, to.left, e), top: lerp(from.top, to.top, e),
+          width: lerp(from.width, to.width, e), height: lerp(from.height, to.height, e),
+        }, lerp(28, 20, e), Math.min(1, t * 1.3));
+        if (t < 1) { requestAnimationFrame(step); return; }
+        frame.classList.remove("is-growing");
+        ["left", "top", "borderRadius"].forEach(function (prop) { frame.style[prop] = ""; });
+        frame.style.width = to.width + "px";
+        frame.style.height = to.height + "px";
+        img.style.opacity = 1;
         resolve();
       }
-      ghost.addEventListener("transitionend", function (e) { if (e.propertyName === "width") finish(); });
-      setTimeout(finish, 700);
+      place(from, 28, 0);
+      requestAnimationFrame(step);
     });
   }
 
@@ -228,65 +240,63 @@
     document.getElementById("timer").style.width = "";
   }
 
-  var FADE_MS = 300;
-
   function showBananas() {
     if (busy) return;
     busy = true;
     clearErrors();
     var n = state.next_round;
-    var from = root.getBoundingClientRect();
+    var button = root.querySelector('[data-action="show"]');
     var frame = document.getElementById("frame");
     var loading = document.getElementById("frame-loading");
     var bar = document.getElementById("timer-bar");
     root.classList.remove("fx-bounce", "fx-shake");
-    frame.querySelectorAll("img").forEach(function (img) { img.remove(); });
-    resetFrame(frame);
-    loading.hidden = true;
-    bar.style.transition = "none";
-    bar.style.transform = "scaleX(1)";
-    root.classList.add("is-growing");
-    show("view");
-    layoutFrame(frame, IMAGE_SIZE[0], IMAGE_SIZE[1]);
+    button.classList.add("is-loading");
 
-    // The image downloads while the card grows.
-    var loaded = api("/rounds/" + n + "/image", {}, "blob").then(function (blob) {
-      var url = URL.createObjectURL(blob);
-      var img = new Image();
-      img.alt = "";
-      img.className = "is-fading";
-      img.src = url;
-      return img.decode().then(function () { return { img: img, url: url }; });
-    });
-    var grown = growFrom(from, frame).then(function () {
-      root.classList.remove("is-growing");
-      loading.hidden = false; // only visible if the image is not there yet
-    });
-
-    Promise.all([loaded, grown])
-      .then(function (results) {
-        var item = results[0];
+    // Download the image first (usually a fraction of a second), so the
+    // bananas are already inside the frame when it starts to grow.
+    api("/rounds/" + n + "/image", {}, "blob")
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var img = new Image();
+        img.alt = "";
+        img.src = url;
+        return img.decode().then(function () { return { img: img, url: url }; });
+      })
+      .then(function (item) {
+        button.classList.remove("is-loading");
+        var from = root.getBoundingClientRect();
+        frame.querySelectorAll("img").forEach(function (old) { old.remove(); });
+        resetFrame(frame);
         loading.hidden = true;
+        bar.style.transition = "none";
+        bar.style.transform = "scaleX(1)";
+        root.classList.add("is-growing");
+        show("view");
+        item.img.style.opacity = 0;
         frame.appendChild(item.img);
         fitImage(item.img, frame);
+        return growFrame(frame, item.img, from).then(function () { return item; });
+      })
+      .then(function (item) {
+        root.classList.remove("is-growing");
         var refit = function () { fitImage(item.img, frame); };
         window.addEventListener("resize", refit);
-        requestAnimationFrame(function () { item.img.classList.add("is-visible"); });
         // The 5 seconds start once the bananas are fully visible.
-        setTimeout(function () {
+        requestAnimationFrame(function () {
           bar.style.transition = "transform " + DISPLAY_MS + "ms linear";
           bar.style.transform = "scaleX(0)";
-          setTimeout(function () {
-            window.removeEventListener("resize", refit);
-            item.img.remove();
-            URL.revokeObjectURL(item.url);
-            busy = false;
-            goGuess(n, false);
-          }, DISPLAY_MS);
-        }, reduceMotion ? 0 : FADE_MS);
+        });
+        setTimeout(function () {
+          window.removeEventListener("resize", refit);
+          item.img.remove();
+          URL.revokeObjectURL(item.url);
+          busy = false;
+          goGuess(n, false);
+        }, DISPLAY_MS);
       })
       .catch(function (error) {
         busy = false;
+        button.classList.remove("is-loading");
         root.classList.remove("is-growing");
         if (error && error.code === "image_expired") {
           goGuess(n, true);
