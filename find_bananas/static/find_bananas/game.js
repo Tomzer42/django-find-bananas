@@ -162,13 +162,13 @@
   // Make the white card, and the image in it, as large as the window allows
   // inside the margin. A landscape image on a screen held upright is turned
   // a quarter turn: same image, more room.
-  function fitImage(img, frame) {
+  var IMAGE_SIZE = [1440, 960]; // every round image; used to size the frame before it arrives
+
+  function layoutFrame(frame, iw, ih) {
     var stack = document.getElementById("view-stack");
     var timer = document.getElementById("timer");
     var w = stack.clientWidth;
     var h = stack.clientHeight - timer.offsetHeight - 12;
-    var iw = img.naturalWidth;
-    var ih = img.naturalHeight;
     var turn = h > w && iw > ih;
     var scale = turn ? Math.min(w / ih, h / iw) : Math.min(w / iw, h / ih);
     var shownW = Math.floor((turn ? ih : iw) * scale);
@@ -177,9 +177,48 @@
     frame.style.height = shownH + "px";
     frame.style.aspectRatio = "auto";
     timer.style.width = shownW + "px";
-    img.style.width = Math.floor(iw * scale) + "px";
-    img.style.height = Math.floor(ih * scale) + "px";
-    img.classList.toggle("is-turned", turn);
+    return { scale: scale, turn: turn };
+  }
+
+  function fitImage(img, frame) {
+    var fit = layoutFrame(frame, img.naturalWidth, img.naturalHeight);
+    img.style.width = Math.floor(img.naturalWidth * fit.scale) + "px";
+    img.style.height = Math.floor(img.naturalHeight * fit.scale) + "px";
+    img.classList.toggle("is-turned", fit.turn);
+  }
+
+  // A white card grows from the round card to the image frame.
+  function growFrom(from, frame) {
+    return new Promise(function (resolve) {
+      if (reduceMotion) { resolve(); return; }
+      var to = frame.getBoundingClientRect();
+      var ghost = document.createElement("div");
+      ghost.className = "grow-ghost";
+      ghost.style.left = from.left + "px";
+      ghost.style.top = from.top + "px";
+      ghost.style.width = from.width + "px";
+      ghost.style.height = from.height + "px";
+      document.body.appendChild(ghost);
+      ghost.getBoundingClientRect(); // commit the start position
+      var ease = "480ms cubic-bezier(0.2, 0.8, 0.2, 1)";
+      ghost.style.transition = ["left", "top", "width", "height", "border-radius"].map(function (prop) {
+        return prop + " " + ease;
+      }).join(", ");
+      ghost.style.left = to.left + "px";
+      ghost.style.top = to.top + "px";
+      ghost.style.width = to.width + "px";
+      ghost.style.height = to.height + "px";
+      ghost.style.borderRadius = "20px";
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        ghost.remove();
+        resolve();
+      }
+      ghost.addEventListener("transitionend", function (e) { if (e.propertyName === "width") finish(); });
+      setTimeout(finish, 700);
+    });
   }
 
   function resetFrame(frame) {
@@ -189,50 +228,66 @@
     document.getElementById("timer").style.width = "";
   }
 
+  var FADE_MS = 300;
+
   function showBananas() {
     if (busy) return;
     busy = true;
     clearErrors();
     var n = state.next_round;
+    var from = root.getBoundingClientRect();
     var frame = document.getElementById("frame");
     var loading = document.getElementById("frame-loading");
     var bar = document.getElementById("timer-bar");
+    root.classList.remove("fx-bounce", "fx-shake");
     frame.querySelectorAll("img").forEach(function (img) { img.remove(); });
     resetFrame(frame);
-    loading.hidden = false;
+    loading.hidden = true;
     bar.style.transition = "none";
     bar.style.transform = "scaleX(1)";
+    root.classList.add("is-growing");
     show("view");
+    layoutFrame(frame, IMAGE_SIZE[0], IMAGE_SIZE[1]);
 
-    api("/rounds/" + n + "/image", {}, "blob")
-      .then(function (blob) {
-        var url = URL.createObjectURL(blob);
-        var img = new Image();
-        img.alt = "";
-        img.src = url;
-        return img.decode().then(function () { return { img: img, url: url }; });
-      })
-      .then(function (loaded) {
+    // The image downloads while the card grows.
+    var loaded = api("/rounds/" + n + "/image", {}, "blob").then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var img = new Image();
+      img.alt = "";
+      img.className = "is-fading";
+      img.src = url;
+      return img.decode().then(function () { return { img: img, url: url }; });
+    });
+    var grown = growFrom(from, frame).then(function () {
+      root.classList.remove("is-growing");
+      loading.hidden = false; // only visible if the image is not there yet
+    });
+
+    Promise.all([loaded, grown])
+      .then(function (results) {
+        var item = results[0];
         loading.hidden = true;
-        frame.appendChild(loaded.img);
-        fitImage(loaded.img, frame);
-        var refit = function () { fitImage(loaded.img, frame); };
+        frame.appendChild(item.img);
+        fitImage(item.img, frame);
+        var refit = function () { fitImage(item.img, frame); };
         window.addEventListener("resize", refit);
-        // The 5 seconds start once the image is actually on screen.
-        requestAnimationFrame(function () {
+        requestAnimationFrame(function () { item.img.classList.add("is-visible"); });
+        // The 5 seconds start once the bananas are fully visible.
+        setTimeout(function () {
           bar.style.transition = "transform " + DISPLAY_MS + "ms linear";
           bar.style.transform = "scaleX(0)";
-        });
-        setTimeout(function () {
-          window.removeEventListener("resize", refit);
-          loaded.img.remove();
-          URL.revokeObjectURL(loaded.url);
-          busy = false;
-          goGuess(n, false);
-        }, DISPLAY_MS);
+          setTimeout(function () {
+            window.removeEventListener("resize", refit);
+            item.img.remove();
+            URL.revokeObjectURL(item.url);
+            busy = false;
+            goGuess(n, false);
+          }, DISPLAY_MS);
+        }, reduceMotion ? 0 : FADE_MS);
       })
       .catch(function (error) {
         busy = false;
+        root.classList.remove("is-growing");
         if (error && error.code === "image_expired") {
           goGuess(n, true);
           flashError(T.errors.image_expired);
@@ -283,14 +338,18 @@
     var shout = exact ? pick(T.exactShouts) : null;
     var comment = field("reveal-comment");
     comment.textContent = exact ? shout : pick(T.comments[tier]);
-    comment.dataset.tier = tier;
-    field("reveal-gap").textContent = gapText(round.gap);
+    comment.classList.remove("is-popping");
+    var gap = field("reveal-gap");
+    gap.textContent = gapText(round.gap);
+    gap.dataset.tier = tier;
     field("reveal-guess").textContent = round.guess;
     field("reveal-count").textContent = round.count;
     root.querySelector('[data-action="next"]').textContent =
       state.status === "completed" ? T.seeResult : T.nextRound;
     renderProgress(round.index);
     show("reveal");
+    void comment.offsetWidth; // restart the pop animation
+    comment.classList.add("is-popping");
     cardEffect(tier);
     if (exact) {
       confetti();
@@ -402,6 +461,7 @@
     document.getElementById("progress").hidden = true;
     var score = state.score;
     field("score").textContent = score;
+    root.querySelector(".stamp").dataset.tier = totalTier();
     field("score-label").textContent =
       score === 0 ? T.scorePerfect : score === 1 ? T.scoreLabelOne : T.scoreLabel;
 

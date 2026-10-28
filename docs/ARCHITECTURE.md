@@ -124,6 +124,12 @@ dans `ROUND_SPECS` (`editions.py`) et envoyés au navigateur avec la partie.
 
 Un compte exact (🎯) déclenche des confettis et un mot qui traverse l'écran.
 
+Règle de couleur : le **jaune banane** est réservé à ce qui se clique
+(boutons, logo). Les **couleurs de résultat** marquent ce qu'on a obtenu :
+écart de chaque round, pastilles 1-2-3, tableau final et la grosse pastille du
+score (couleur du total). Une pastille jaune signifie donc toujours « résultat
+moyen ».
+
 **Population de référence** : les parties *terminées* et *classées* de la même
 édition. Les visiteurs qui n'ont pas fini ne comptent pas.
 
