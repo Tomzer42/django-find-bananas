@@ -1,0 +1,10 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'Too many attempts' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>{% translate 'Too many attempts' %}</h1>
+  <p class="lead">{% translate 'Too many requests came from your connection. Wait a few minutes, then try again.' %}</p>
+  <a class="btn btn-secondary" href="{% url 'home' %}">{% translate 'Back to the game' %}</a>
+</div>
+{% endblock %}

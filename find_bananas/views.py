@@ -1,71 +1,141 @@
+import json
+from datetime import timedelta
+
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Avg, Min
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.http import HttpResponse
-from bananas_updater.create_bananas import bananas_of_the_day
-from bananas_updater.updater import start_sessions
-from find_bananas.models import Bananas
-from datetime import datetime
+from django.utils import timezone
+from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_GET, require_POST
 
+from . import game, scoring, streaks
+from .editions import get_live_edition
+from .models import Edition, Play
+from .players import find_play
+from .ratelimit import ratelimit
+from .strings import game_strings
+
+# A play started just before the daily switch can still be finished.
+FINISH_GRACE = timedelta(minutes=15)
+
+
+# --- Pages -----------------------------------------------------------------
+
+
+@never_cache
+@require_GET
 def home(request):
-
-  print(Bananas.objects.count())
-  print(Bananas.objects.latest('timestamp').timestamp)
-  print(Bananas.objects.latest('timestamp').nb_bananas_1)
-  if Bananas.objects.count() == 0 :
-    bananas_of_the_day(True)
-
-  latest_bananas = Bananas.objects.latest('timestamp')
-
-  dico = {
-    "round1": {},
-    "round2": {},
-    "round3": {}
-  }
-
-  dico["round1"]["number"] = latest_bananas.nb_bananas_1
-  dico["round2"]["number"] = latest_bananas.nb_bananas_2
-  dico["round3"]["number"] = latest_bananas.nb_bananas_3
-  dico["round1"]["image"] = latest_bananas.image_1
-  dico["round2"]["image"] = latest_bananas.image_2
-  dico["round3"]["image"] = latest_bananas.image_3
-  dico["date"] = latest_bananas.date
-  print("Round 1 :", dico["round1"]["number"])
-  print("Round 2 :", dico["round2"]["number"])
-  print("Round 3 :", dico["round3"]["number"])
+    edition = get_live_edition()
+    play = find_play(request, edition)
+    return render(
+        request,
+        "find_bananas/home.html",
+        {"edition": edition, "state": game.play_state(play, edition), "strings": game_strings()},
+    )
 
 
-  context = {
-    "dico": dico
-  }
+@login_required
+@require_GET
+def profile(request):
+    plays = (
+        Play.objects.filter(user=request.user, status=Play.Status.COMPLETED)
+        .select_related("edition")
+        .order_by("-edition__date")
+    )
+    page = Paginator(plays, 30).get_page(request.GET.get("page"))
+    rows = [{"play": p, "ranking": scoring.ranking_for(p)} for p in page]
+    totals = plays.aggregate(best=Min("score"), average=Avg("score"))
+    summary = {
+        "games": page.paginator.count,
+        "best": totals["best"],
+        "average": round(totals["average"], 1) if totals["average"] is not None else None,
+        "rounds": scoring.average_gap_per_round(plays.values_list("rounds", flat=True)),
+        "streak": streaks.for_user(request.user),
+        "bananas_seen": scoring.bananas_seen(Play.objects.filter(user=request.user)),
+    }
+    return render(request, "find_bananas/profile.html", {"page": page, "rows": rows, "summary": summary})
 
-  if request.method == 'POST':
-    if request.POST.get('finalScore'): #If we are in the 3rd round
-      request.session['final_score'] = request.POST.get('finalScore')
-      request.session['result_round3'] = request.POST.get('resultRound3')
-      request.session['guess1'] = request.POST.get('guess1')
-      request.session['guess2'] = request.POST.get('guess2')
-      request.session['guess3'] = request.POST.get('guess3')
-      print(request.session['final_score'])
-      print(request.session['result_round3'])
-      print(request.session['guess1'])
 
-      # Set the 'played_game' flag in the session to True when the player finish the round 3
-      request.session['played_game'] = True
-
-      start_sessions(request)  # Start the scheduled task
+@require_GET
+def privacy(request):
+    return render(request, "find_bananas/privacy.html")
 
 
-  # Check if the user has already played the game
-  if request.session.get('played_game', False): #If yes, we retrieved data about his results
-    context["final_score"] = request.session['final_score']
-    context["result_round3"] = request.session['result_round3']
-    context["guess1"] = request.session['guess1']
-    context["guess2"] = request.session['guess2']
-    context["guess3"] = request.session['guess3']
+# --- Game API (JSON) -------------------------------------------------------
 
-    # If the user has already played, display the result template page
-    return render(request, 'find_bananas/result.html', context)
 
-  return render(request, 'find_bananas/home.html', context)
+def _error(exc: game.GameError) -> JsonResponse:
+    return JsonResponse({"error": exc.code}, status=exc.status)
 
-def about(request):
-  return render(request, 'find_bananas/about.html')
+
+def _playable_edition(number: int, allow_grace: bool) -> Edition:
+    edition = Edition.objects.filter(market="global", number=number).first()
+    now = timezone.now()
+    if edition is None or now < edition.starts_at:
+        raise game.GameError("edition_not_found", status=404)
+    deadline = edition.ends_at + (FINISH_GRACE if allow_grace else timedelta(0))
+    if now >= deadline:
+        raise game.GameError("edition_over", status=410)
+    return edition
+
+
+def _current_play(request, number: int):
+    edition = _playable_edition(number, allow_grace=True)
+    play = find_play(request, edition)
+    if play is None:
+        raise game.GameError("play_not_started", status=409)
+    return edition, play
+
+
+@never_cache
+@require_POST
+@ratelimit("play-start", limit=30, window_seconds=600)
+def api_start(request, number):
+    try:
+        edition = _playable_edition(number, allow_grace=False)
+        play = game.start_play(request, edition)
+    except game.GameError as exc:
+        return _error(exc)
+    return JsonResponse(game.play_state(play, edition))
+
+
+@never_cache
+@require_POST
+@ratelimit("play-image", limit=60, window_seconds=600)
+def api_round_image(request, number, index):
+    try:
+        _, play = _current_play(request, number)
+        round_ = game.serve_round(play, index)
+    except game.GameError as exc:
+        return _error(exc)
+    response = HttpResponse(bytes(round_.image), content_type=round_.image_type)
+    response["Cache-Control"] = "no-store, private"
+    return response
+
+
+@never_cache
+@require_POST
+@ratelimit("play-answer", limit=60, window_seconds=600)
+def api_answer(request, number, index):
+    try:
+        payload = json.loads(request.body or b"{}")
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({"error": "invalid_json"}, status=400)
+    try:
+        edition, play = _current_play(request, number)
+        play, round_data = game.answer_round(play, index, payload.get("guess"))
+    except game.GameError as exc:
+        return _error(exc)
+    return JsonResponse({"round": round_data, "state": game.play_state(play, edition)})
+
+
+@never_cache
+@require_GET
+def api_state(request, number):
+    try:
+        edition = _playable_edition(number, allow_grace=True)
+    except game.GameError as exc:
+        return _error(exc)
+    return JsonResponse(game.play_state(find_play(request, edition), edition))

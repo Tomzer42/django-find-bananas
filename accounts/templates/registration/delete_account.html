@@ -1,0 +1,15 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'Delete my account' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>{% translate 'Delete my account' %}</h1>
+  <p class="lead">{% translate 'Your account and all your results will be deleted. This cannot be undone.' %}</p>
+  <form method="post" class="form" novalidate>
+    {% csrf_token %}
+    {% include "find_bananas/_form.html" %}
+    <button type="submit" class="btn btn-secondary">{% translate 'Delete my account' %}</button>
+  </form>
+  <div class="form-links"><p><a href="{% url 'profile' %}">{% translate 'Keep my account' %}</a></p></div>
+</div>
+{% endblock %}

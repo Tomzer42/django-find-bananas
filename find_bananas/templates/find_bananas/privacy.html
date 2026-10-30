@@ -1,0 +1,17 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'Privacy' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel prose">
+  <h1>{% translate 'Privacy' %}</h1>
+  <p>{% translate 'Find Bananas collects as little as possible.' %}</p>
+  <h2>{% translate 'Without an account' %}</h2>
+  <p>{% translate 'A session cookie remembers that you played today’s challenge and your answers. Your results are stored without your name or email, and count anonymously in the daily ranking. Your IP address is never stored: only a one-way fingerprint, different every day, used to limit cheating.' %}</p>
+  <h2>{% translate 'With an account' %}</h2>
+  <p>{% translate 'We store your email address, a secured version of your password, your username and your results, to show you your history. Your username is visible to other players; your email never is, and is only used to reset your password.' %}</p>
+  <h2>{% translate 'Your rights' %}</h2>
+  <p>{% translate 'You can delete your account and all its results at any time from “My profile”.' %}</p>
+  <h2>{% translate 'Analytics' %}</h2>
+  <p>{% translate 'Audience measurement is only loaded if you accept it.' %}</p>
+</div>
+{% endblock %}

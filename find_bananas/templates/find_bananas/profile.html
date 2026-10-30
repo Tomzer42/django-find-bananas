@@ -1,0 +1,73 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'My profile' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1 class="profile-name">{{ user.username|default:_('My profile') }}</h1>
+  {% if summary.games %}
+    <dl class="stats">
+      <div><dt>{% translate 'Games played' %}</dt><dd>{{ summary.games }}</dd></div>
+      <div><dt>{% translate 'Best score' %}</dt><dd>{{ summary.best }}</dd></div>
+      <div><dt>{% translate 'Average score' %}</dt><dd>{{ summary.average }}</dd></div>
+    </dl>
+    <dl class="stats stats-2">
+      <div><dt>{% translate '🔥 Current streak' %}</dt><dd>{{ summary.streak.current }}</dd></div>
+      <div><dt>{% translate 'Bananas spotted 🍌' %}</dt><dd>{{ summary.bananas_seen|floatformat:"g" }}</dd></div>
+    </dl>
+    <p class="form-help">{% translate 'Score = total number of bananas you were off by. Lower is better.' %}</p>
+    {% if summary.rounds %}
+      <h2 class="stats-title">{% translate 'Average gap per round' %}</h2>
+      <dl class="stats">
+        {% for r in summary.rounds %}
+          <div><dt>{% blocktranslate with n=r.index %}Round {{ n }}{% endblocktranslate %}</dt><dd>{{ r.average }}</dd></div>
+        {% endfor %}
+      </dl>
+    {% endif %}
+  {% else %}
+    <p class="empty">{% translate 'No results yet. Play today’s challenge and it will appear here.' %}</p>
+    <a class="btn btn-primary btn-big" href="{% url 'home' %}">{% translate 'Play' %}</a>
+  {% endif %}
+</div>
+
+{% if rows %}
+<div class="panel">
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th scope="col">{% translate 'Challenge' %}</th>
+        <th scope="col" class="num">{% translate 'Score' %}</th>
+        <th scope="col" class="num">{% translate 'Ranking' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>#{{ row.play.edition.number }} <span class="form-help">{{ row.play.edition.date|date:"SHORT_DATE_FORMAT" }}</span></td>
+          <td class="num">{{ row.play.score }}</td>
+          <td class="num">{% if row.ranking.top_percent %}{% blocktranslate with p=row.ranking.top_percent %}top {{ p }}%{% endblocktranslate %}{% else %}—{% endif %}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if page.has_other_pages %}
+    <nav class="pager" aria-label="{% translate 'Pages' %}">
+      {% if page.has_previous %}<a href="?page={{ page.previous_page_number }}">{% translate 'Newer' %}</a>{% else %}<span></span>{% endif %}
+      {% if page.has_next %}<a href="?page={{ page.next_page_number }}">{% translate 'Older' %}</a>{% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="panel">
+  <p class="form-help">{{ user.email }}</p>
+  <p class="account-links">
+    <a href="{% url 'choose_username' %}">{% translate 'Change username' %}</a>
+    <a href="{% url 'password_reset' %}">{% translate 'Change password' %}</a>
+    <a href="{% url 'delete_account' %}">{% translate 'Delete my account' %}</a>
+  </p>
+  <form method="post" action="{% url 'logout' %}" class="logout">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-quiet">{% translate 'Log out' %}</button>
+  </form>
+</div>
+{% endblock %}

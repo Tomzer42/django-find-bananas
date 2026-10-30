@@ -1,0 +1,19 @@
+{% extends "find_bananas/base.html" %}
+{% load i18n %}
+{% block title %}{% translate 'Create an account' %} — Find Bananas{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>{% translate 'Create an account' %}</h1>
+  <p class="lead">{% translate 'Keep your daily results and see your progress. Only an email and a username are needed. Today’s game on this device is added to your account.' %}</p>
+  {% include "registration/_google.html" %}
+  <form method="post" class="form" novalidate>
+    {% csrf_token %}
+    {% include "find_bananas/_form.html" %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary btn-big">{% translate 'Create my account' %}</button>
+  </form>
+  <div class="form-links">
+    <p>{% translate 'Already have an account?' %} <a href="{% url 'login' %}">{% translate 'Log in' %}</a></p>
+  </div>
+</div>
+{% endblock %}

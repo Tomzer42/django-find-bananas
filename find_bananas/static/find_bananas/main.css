@@ -1,84 +1,1057 @@
+/* Find Bananas — one blue sky, one white card, bananas in yellow. */
+
+/* Typography rule: Cherry Bomb One for the big moments only (logo, titles,
+   buttons, the numbers of the game). Everything you read goes in Nunito,
+   a rounded face that matches it. Both under the SIL Open Font License
+   (fonts/OFL-*.txt), Latin subsets, self-hosted. */
+
+/* Cherry Bomb One by Satsuyako. Single weight: it is drawn heavy, so never
+   ask the browser for a fake bold. */
+@font-face {
+  font-family: "Cherry Bomb One";
+  src: url("fonts/cherrybombone-regular.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Nunito by Vernon Adams et al., variable weight 400 to 800. */
+@font-face {
+  font-family: "Nunito";
+  src: url("fonts/nunito-latin.woff") format("woff");
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+:root {
+  --sky: #3380ff;
+  --sky-deep: #2569dc;
+  --night: #14306e;
+  --banana: #ffd23f;
+  --banana-deep: #f2b705;
+  --peel: #5b3a0e;
+  --paper: #ffffff;
+  --mist: #eaf1ff;
+  --muted: #4b5f8a;
+  --danger: #b42318;
+
+  /* Result colours: strong for dots and pills, soft for the 1 s card flash. */
+  --tier-green: #2fb463;
+  --tier-green-soft: #b9f0cb;
+  --tier-yellow: #ffd23f;
+  --tier-yellow-soft: #fff0b0;
+  --tier-orange: #ff9a3c;
+  --tier-orange-soft: #ffd7b0;
+  --tier-red: #f2545b;
+  --tier-red-soft: #ffc4c6;
+  --tier-green-deep: #1f8a49;
+  --tier-yellow-deep: #e0a800;
+  --tier-orange-deep: #d9741a;
+  --tier-red-deep: #c4343b;
+
+  --font-display: "Cherry Bomb One", ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-body: "Nunito", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 28px;
+  --radius-control: 16px;
+  --gutter: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: #3380FF;
-  color: #333333;
-  margin-top: 5rem;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky);
+  color: var(--night);
+  font: 400 1rem/1.5 var(--font-body);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+a {
+  color: var(--sky-deep);
 }
 
-ul {
+:focus-visible {
+  outline: 3px solid var(--banana);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* --- Top bar & footer --------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  /* 16px on phones, growing with the window up to 48px on computers. */
+  padding: clamp(12px, 2vw, 24px) clamp(var(--gutter), 3.5vw, 48px);
+  padding-top: max(clamp(12px, 2vw, 24px), env(safe-area-inset-top));
+}
+
+.brand {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--paper);
+  text-decoration: none;
+  font: 400 1.5rem/1 var(--font-display);
+}
+
+.brand img {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-12deg);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topnav a,
+.linklike {
+  color: var(--paper);
+  font: 500 0.95rem/1 var(--font-body);
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.topnav a:hover,
+.linklike:hover {
+  text-decoration: underline;
+}
+
+.topnav form {
   margin: 0;
 }
 
-.bg-steel {
-  background-color: #ffffff;
+.linklike {
+  border: 0;
+  background: none;
+  cursor: pointer;
 }
 
-.site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+.footer {
+  padding: 24px var(--gutter);
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  text-align: center;
 }
 
-.site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 20px;
 }
 
-.site-header .navbar-nav .nav-link.active {
+.footer a {
+  color: var(--mist);
+  font-size: 0.875rem;
+}
+
+.lang {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+}
+
+.lang button {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mist);
+  font: 500 0.875rem/1 var(--font-body);
+  cursor: pointer;
+}
+
+.lang button[aria-current="true"] {
+  background: var(--sky-deep);
+  color: var(--paper);
+}
+
+/* --- Page & card -------------------------------------------------------- */
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 492px;
+  margin: 0 auto;
+  padding: 8px var(--gutter) 0;
+}
+
+.game,
+.panel {
+  background: var(--paper);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  box-shadow: 0 6px 0 var(--sky-deep);
+}
+
+.panel > :last-child,
+.screen > :last-child {
+  margin-bottom: 0;
+}
+
+.panel + .panel {
+  margin-top: 16px;
+}
+
+h1,
+h2,
+.lead,
+.ranking,
+.guess label,
+.reveal-gap {
+  text-wrap: balance;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: clamp(2rem, 8.5vw, 2.5rem);
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+.lead {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 1.0625rem;
+}
+
+.edition {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font: 700 1rem/1.2 var(--font-body);
+}
+
+.flash {
+  background: var(--banana);
+  color: var(--peel);
+  border-radius: var(--radius-control);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.flash p {
+  margin: 0;
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: var(--radius-control);
+  font: 400 1rem/1 var(--font-display);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background: var(--banana);
+  color: var(--peel);
+  box-shadow: 0 4px 0 var(--banana-deep);
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--banana-deep);
+}
+
+.btn-secondary {
+  background: var(--sky);
+  color: var(--paper);
+}
+
+.btn-quiet {
+  background: var(--mist);
+  color: var(--night);
+}
+
+.btn-small {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.topnav .btn {
+  color: var(--night);
+  padding: 8px 16px;
+  font: 400 0.9375rem/1 var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.topnav .btn:hover {
+  text-decoration: none;
+  background: var(--paper);
+}
+
+.btn-google {
+  gap: 12px;
+  background: var(--paper);
+  color: var(--night);
+  box-shadow: inset 0 0 0 2px var(--mist), 0 4px 0 var(--mist);
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+.btn-google:active {
+  transform: translateY(3px);
+  box-shadow: inset 0 0 0 2px var(--mist), 0 1px 0 var(--mist);
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 4px;
+  color: var(--night);
+  opacity: 0.6;
+  font-size: 0.875rem;
+}
+
+.or::before,
+.or::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--mist);
+}
+
+.btn-big {
+  width: 100%;
+  min-height: 60px;
+  font-size: 1.25rem;
+}
+
+/* --- Game --------------------------------------------------------------- */
+
+.screen {
+  text-align: center;
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.progress li {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--mist);
+  color: var(--muted);
+  font: 800 0.95rem/1 var(--font-body);
+}
+
+.progress li.current {
+  background: var(--sky);
+  color: var(--paper);
+}
+
+.progress li.done {
+  background: var(--banana);
+  color: var(--peel);
+}
+
+/* The playing screen: for 5 seconds the image sits on the blue sky, in a
+   white card as large as the window allows, with a small margin around it.
+   game.js sizes the card and turns the image a quarter turn when a
+   landscape image meets a screen held upright. */
+.screen-view {
+  --view-margin: clamp(12px, 3vmin, 40px);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: var(--view-margin);
+  padding-top: max(var(--view-margin), env(safe-area-inset-top));
+  padding-bottom: max(var(--view-margin), env(safe-area-inset-bottom));
+  background: var(--sky);
+}
+
+.view-stack {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.frame {
+  position: relative;
+  width: min(100%, 600px);
+  aspect-ratio: 3 / 2;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 0 var(--sky-deep);
+}
+
+.frame img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
+
+/* While the frame grows from the round card, it is lifted above the page
+   (game.js sets its position each frame) and the timer waits. */
+.frame.is-growing {
+  position: fixed;
+  z-index: 55;
+  aspect-ratio: auto;
+}
+
+.game.is-growing .timer {
+  visibility: hidden;
+}
+
+/* "Show the bananas" while the image downloads. */
+.btn.is-loading {
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.frame img.is-turned {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.frame-loading {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.timer {
+  width: min(100%, 600px);
+  height: 8px;
+  flex: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.timer span {
+  display: block;
+  height: 100%;
+  background: var(--banana);
+  transform-origin: left center;
+}
+
+.screen[data-screen="ready"] h2 {
+  margin-bottom: 24px;
+}
+
+.guess {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.guess label {
+  font: 400 1.375rem/1.25 var(--font-display);
+}
+
+.guess input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 3px solid var(--mist);
+  border-radius: var(--radius-control);
+  font: 400 2.5rem/1 var(--font-display);
+  text-align: center;
+  color: var(--night);
+  -moz-appearance: textfield;
+}
+
+.guess input::-webkit-outer-spin-button,
+.guess input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.guess input::placeholder {
+  color: #c3cde3;
   font-weight: 500;
 }
 
-.play-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.guess input:focus {
+  border-color: var(--sky);
+  outline: none;
 }
 
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.form-error {
+  margin: 12px 0 0;
+  color: var(--danger);
+  font-weight: 500;
 }
 
-.pti-marg {
-  margin: 10px 0px 10px 0px;
+.guess .form-error {
+  margin: 0;
 }
 
-.modal {
-  display: none;
+/* Comment on the round: display font, native blue, pops in with a wiggle. */
+.reveal-comment {
+  margin: 0 0 14px;
+  font: 400 clamp(1.75rem, 7.5vw, 2.125rem)/1.15 var(--font-display);
+  color: var(--night);
+  text-wrap: balance;
+}
+
+.reveal-comment.is-popping {
+  animation: comment-pop 900ms cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+@keyframes comment-pop {
+  0% { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  35% { opacity: 1; transform: scale(1.12) rotate(3deg); }
+  55% { transform: scale(0.97) rotate(-2deg); }
+  75% { transform: scale(1.02) rotate(1deg); }
+  100% { transform: none; }
+}
+
+/* The gap carries the round's colour: a flat pill (no 3D shadow, so it
+   never looks like a button). */
+.reveal-gap {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 20px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  font: 400 1.75rem/1.15 var(--font-display);
+  color: var(--night);
+  background: var(--mist);
+}
+
+.reveal-gap[data-tier="green"] { background: var(--tier-green); color: #fff; }
+.reveal-gap[data-tier="yellow"] { background: var(--tier-yellow); color: var(--peel); }
+.reveal-gap[data-tier="orange"] { background: var(--tier-orange); color: #4a2400; }
+.reveal-gap[data-tier="red"] { background: var(--tier-red); color: #fff; }
+
+/* The game card flashes in the round's colour for 1 s while it moves. */
+.game[data-tier="green"] { --flash: var(--tier-green-soft); }
+.game[data-tier="yellow"] { --flash: var(--tier-yellow-soft); }
+.game[data-tier="orange"] { --flash: var(--tier-orange-soft); }
+.game[data-tier="red"] { --flash: var(--tier-red-soft); }
+
+.game.fx-bounce {
+  animation: card-flash 1000ms ease-out, card-bounce 650ms cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.game.fx-shake {
+  animation: card-flash 1000ms ease-out, card-shake 500ms ease-in-out;
+}
+
+@keyframes card-flash {
+  0% { background-color: var(--paper); }
+  12% { background-color: var(--flash); }
+  65% { background-color: var(--flash); }
+  100% { background-color: var(--paper); }
+}
+
+@keyframes card-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.035) translateY(-6px); }
+  70% { transform: scale(0.99); }
+  100% { transform: none; }
+}
+
+@keyframes card-shake {
+  0%, 100% { transform: none; }
+  15% { transform: translateX(-10px) rotate(-1deg); }
+  30% { transform: translateX(9px) rotate(1deg); }
+  45% { transform: translateX(-7px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* Exact count: confetti and a big word crossing the screen. */
+.confetti,
+.shout-layer {
   position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.confetti {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
 }
 
-.modal-content {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  position: relative;
-  z-index: 1001;
-  max-width: 70%; /* Limit the width of the modal */
+.shout-layer {
+  overflow: hidden;
 }
 
-.close {
+.shout {
   position: absolute;
-  top: 0;
-  right: 10px;
-  font-size: 28px;
-  cursor: pointer;
+  top: 26%;
+  left: 0;
+  white-space: nowrap;
+  font: 400 clamp(3.5rem, 15vw, 9rem)/1 var(--font-display);
+  color: var(--banana);
+  -webkit-text-stroke: 3px var(--peel);
+  paint-order: stroke fill;
+  text-shadow: 0 6px 0 var(--peel);
+  transform: translateX(100vw);
+  animation: shout-across 2600ms linear forwards;
+}
+
+@keyframes shout-across {
+  from { transform: translateX(100vw) rotate(-4deg); }
+  to { transform: translateX(-100%) rotate(-4deg); }
+}
+
+/* Small coloured dot before a gap in the result table. */
+.dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  vertical-align: 0.02em;
+  background: var(--mist);
+}
+
+.progress li[data-tier="green"] { background: var(--tier-green); color: #fff; }
+.progress li[data-tier="yellow"] { background: var(--tier-yellow); color: var(--peel); }
+.progress li[data-tier="orange"] { background: var(--tier-orange); color: #4a2400; }
+.progress li[data-tier="red"] { background: var(--tier-red); color: #fff; }
+
+.dot[data-tier="green"] { background: var(--tier-green); }
+.dot[data-tier="yellow"] { background: var(--tier-yellow); }
+.dot[data-tier="orange"] { background: var(--tier-orange); }
+.dot[data-tier="red"] { background: var(--tier-red); }
+
+.reveal-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.reveal-facts div {
+  background: var(--mist);
+  border-radius: var(--radius-control);
+  padding: 14px 8px;
+}
+
+.reveal-facts dt {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.reveal-facts dd {
+  margin: 4px 0 0;
+  font: 400 2rem/1 var(--font-display);
+}
+
+/* The result stamp: the one loud moment of the game. */
+.stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  margin: 12px auto 20px;
+  padding: 16px;
+  background: var(--mist);
+  color: var(--night);
+  border-radius: 50%;
+  box-shadow: 0 6px 0 var(--sky-deep);
+  transform: rotate(-6deg);
+  animation: stamp-in 420ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+/* The score stamp takes the colour of the total (same as the shared
+   score). Banana yellow is kept for what you can click. */
+.stamp[data-tier="green"] { background: var(--tier-green); color: #fff; box-shadow: 0 6px 0 var(--tier-green-deep); }
+.stamp[data-tier="yellow"] { background: var(--tier-yellow); color: var(--peel); box-shadow: 0 6px 0 var(--tier-yellow-deep); }
+.stamp[data-tier="orange"] { background: var(--tier-orange); color: #4a2400; box-shadow: 0 6px 0 var(--tier-orange-deep); }
+.stamp[data-tier="red"] { background: var(--tier-red); color: #fff; box-shadow: 0 6px 0 var(--tier-red-deep); }
+
+.stamp-score {
+  font: 400 clamp(4.25rem, 22vw, 5.5rem)/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.stamp-label {
+  max-width: 190px;
+  text-align: center;
+  font: 800 0.9375rem/1.2 var(--font-body);
+}
+
+@keyframes stamp-in {
+  from {
+    transform: rotate(-12deg) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(-6deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.ranking {
+  margin: 0 0 20px;
+  font: 400 1.1875rem/1.35 var(--font-display);
+}
+
+.ranking.is-pending {
+  color: var(--muted);
+  font: 400 1rem/1.5 var(--font-body);
+}
+
+.rounds {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rounds th {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0 4px 6px;
+}
+
+.rounds td {
+  padding: 8px 4px;
+  border-top: 1px solid var(--mist);
+  font-size: 1.0625rem;
+}
+
+.rounds td:last-child {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rounds tfoot th,
+.rounds tfoot td {
+  padding: 10px 4px 0;
+  border-top: 2px solid var(--mist);
+  font-weight: 800;
+}
+
+.rounds tfoot th {
+  text-align: right;
+  color: var(--muted);
+}
+
+.streak {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff1e0;
+  color: #8a3b00;
+  font: 800 1rem/1.3 var(--font-body);
+}
+
+.account-cta.is-streak {
+  font-weight: 700;
+}
+
+.stats.stats-2 {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 10px;
+}
+
+.toast {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+.toast textarea {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border: 2px solid var(--mist);
+  border-radius: 12px;
+  font: 0.9375rem/1.4 var(--font-body);
+}
+
+.next-edition {
+  margin: 20px 0 0;
+  color: var(--muted);
+}
+
+.account-cta {
+  margin: 8px 0 0;
+}
+
+/* --- Forms (accounts) --------------------------------------------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form p {
+  margin: 0;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--mist);
+  border-radius: 12px;
+  font: 1.0625rem/1.3 var(--font-body);
+  color: var(--night);
+}
+
+.form-field input:focus {
+  border-color: var(--sky);
+  outline: none;
+}
+
+.form-help {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.form-help ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.errorlist {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--danger);
+  font-size: 0.9375rem;
+}
+
+.form-links {
+  margin-top: 20px;
+  color: var(--muted);
+}
+
+.form-links p {
+  margin: 6px 0;
+}
+
+/* --- History ------------------------------------------------------------ */
+
+.profile-name {
+  overflow-wrap: anywhere;
+}
+
+.logout {
+  margin: 16px 0 0;
+}
+
+.account-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 8px 0 0;
+}
+
+.stats-title {
+  margin: 20px 0 10px;
+  font-size: 1.125rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 0 8px;
+}
+
+.stats div {
+  background: var(--mist);
+  border-radius: var(--radius-control);
+  padding: 12px 6px;
+  text-align: center;
+}
+
+.stats dt {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+.stats dd {
+  margin: 4px 0 0;
+  font: 400 1.75rem/1 var(--font-display);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.history-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0 6px 8px;
+}
+
+.history-table td {
+  padding: 10px 6px;
+  border-top: 1px solid var(--mist);
+}
+
+.history-table .num {
+  text-align: right;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+.prose {
+  line-height: 1.6;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  margin-top: 24px;
+}
+
+/* --- Consent banner ----------------------------------------------------- */
+
+.consent {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  max-width: 468px;
+  margin: 0 auto;
+  padding: 16px;
+  background: var(--paper);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(20, 48, 110, 0.3);
+  z-index: 10;
+}
+
+.consent p {
+  margin: 0 0 12px;
+  font-size: 0.9375rem;
+}
+
+.consent-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding-top: 32px;
+  }
+
+  .game,
+  .panel {
+    padding: 36px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp {
+    animation: none;
+  }
+
+  /* Keep the colour, drop the movement. */
+  .game.fx-bounce,
+  .game.fx-shake {
+    animation: card-flash 1000ms ease-out;
+  }
+
+  .reveal-comment.is-popping {
+    animation: none;
+  }
+
+  .shout {
+    left: 50%;
+    animation: shout-fade 2000ms ease-out forwards;
+  }
+
+  @keyframes shout-fade {
+    0% { opacity: 0; transform: translateX(-50%); }
+    15%, 70% { opacity: 1; transform: translateX(-50%); }
+    100% { opacity: 0; transform: translateX(-50%); }
+  }
+
+  .btn-primary:active {
+    transform: none;
+  }
 }
