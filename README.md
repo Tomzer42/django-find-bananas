@@ -46,9 +46,9 @@ To replay locally, open a private window (a new guest) or delete your plays in
 DJANGO_DEBUG=1 python manage.py test
 ```
 
-63 tests cover the daily schedule (including daylight-saving changes), image
+72 tests cover the daily schedule (including daylight-saving changes), image
 generation, the server-side game rules, anti-cheat limits, ranking, accounts,
-privacy of the history, rate limits, language detection and daily streaks.
+Google sign-in, privacy of the history, rate limits, language detection and daily streaks.
 
 ## Translations
 
@@ -87,15 +87,43 @@ With `DJANGO_DEBUG=0` the app refuses to start without `DJANGO_SECRET_KEY`.
 
 ## Deploy (recommended: Render + Neon)
 
-1. Create a free PostgreSQL database on [Neon](https://neon.com), in an EU
-   region. Copy its connection string.
+Two environments, same code:
+
+| | Branch | Render service | Database (Neon) |
+|---|---|---|---|
+| Staging | `develop` | `find-bananas-staging` (free, sleeps when idle) | branch `staging` |
+| Production | `main` | `find-bananas` (starter) | branch `main` |
+
+Pushing to `develop` updates staging; merging `develop` into `main` releases
+to production.
+
+1. Create a PostgreSQL project on [Neon](https://neon.com) in an EU region,
+   then a `staging` branch. Copy both connection strings.
 2. On [Render](https://render.com), create a **Blueprint** from this
-   repository. It reads `render.yaml` (one web service, Frankfurt).
-3. Fill the variables Render asks for: `DATABASE_URL` (Neon string), and the
-   SMTP settings for password-reset emails (any provider with a free tier).
+   repository. It reads `render.yaml` and creates both services.
+3. Fill the variables Render asks for, per service: `DATABASE_URL` (the
+   matching Neon string), `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`, and
+   optionally the SMTP settings (without them, password-reset emails are only
+   written to the logs).
 4. Deploy. Migrations and edition generation run before each release.
-5. Add the custom domain `find-bananas.com` in Render, then update the DNS
-   records it shows.
+5. Add the custom domain `find-bananas.com` to the production service, then
+   update the DNS records it shows.
+
+### Sign in with Google
+
+In Google Cloud Console, create an OAuth client of type *Web application*
+with these authorized redirect URIs, then publish the consent screen:
+
+```
+http://localhost:8000/account/google/callback/
+https://find-bananas-staging.onrender.com/account/google/callback/
+https://find-bananas.onrender.com/account/google/callback/
+https://find-bananas.com/account/google/callback/
+```
+
+Without `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` the button is hidden.
+A Google sign-in links to an existing account with the same (verified) email;
+new players choose their username right after.
 
 A `Dockerfile` is included to run the same app on any container host.
 
@@ -103,7 +131,7 @@ A `Dockerfile` is included to run the same app on any container host.
 
 ```
 django_project/   settings (env-based), URLs
-accounts/         custom user (email login), signup/login/reset/delete
+accounts/         custom user (email login), Google sign-in, signup/login/reset/delete
 find_bananas/
   editions.py     daily schedule + image generation
   game.py         game rules enforced server-side

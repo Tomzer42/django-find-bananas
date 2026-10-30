@@ -5,6 +5,7 @@
 <div class="panel">
   <h1>{% translate 'Create an account' %}</h1>
   <p class="lead">{% translate 'Keep your daily results and see your progress. Only an email and a username are needed. Today’s game on this device is added to your account.' %}</p>
+  {% include "registration/_google.html" %}
   <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% include "find_bananas/_form.html" %}

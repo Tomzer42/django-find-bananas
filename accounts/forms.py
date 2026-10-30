@@ -90,8 +90,18 @@ class DeleteAccountForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         self.user = user
         super().__init__(*args, **kwargs)
+        if not user.has_usable_password():
+            # Google accounts have no password: typing the username confirms.
+            self.fields["password"] = forms.CharField(
+                label=_("Type your username to confirm"), widget=forms.TextInput(attrs={"autocomplete": "off"})
+            )
 
     def clean_password(self):
+        if not self.user.has_usable_password():
+            typed = self.cleaned_data["password"].strip().lower()
+            if typed != (self.user.username or "").lower():
+                raise forms.ValidationError(_("This is not your username."))
+            return typed
         password = self.cleaned_data["password"]
         if not self.user.check_password(password):
             raise forms.ValidationError(_("Wrong password."))

@@ -15,6 +15,7 @@
   <meta property="og:url" content="{{ SITE_URL }}/">
   <meta property="og:image" content="{{ SITE_URL }}{% static 'find_bananas/brand/meta-image-find-bananas.png' %}">
   <meta name="twitter:card" content="summary_large_image">
+  {% if NOINDEX %}<meta name="robots" content="noindex, nofollow">{% endif %}
 
   <link rel="icon" href="{% static 'find_bananas/brand/la-bananas.ico' %}" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'find_bananas/brand/la-bananas_32x32.png' %}">

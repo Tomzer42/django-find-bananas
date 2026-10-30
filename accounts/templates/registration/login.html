@@ -4,6 +4,7 @@
 {% block content %}
 <div class="panel">
   <h1>{% translate 'Log in' %}</h1>
+  {% include "registration/_google.html" %}
   <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% include "find_bananas/_form.html" %}

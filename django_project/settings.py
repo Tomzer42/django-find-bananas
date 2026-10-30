@@ -146,8 +146,20 @@ SESSION_COOKIE_SAMESITE = "Lax"
 
 # Email (password reset). Console backend locally; SMTP in production.
 
-EMAIL_BACKEND = env("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+# Ask search engines not to index this site (staging).
+NOINDEX = env_bool("DJANGO_NOINDEX", False)
+
+# Sign in with Google (accounts/google.py). Leave empty to hide the button.
+GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", "")
+
 EMAIL_HOST = env("EMAIL_HOST", "")
+# Without an SMTP host, emails are written to the log instead of being sent
+# (local development, or before an email provider is set up).
+EMAIL_BACKEND = env(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.smtp.EmailBackend" if EMAIL_HOST else "django.core.mail.backends.console.EmailBackend",
+)
 EMAIL_PORT = int(env("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")

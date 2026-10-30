@@ -8,6 +8,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: accounts/forms.py:103
+msgid "This is not your username."
+msgstr "Ce n’est pas ton pseudo."
+
+#: accounts/forms.py:107
+msgid "Wrong password."
+msgstr "Mot de passe incorrect."
+
 #: accounts/forms.py:16
 msgid "This username is already taken."
 msgstr "Ce pseudo est déjà pris."
@@ -40,9 +48,13 @@ msgstr "Email"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: accounts/forms.py:97
-msgid "Wrong password."
-msgstr "Mot de passe incorrect."
+#: accounts/forms.py:96
+msgid "Type your username to confirm"
+msgstr "Tape ton pseudo pour confirmer"
+
+#: accounts/google.py:146
+msgid "Google sign-in did not work. Please try again."
+msgstr "La connexion avec Google n’a pas marché. Réessaie."
 
 #: accounts/models.py:41
 msgid "email address"
@@ -51,6 +63,14 @@ msgstr "adresse email"
 #: accounts/models.py:45
 msgid "username"
 msgstr "pseudo"
+
+#: accounts/templates/registration/_google.html:4:1
+msgid "Continue with Google"
+msgstr "Continuer avec Google"
+
+#: accounts/templates/registration/_google.html:6:1
+msgid "or"
+msgstr "ou"
 
 #: accounts/templates/registration/choose_username.html:16:1
 msgid "Continue"
@@ -98,23 +118,23 @@ msgid ""
 "Your account and all your results will be deleted. This cannot be undone."
 msgstr "Ton compte et tous tes résultats seront supprimés. C’est définitif."
 
-#: accounts/templates/registration/login.html:14:1
+#: accounts/templates/registration/login.html:15:1
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié ?"
 
-#: accounts/templates/registration/login.html:15:1
+#: accounts/templates/registration/login.html:16:1
 msgid "No account?"
 msgstr "Pas de compte ?"
 
-#: accounts/templates/registration/login.html:15:1
+#: accounts/templates/registration/login.html:16:1
 msgid "Create one"
 msgstr "Crée-le"
 
 #: accounts/templates/registration/login.html:3:1
 #: accounts/templates/registration/login.html:6:1
-#: accounts/templates/registration/login.html:11:1
+#: accounts/templates/registration/login.html:12:1
 #: accounts/templates/registration/password_reset_complete.html:7:1
-#: accounts/templates/registration/signup.html:15:1
+#: accounts/templates/registration/signup.html:16:1
 #: find_bananas/templates/find_bananas/base.html:37:1
 msgid "Log in"
 msgstr "Se connecter"
@@ -201,11 +221,11 @@ msgstr ""
 msgid "Your Find Bananas password"
 msgstr "Ton mot de passe Find Bananas"
 
-#: accounts/templates/registration/signup.html:12:1
+#: accounts/templates/registration/signup.html:13:1
 msgid "Create my account"
 msgstr "Créer mon compte"
 
-#: accounts/templates/registration/signup.html:15:1
+#: accounts/templates/registration/signup.html:16:1
 msgid "Already have an account?"
 msgstr "Déjà un compte ?"
 

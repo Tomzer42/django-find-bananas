@@ -44,6 +44,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         _("username"), max_length=20, null=True, blank=True, validators=[check_username]
     )
+    # Google's stable user id, set for accounts that sign in with Google.
+    google_sub = models.CharField(max_length=255, unique=True, null=True, blank=True, editable=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)

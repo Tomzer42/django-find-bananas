@@ -322,6 +322,37 @@ h2 {
   background: var(--paper);
 }
 
+.btn-google {
+  gap: 12px;
+  background: var(--paper);
+  color: var(--night);
+  box-shadow: inset 0 0 0 2px var(--mist), 0 4px 0 var(--mist);
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+.btn-google:active {
+  transform: translateY(3px);
+  box-shadow: inset 0 0 0 2px var(--mist), 0 1px 0 var(--mist);
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 4px;
+  color: var(--night);
+  opacity: 0.6;
+  font-size: 0.875rem;
+}
+
+.or::before,
+.or::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--mist);
+}
+
 .btn-big {
   width: 100%;
   min-height: 60px;
