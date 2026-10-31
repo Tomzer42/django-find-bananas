@@ -623,8 +623,8 @@ msgstr "Rounds"
 #: find_bananas/templates/find_bananas/home.html:14:1
 #: find_bananas/templates/find_bananas/home.html:55:1
 #, python-format
-msgid "Challenge #%(number)s"
-msgstr "Défi n°%(number)s"
+msgid "Day #%(number)s"
+msgstr "Jour n°%(number)s"
 
 #: find_bananas/templates/find_bananas/home.html:15:1
 msgid "How many bananas?"
@@ -783,8 +783,8 @@ msgid "No results yet. Play today’s challenge and it will appear here."
 msgstr "Pas encore de résultat. Joue au défi du jour et il apparaîtra ici."
 
 #: find_bananas/templates/find_bananas/profile.html:37:1
-msgid "Challenge"
-msgstr "Défi"
+msgid "Day"
+msgstr "Jour"
 
 #: find_bananas/templates/find_bananas/profile.html:38:1
 msgid "Score"
