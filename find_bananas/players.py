@@ -30,7 +30,15 @@ def find_play(request, edition) -> Play | None:
         play = Play.objects.filter(edition=edition, user=request.user).first()
         if play:
             return play
-    return Play.objects.filter(edition=edition, guest_key=get_guest_key(request), user__isnull=True).first()
+    # Every play keeps the key of the device it was played on, even once it
+    # belongs to an account: after logging out, this device still shows the
+    # day's result instead of offering a second game.
+    # (A signed-in account only picks up this device's play if no other
+    # account owns it.)
+    plays = Play.objects.filter(edition=edition, guest_key=get_guest_key(request))
+    if request.user.is_authenticated:
+        plays = plays.filter(user__isnull=True)
+    return plays.first()
 
 
 def claim_guest_plays(user, guest_key: uuid.UUID) -> int:
