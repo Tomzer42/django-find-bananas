@@ -43,7 +43,7 @@ def game_strings() -> dict:
                 _("That’s impressive!"),
                 _("You nailed it!"),
                 _("That’s a banana split!"),
-                _("Oh my god of bananas!"),
+                _("Bananas legend!"),
                 _("Bananas banger!"),
             ],
             "yellow": [

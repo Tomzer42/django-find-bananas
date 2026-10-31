@@ -135,7 +135,7 @@ msgstr "Crée-le"
 #: accounts/templates/registration/login.html:12:1
 #: accounts/templates/registration/password_reset_complete.html:7:1
 #: accounts/templates/registration/signup.html:16:1
-#: find_bananas/templates/find_bananas/base.html:38:1
+#: find_bananas/templates/find_bananas/base.html:40:1
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -408,14 +408,14 @@ msgstr "Impressionnant !"
 
 #: find_bananas/strings.py:44
 msgid "You nailed it!"
-msgstr "T’as dead ça chacal !"
+msgstr "Masterclass !"
 
 #: find_bananas/strings.py:45
 msgid "That’s a banana split!"
 msgstr "La légende des bananes !"
 
 #: find_bananas/strings.py:46
-msgid "Oh my god of bananas!"
+msgid "Bananas legend!"
 msgstr "What a crackito !"
 
 #: find_bananas/strings.py:47
@@ -472,7 +472,7 @@ msgstr "Impressionnant… de nullité !"
 
 #: find_bananas/strings.py:66
 msgid "Are you drunk?"
-msgstr "T’es bourré(e) ?"
+msgstr "Lendemain de soirée ?"
 
 #: find_bananas/strings.py:67
 msgid "Try with your eyes open."
@@ -578,22 +578,22 @@ msgstr "FindBananas — combien de bananes vois-tu ?"
 msgid "A new challenge every day at noon. 3 rounds, 5 seconds each."
 msgstr "Un nouveau défi chaque jour à midi. 3 rounds, 5 secondes chacun."
 
-#: find_bananas/templates/find_bananas/base.html:34:1
+#: find_bananas/templates/find_bananas/base.html:36:1
 msgid "Account"
 msgstr "Compte"
 
-#: find_bananas/templates/find_bananas/base.html:36:1
+#: find_bananas/templates/find_bananas/base.html:38:1
 #: find_bananas/templates/find_bananas/profile.html:3:1
 msgid "My profile"
 msgstr "Mon profil"
 
-#: find_bananas/templates/find_bananas/base.html:61:1
+#: find_bananas/templates/find_bananas/base.html:63:1
 #: find_bananas/templates/find_bananas/privacy.html:3:1
 #: find_bananas/templates/find_bananas/privacy.html:6:1
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: find_bananas/templates/find_bananas/base.html:67:1
+#: find_bananas/templates/find_bananas/base.html:69:1
 msgid ""
 "May we measure visits with Google Analytics? It sets cookies. The game works "
 "either way."
@@ -601,11 +601,11 @@ msgstr ""
 "Pouvons-nous mesurer l’audience avec Google Analytics ? Cela dépose des "
 "cookies. Le jeu marche dans les deux cas."
 
-#: find_bananas/templates/find_bananas/base.html:69:1
+#: find_bananas/templates/find_bananas/base.html:71:1
 msgid "No thanks"
 msgstr "Non merci"
 
-#: find_bananas/templates/find_bananas/base.html:70:1
+#: find_bananas/templates/find_bananas/base.html:72:1
 msgid "Allow"
 msgstr "Accepter"
 
