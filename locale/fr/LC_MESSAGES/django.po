@@ -135,7 +135,7 @@ msgstr "Crée-le"
 #: accounts/templates/registration/login.html:12:1
 #: accounts/templates/registration/password_reset_complete.html:7:1
 #: accounts/templates/registration/signup.html:16:1
-#: find_bananas/templates/find_bananas/base.html:37:1
+#: find_bananas/templates/find_bananas/base.html:38:1
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -185,10 +185,10 @@ msgid "Back to the game"
 msgstr "Retour au jeu"
 
 #: accounts/templates/registration/password_reset_email.html:1:1
-msgid "Someone asked to reset the password of your Find Bananas account."
+msgid "Someone asked to reset the password of your FindBananas account."
 msgstr ""
-"Quelqu’un a demandé à réinitialiser le mot de passe de ton compte Find "
-"Bananas."
+"Quelqu’un a demandé à réinitialiser le mot de passe de ton compte "
+"FindBananas."
 
 #: accounts/templates/registration/password_reset_email.html:3:1
 msgid "Choose a new password here (the link works for 3 days):"
@@ -218,8 +218,8 @@ msgstr ""
 "choisir un nouveau mot de passe."
 
 #: accounts/templates/registration/password_reset_subject.txt:1:1
-msgid "Your Find Bananas password"
-msgstr "Ton mot de passe Find Bananas"
+msgid "Your FindBananas password"
+msgstr "Ton mot de passe FindBananas"
 
 #: accounts/templates/registration/signup.html:13:1
 msgid "Create my account"
@@ -269,7 +269,7 @@ msgstr "Bienvenue ! Tes résultats sont maintenant enregistrés dans ton compte
 msgid "Your username has been changed."
 msgstr "Ton pseudo a été modifié."
 
-#: accounts/views.py:72
+#: accounts/views.py:86
 msgid "Your account and its history have been deleted."
 msgstr "Ton compte et son historique ont été supprimés."
 
@@ -363,8 +363,8 @@ msgid "See all my results"
 msgstr "Voir tous mes résultats"
 
 #: find_bananas/strings.py:30
-msgid "Find Bananas #{number}"
-msgstr "Find Bananas n°{number}"
+msgid "FindBananas #{number}"
+msgstr "FindBananas n°{number}"
 
 #: find_bananas/strings.py:31
 msgid "R{n}: {gap}"
@@ -412,7 +412,7 @@ msgstr "T’as dead ça chacal !"
 
 #: find_bananas/strings.py:45
 msgid "That’s a banana split!"
-msgstr "Le dieu des bananes !"
+msgstr "La légende des bananes !"
 
 #: find_bananas/strings.py:46
 msgid "Oh my god of bananas!"
@@ -571,29 +571,29 @@ msgstr ""
 "réessaie."
 
 #: find_bananas/templates/find_bananas/base.html:13:1
-msgid "Find Bananas — how many bananas can you see?"
-msgstr "Find Bananas — combien de bananes vois-tu ?"
+msgid "FindBananas — how many bananas can you see?"
+msgstr "FindBananas — combien de bananes vois-tu ?"
 
 #: find_bananas/templates/find_bananas/base.html:14:1
 msgid "A new challenge every day at noon. 3 rounds, 5 seconds each."
 msgstr "Un nouveau défi chaque jour à midi. 3 rounds, 5 secondes chacun."
 
-#: find_bananas/templates/find_bananas/base.html:33:1
+#: find_bananas/templates/find_bananas/base.html:34:1
 msgid "Account"
 msgstr "Compte"
 
-#: find_bananas/templates/find_bananas/base.html:35:1
+#: find_bananas/templates/find_bananas/base.html:36:1
 #: find_bananas/templates/find_bananas/profile.html:3:1
 msgid "My profile"
 msgstr "Mon profil"
 
-#: find_bananas/templates/find_bananas/base.html:60:1
+#: find_bananas/templates/find_bananas/base.html:61:1
 #: find_bananas/templates/find_bananas/privacy.html:3:1
 #: find_bananas/templates/find_bananas/privacy.html:6:1
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: find_bananas/templates/find_bananas/base.html:66:1
+#: find_bananas/templates/find_bananas/base.html:67:1
 msgid ""
 "May we measure visits with Google Analytics? It sets cookies. The game works "
 "either way."
@@ -601,11 +601,11 @@ msgstr ""
 "Pouvons-nous mesurer l’audience avec Google Analytics ? Cela dépose des "
 "cookies. Le jeu marche dans les deux cas."
 
-#: find_bananas/templates/find_bananas/base.html:68:1
+#: find_bananas/templates/find_bananas/base.html:69:1
 msgid "No thanks"
 msgstr "Non merci"
 
-#: find_bananas/templates/find_bananas/base.html:69:1
+#: find_bananas/templates/find_bananas/base.html:70:1
 msgid "Allow"
 msgstr "Accepter"
 
@@ -729,8 +729,8 @@ msgid "Audience measurement is only loaded if you accept it."
 msgstr "La mesure d’audience n’est chargée que si tu l’acceptes."
 
 #: find_bananas/templates/find_bananas/privacy.html:7:1
-msgid "Find Bananas collects as little as possible."
-msgstr "Find Bananas collecte le moins de données possible."
+msgid "FindBananas collects as little as possible."
+msgstr "FindBananas collecte le moins de données possible."
 
 #: find_bananas/templates/find_bananas/privacy.html:8:1
 msgid "Without an account"

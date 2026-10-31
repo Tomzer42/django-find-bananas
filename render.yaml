@@ -44,7 +44,7 @@ services:
       - key: EMAIL_HOST_PASSWORD
         sync: false
       - key: DEFAULT_FROM_EMAIL
-        value: Find Bananas <no-reply@find-bananas.com>
+        value: FindBananas <no-reply@find-bananas.com>
 
   - type: web
     name: find-bananas-staging

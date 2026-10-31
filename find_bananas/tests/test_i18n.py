@@ -33,7 +33,7 @@ class LanguageTests(TestCase):
 
     def test_share_text_and_numbers_in_french(self):
         strings = self.strings(self.client.get("/", HTTP_ACCEPT_LANGUAGE="fr"))
-        self.assertEqual(strings["shareTitle"], "Find Bananas n°{number}")
+        self.assertEqual(strings["shareTitle"], "FindBananas n°{number}")
         self.assertIn("{p}", strings["topPercent"])
         self.assertIn("{players}", strings["topPercent"])
 

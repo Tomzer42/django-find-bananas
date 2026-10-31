@@ -1,4 +1,4 @@
-# Find Bananas 🍌
+# FindBananas 🍌
 
 A daily 30-second game. Bananas appear for 5 seconds, you guess how many you
 saw. Three rounds, more bananas each time. A new challenge goes live every day

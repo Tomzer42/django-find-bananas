@@ -1,5 +1,5 @@
 """
-Django settings for Find Bananas.
+Django settings for FindBananas.
 
 Every value that differs between environments comes from an environment
 variable. Defaults are safe for local development only; see `.env.example`
@@ -164,7 +164,7 @@ EMAIL_PORT = int(env("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "Find Bananas <no-reply@find-bananas.com>")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "FindBananas <no-reply@find-bananas.com>")
 
 
 # Internationalization. All user-facing strings go through gettext; adding a
