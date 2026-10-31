@@ -209,3 +209,34 @@ class TierTests(GameClientMixin, TestCase):
         edition = make_edition()
         state = self.api(edition, "/state").json()
         self.assertEqual(state["edition"]["tiers"], [[4, 6, 8], [8, 11, 15], [15, 23, 30]])
+
+
+class LogoutReplayTests(GameClientMixin, TestCase):
+    """After logging out, the device still shows the day's result."""
+
+    def test_no_second_game_after_logout(self):
+        from accounts.models import User
+
+        edition = make_edition()
+        self.play_full_game(edition, [30, 75, 150])
+        user = User.objects.create_user(email="p@example.com", password="pw-12345678", username="banana_fan")
+        self.client.login(email="p@example.com", password="pw-12345678")
+        self.assertEqual(Play.objects.get().user, user)  # claimed at login
+        self.client.post("/account/logout/")
+        state = self.api(edition, "/state").json()
+        self.assertEqual(state["status"], "completed")
+        start = self.api(edition, "/start").json()
+        self.assertEqual(start["status"], "completed")
+        self.assertEqual(Play.objects.count(), 1)
+
+    def test_other_account_on_same_device_does_not_see_it(self):
+        from accounts.models import User
+
+        edition = make_edition()
+        self.play_full_game(edition, [30, 75, 150])
+        User.objects.create_user(email="a@example.com", password="pw-12345678", username="first_fan")
+        User.objects.create_user(email="b@example.com", password="pw-12345678", username="second_fan")
+        self.client.login(email="a@example.com", password="pw-12345678")
+        self.client.post("/account/logout/")
+        self.client.login(email="b@example.com", password="pw-12345678")
+        self.assertNotEqual(self.api(edition, "/state").json()["status"], "completed")

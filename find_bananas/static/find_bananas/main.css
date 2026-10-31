@@ -1,4 +1,4 @@
-/* Find Bananas — one blue sky, one white card, bananas in yellow. */
+/* FindBananas — one blue sky, one white card, bananas in yellow. */
 
 /* Typography rule: Cherry Bomb One for the big moments only (logo, titles,
    buttons, the numbers of the game). Everything you read goes in Nunito,
@@ -66,6 +66,26 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Giant banana shadows on the sky. A fixed layer (not background-attachment:
+   fixed, which iOS ignores) so they stay put while the page scrolls. The sky
+   blue itself is unchanged; only the shapes are a shade darker. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("brand/sky-bananas.svg") center / cover no-repeat;
+  pointer-events: none;
+}
+
+/* Portrait phones: show the banana that rises under the card. */
+@media (max-aspect-ratio: 3/4) {
+  body::before {
+    background-size: auto 100%;
+    background-position: 30% center;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -75,6 +95,7 @@ body {
   background: var(--sky);
   color: var(--night);
   font: 400 1rem/1.5 var(--font-body);
+  isolation: isolate;
 }
 
 a {

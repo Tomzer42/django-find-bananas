@@ -1,4 +1,4 @@
-// Find Bananas — game screen.
+// FindBananas — game screen.
 // The server owns the game: this script only displays what it is told,
 // sends guesses, and never knows a banana count before answering.
 (function () {
