@@ -27,7 +27,7 @@ def game_strings() -> dict:
         "streakCurrent": _("🔥 {n} days in a row!"),
         "signupLink": _("create a free account"),
         "historyLink": _("See all my results"),
-        "shareTitle": _("Find Bananas #{number}"),
+        "shareTitle": _("FindBananas #{number}"),
         "shareRound": _("R{n}: {gap}"),
         "shareTotal": _("Total: {score} 🍌 off"),
         "shareTop": _("top {p}%"),
@@ -43,7 +43,7 @@ def game_strings() -> dict:
                 _("That’s impressive!"),
                 _("You nailed it!"),
                 _("That’s a banana split!"),
-                _("Oh my god of bananas!"),
+                _("Bananas legend!"),
                 _("Bananas banger!"),
             ],
             "yellow": [

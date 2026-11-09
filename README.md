@@ -1,4 +1,4 @@
-# Find Bananas 🍌
+# FindBananas 🍌
 
 A daily 30-second game. Bananas appear for 5 seconds, you guess how many you
 saw. Three rounds, more bananas each time. A new challenge goes live every day
@@ -46,7 +46,7 @@ To replay locally, open a private window (a new guest) or delete your plays in
 DJANGO_DEBUG=1 python manage.py test
 ```
 
-72 tests cover the daily schedule (including daylight-saving changes), image
+74 tests cover the daily schedule (including daylight-saving changes), image
 generation, the server-side game rules, anti-cheat limits, ranking, accounts,
 Google sign-in, privacy of the history, rate limits, language detection and daily streaks.
 

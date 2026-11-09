@@ -62,6 +62,20 @@ def choose_username(request):
     )
 
 
+class LogoutView(auth_views.LogoutView):
+    """Logging out empties the session; the device's guest key is put back so
+    the day's game played on this device is still recognised."""
+
+    def post(self, request, *args, **kwargs):
+        from find_bananas.players import SESSION_GUEST_KEY
+
+        guest_key = request.session.get(SESSION_GUEST_KEY)
+        response = super().post(request, *args, **kwargs)
+        if guest_key:
+            request.session[SESSION_GUEST_KEY] = guest_key
+        return response
+
+
 @login_required
 def delete_account(request):
     form = DeleteAccountForm(request.user, request.POST or None)

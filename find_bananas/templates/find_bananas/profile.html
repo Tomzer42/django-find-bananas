@@ -1,6 +1,6 @@
 {% extends "find_bananas/base.html" %}
 {% load i18n %}
-{% block title %}{% translate 'My profile' %} — Find Bananas{% endblock %}
+{% block title %}{% translate 'My profile' %} — FindBananas{% endblock %}
 {% block content %}
 <div class="panel">
   <h1 class="profile-name">{{ user.username|default:_('My profile') }}</h1>
@@ -34,7 +34,7 @@
   <table class="history-table">
     <thead>
       <tr>
-        <th scope="col">{% translate 'Challenge' %}</th>
+        <th scope="col">{% translate 'Day' %}</th>
         <th scope="col" class="num">{% translate 'Score' %}</th>
         <th scope="col" class="num">{% translate 'Ranking' %}</th>
       </tr>

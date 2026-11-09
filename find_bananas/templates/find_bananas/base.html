@@ -5,15 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#3380FF">
-  <title>{% block title %}Find Bananas{% endblock %}</title>
+  <title>{% block title %}FindBananas{% endblock %}</title>
   <meta name="description" content="{% translate 'A daily 30-second game: bananas appear for 5 seconds. How many did you see?' %}">
 
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Find Bananas">
-  <meta property="og:title" content="{% translate 'Find Bananas — how many bananas can you see?' %}">
+  <meta property="og:site_name" content="FindBananas">
+  <meta property="og:title" content="{% translate 'FindBananas — how many bananas can you see?' %}">
   <meta property="og:description" content="{% translate 'A new challenge every day at noon. 3 rounds, 5 seconds each.' %}">
   <meta property="og:url" content="{{ SITE_URL }}/">
-  <meta property="og:image" content="{{ SITE_URL }}{% static 'find_bananas/brand/meta-image-find-bananas.png' %}">
+  <meta property="og:image" content="{{ SITE_URL }}{% static 'find_bananas/brand/og-image.png' %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   {% if NOINDEX %}<meta name="robots" content="noindex, nofollow">{% endif %}
 
@@ -29,7 +31,7 @@
   <header class="topbar">
     <a class="brand" href="{% url 'home' %}">
       <img src="{% static 'find_bananas/brand/logo-96.png' %}" alt="" width="44" height="44">
-      <span>Find Bananas</span>
+      <span>FindBananas</span>
     </a>
     <nav class="topnav" aria-label="{% translate 'Account' %}">
       {% if user.is_authenticated %}
