@@ -444,11 +444,11 @@ msgstr "Jaune comme une banane."
 
 #: find_bananas/strings.py:57
 msgid "Better at counting bills?"
-msgstr "Tu comptes mieux les billets ?"
+msgstr "Les bananes sont cuites…"
 
 #: find_bananas/strings.py:58
 msgid "Forgot your glasses on that one?"
-msgstr "L’ophtalmo est une solution."
+msgstr "Tu veux mes lunettes ?"
 
 #: find_bananas/strings.py:59
 msgid "Not so good…"
@@ -460,11 +460,11 @@ msgstr "Belle marge de progression…"
 
 #: find_bananas/strings.py:61
 msgid "Not a big fan of bananas?"
-msgstr "Pas fan des bananes ?"
+msgstr "Pas fan de bananes ?"
 
 #: find_bananas/strings.py:62
 msgid "Orange is not banana…"
-msgstr "Orange n’est pas banane…"
+msgstr "L’orange n’est pas une banane."
 
 #: find_bananas/strings.py:65
 msgid "That’s impressively bad!"
