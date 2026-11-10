@@ -61,6 +61,7 @@
 <div class="panel">
   <p class="form-help">{{ user.email }}</p>
   <p class="account-links">
+    {% if user.is_staff %}<a href="{% url 'stats' %}">Statistiques</a>{% endif %}
     <a href="{% url 'choose_username' %}">{% translate 'Change username' %}</a>
     <a href="{% url 'password_reset' %}">{% translate 'Change password' %}</a>
     <a href="{% url 'delete_account' %}">{% translate 'Delete my account' %}</a>

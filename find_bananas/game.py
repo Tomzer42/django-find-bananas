@@ -20,6 +20,7 @@ from django.utils import timezone
 from . import scoring, streaks
 from .editions import ROUND_SPECS
 from .models import Edition, EditionRound, Play
+from .sources import session_source
 from .players import find_play, get_guest_key, ip_hash
 
 IMAGE_REFETCH_SECONDS = 15  # how long a round image can be re-downloaded after first serve
@@ -62,6 +63,7 @@ def start_play(request, edition: Edition) -> Play:
                 user=user,
                 guest_key=get_guest_key(request),
                 ip_hash=ip_hash(request, f"edition:{edition.pk}"),
+                source=session_source(request),
             )
     except IntegrityError:
         # Double click / two tabs: the other request created it.

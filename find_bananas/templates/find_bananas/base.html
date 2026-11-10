@@ -42,7 +42,7 @@
     </nav>
   </header>
 
-  <main class="page">
+  <main class="page{% block page_class %}{% endblock %}">
     {% if messages %}
       <div class="flash" role="status">
         {% for message in messages %}<p>{{ message }}</p>{% endfor %}
