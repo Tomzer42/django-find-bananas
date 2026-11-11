@@ -46,9 +46,9 @@ To replay locally, open a private window (a new guest) or delete your plays in
 DJANGO_DEBUG=1 python manage.py test
 ```
 
-74 tests cover the daily schedule (including daylight-saving changes), image
+82 tests cover the daily schedule (including daylight-saving changes), image
 generation, the server-side game rules, anti-cheat limits, ranking, accounts,
-Google sign-in, privacy of the history, rate limits, language detection and daily streaks.
+Google sign-in, privacy of the history, rate limits, language detection, daily streaks and statistics.
 
 ## Translations
 
@@ -79,6 +79,15 @@ spot (about 2 seconds for that one visitor), so a missed run never breaks the
 game.
 
 Change the switch time with `EDITION_HOUR` and `EDITION_TIMEZONE`.
+
+## Statistics
+
+`/stats/` (staff only) shows players per day, new and returning players,
+return rate the next day and 7 days later, and where new players come from.
+Give an account access with `python manage.py make_staff you@example.com`
+(Render: the service's *Shell* tab). Add `?ref=<name>` to links you post
+(`?ref=tiktok`, `?ref=reddit`…) to see each channel there; the share button
+already adds `?ref=share`. See `find_bananas/sources.py` and `stats.py`.
 
 ## Configuration
 

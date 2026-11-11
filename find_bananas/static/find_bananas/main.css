@@ -1076,3 +1076,56 @@ h2 {
     transform: none;
   }
 }
+
+/* Staff statistics page (/stats/) */
+.page.page-wide {
+  max-width: 1040px;
+}
+
+.stats.stats-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 640px) {
+  .stats.stats-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin: 0 calc(-1 * 6px);
+}
+
+.history-table.stats-table td,
+.history-table.stats-table th {
+  white-space: nowrap;
+}
+
+.stats-table .muted {
+  color: var(--muted);
+}
+
+.stats-bar {
+  display: block;
+  height: 8px;
+  min-width: 2px;
+  border-radius: 4px;
+  background: var(--sky);
+}
+
+.stats-bar-cell {
+  width: 30%;
+  min-width: 80px;
+}
+
+.stats-today td {
+  font-weight: 700;
+}
+
+.stats-links code {
+  font-size: 0.875rem;
+  background: var(--mist);
+  border-radius: 6px;
+  padding: 2px 6px;
+}

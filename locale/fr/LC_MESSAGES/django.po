@@ -109,7 +109,7 @@ msgstr "Garder mon compte"
 #: accounts/templates/registration/delete_account.html:3:1
 #: accounts/templates/registration/delete_account.html:6:1
 #: accounts/templates/registration/delete_account.html:11:1
-#: find_bananas/templates/find_bananas/profile.html:66:1
+#: find_bananas/templates/find_bananas/profile.html:67:1
 msgid "Delete my account"
 msgstr "Supprimer mon compte"
 
@@ -448,7 +448,7 @@ msgstr "Les bananes sont cuites…"
 
 #: find_bananas/strings.py:58
 msgid "Forgot your glasses on that one?"
-msgstr "Tu veux mes lunettes ?"
+msgstr "Tu veux mes lunettes ?"
 
 #: find_bananas/strings.py:59
 msgid "Not so good…"
@@ -460,7 +460,7 @@ msgstr "Belle marge de progression…"
 
 #: find_bananas/strings.py:61
 msgid "Not a big fan of bananas?"
-msgstr "Pas fan de bananes ?"
+msgstr "Pas fan de bananes ?"
 
 #: find_bananas/strings.py:62
 msgid "Orange is not banana…"
@@ -811,15 +811,15 @@ msgstr "Plus récents"
 msgid "Older"
 msgstr "Plus anciens"
 
-#: find_bananas/templates/find_bananas/profile.html:64:1
+#: find_bananas/templates/find_bananas/profile.html:65:1
 msgid "Change username"
 msgstr "Changer de pseudo"
 
-#: find_bananas/templates/find_bananas/profile.html:65:1
+#: find_bananas/templates/find_bananas/profile.html:66:1
 msgid "Change password"
 msgstr "Changer de mot de passe"
 
-#: find_bananas/templates/find_bananas/profile.html:70:1
+#: find_bananas/templates/find_bananas/profile.html:71:1
 msgid "Log out"
 msgstr "Se déconnecter"
 

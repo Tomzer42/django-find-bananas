@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Avg, Min
@@ -10,7 +11,7 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET, require_POST
 
-from . import game, scoring, streaks
+from . import game, scoring, stats, streaks
 from .editions import get_live_edition
 from .models import Edition, Play
 from .players import find_play
@@ -56,6 +57,13 @@ def profile(request):
         "bananas_seen": scoring.bananas_seen(Play.objects.filter(user=request.user)),
     }
     return render(request, "find_bananas/profile.html", {"page": page, "rows": rows, "summary": summary})
+
+
+@never_cache
+@staff_member_required
+@require_GET
+def stats_page(request):
+    return render(request, "find_bananas/stats.html", {"stats": stats.build(), "site": request.build_absolute_uri("/")})
 
 
 @require_GET

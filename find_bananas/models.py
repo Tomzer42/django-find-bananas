@@ -76,6 +76,9 @@ class Play(models.Model):
     rounds = models.JSONField(default=list)
     score = models.PositiveIntegerField(null=True, blank=True, help_text="Sum of the gaps; lower is better.")
     ranked = models.BooleanField(default=False, help_text="Counts in the comparison with other players.")
+    source = models.CharField(
+        max_length=32, blank=True, help_text="Where the player came from (see sources.py); empty before tracking."
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 

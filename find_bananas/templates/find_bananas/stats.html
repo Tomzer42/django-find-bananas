@@ -1,0 +1,82 @@
+{% extends "find_bananas/base.html" %}
+{% comment %}Staff-only page, kept in French on purpose (not part of the translated site).{% endcomment %}
+{% block title %}Statistiques — FindBananas{% endblock %}
+{% block page_class %} page-wide{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>Statistiques</h1>
+  <p class="form-help">Jour n°{{ stats.daily.0.number|default:"—" }} en cours. Un « joueur » = un compte, ou un appareil sans compte.</p>
+  <dl class="stats stats-4">
+    <div><dt>Joueurs aujourd'hui</dt><dd>{{ stats.summary.players_today }}</dd></div>
+    <div><dt>Moyenne 7 derniers jours</dt><dd>{{ stats.summary.week_avg|default:"—" }}</dd></div>
+    <div><dt>Joueurs depuis le début</dt><dd>{{ stats.summary.players_total }}</dd></div>
+    <div><dt>Comptes créés</dt><dd>{{ stats.summary.accounts_total }}</dd></div>
+  </dl>
+</div>
+
+<div class="panel">
+  <h2 class="stats-title">Jour par jour (30 derniers jours)</h2>
+  <div class="table-scroll">
+    <table class="history-table stats-table">
+      <thead>
+        <tr>
+          <th scope="col">Jour</th>
+          <th scope="col" class="num">Joueurs</th>
+          <th scope="col"></th>
+          <th scope="col" class="num">Terminées</th>
+          <th scope="col" class="num">Nouveaux</th>
+          <th scope="col" class="num">Revenants</th>
+          <th scope="col" class="num">Via partage</th>
+          <th scope="col" class="num">Retour J+1</th>
+          <th scope="col" class="num">Retour J+7</th>
+          <th scope="col" class="num">Comptes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in stats.daily %}
+          <tr{% if forloop.first %} class="stats-today"{% endif %}>
+            <td>{% if d.number %}n°{{ d.number }} {% endif %}<span class="muted">{{ d.date|date:"D j M" }}</span></td>
+            <td class="num">{{ d.players }}</td>
+            <td class="stats-bar-cell">{% if d.players %}<span class="stats-bar" style="width: {{ d.bar }}%"></span>{% endif %}</td>
+            <td class="num">{{ d.completed }}</td>
+            <td class="num">{{ d.new }}</td>
+            <td class="num">{{ d.returning }}</td>
+            <td class="num">{{ d.from_share }}</td>
+            <td class="num">{% if d.d1 %}{{ d.d1.rate }} %{% if d.d1.running %} <span class="muted">(en cours)</span>{% endif %}{% else %}<span class="muted">—</span>{% endif %}</td>
+            <td class="num">{% if d.d7 %}{{ d.d7.rate }} %{% if d.d7.running %} <span class="muted">(en cours)</span>{% endif %}{% else %}<span class="muted">—</span>{% endif %}</td>
+            <td class="num">{{ d.accounts }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="form-help">Retour J+1 / J+7 : part des nouveaux joueurs de ce jour qui ont rejoué 1 / 7 jours plus tard. « — » tant que ce jour n'est pas arrivé.</p>
+</div>
+
+<div class="panel">
+  <h2 class="stats-title">D'où viennent les nouveaux joueurs</h2>
+  {% if stats.sources_30 %}
+    <table class="history-table stats-table">
+      <thead>
+        <tr><th scope="col">Source</th><th scope="col" class="num">7 derniers jours</th><th scope="col" class="num">30 derniers jours</th><th scope="col" class="num">Part (30 j)</th></tr>
+      </thead>
+      <tbody>
+        {% for s in stats.sources_30 %}
+          <tr>
+            <td>{{ s.name }}</td>
+            <td class="num">{% for w in stats.sources_7 %}{% if w.name == s.name %}{{ w.players }}{% endif %}{% endfor %}</td>
+            <td class="num">{{ s.players }}</td>
+            <td class="num">{{ s.share }} %</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty">Pas encore de nouveaux joueurs sur les 30 derniers jours.</p>
+  {% endif %}
+  <div class="stats-links form-help">
+    <p><strong>share</strong> = arrivés par le message de partage du jeu. <strong>direct</strong> = adresse tapée, ou appli qui n'indique pas d'où vient le clic (WhatsApp, la plupart des applis). <strong>inconnu</strong> = joueurs d'avant le suivi.</p>
+    <p>Pour suivre un canal, ajoute <code>?ref=nom</code> à tes liens, par exemple <code>{{ site }}?ref=tiktok</code> dans la bio TikTok ou <code>{{ site }}?ref=reddit</code> dans un post. Le nom s'affichera ici tel quel.</p>
+  </div>
+</div>
+{% endblock %}

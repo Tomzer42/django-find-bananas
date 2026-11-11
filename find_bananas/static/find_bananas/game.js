@@ -574,7 +574,7 @@
       total += " · " + fmt(T.shareTop, { p: state.ranking.top_percent });
     }
     lines.push(total + " " + EMOJI[totalTier()]);
-    lines.push(T.shareChallenge + " " + window.SITE_URL + "/");
+    lines.push(T.shareChallenge + " " + window.SITE_URL + "/?ref=share");
     return lines.join("\n");
   }
 
