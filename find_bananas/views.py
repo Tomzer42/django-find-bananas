@@ -66,6 +66,14 @@ def stats_page(request):
     return render(request, "find_bananas/stats.html", {"stats": stats.build(), "site": request.build_absolute_uri("/")})
 
 
+@never_cache
+def health(request):
+    """Render's health check. Answers without touching the database, so the
+    checks (every few seconds, day and night) do not keep the database awake:
+    Neon's free plan only counts the hours the database is actually running."""
+    return HttpResponse("ok", content_type="text/plain")
+
+
 @require_GET
 def privacy(request):
     return render(request, "find_bananas/privacy.html")

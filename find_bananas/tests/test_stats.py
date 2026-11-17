@@ -136,3 +136,11 @@ class StatsPageTests(TestCase):
         self.assertContains(response, "Joueurs aujourd")
         self.assertContains(response, "?ref=tiktok")
         self.assertContains(self.client.get("/profile/"), "/stats/")
+
+
+class HealthCheckTests(TestCase):
+    def test_health_check_does_not_touch_the_database(self):
+        with self.assertNumQueries(0):
+            response = self.client.get("/healthz", HTTP_USER_AGENT="Render/1.0")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"ok")
