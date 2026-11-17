@@ -83,7 +83,7 @@ class TrafficSourceMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.method == "GET" and not request.path.startswith(("/api/", "/static/", "/admin/")):
+        if request.method == "GET" and not request.path.startswith(("/api/", "/static/", "/admin/", "/healthz")):
             response = self._capture(request)
             if response is not None:
                 return response
