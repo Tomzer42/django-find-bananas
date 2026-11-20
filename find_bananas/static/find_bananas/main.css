@@ -517,17 +517,18 @@ h2 {
   margin-bottom: 12px;
 }
 
-/* Phones: the "Show the bananas" button sits low in the card, at thumb
-   height, like the buttons of the other screens (not right under the title). */
+.screen[data-screen="ready"] .ready-hint {
+  margin-bottom: 24px;
+}
+
+/* Phones: the round card is centred on the screen, which puts "Show the
+   bananas" at thumb height, like the buttons of the other screens. */
 @media (max-width: 640px) {
-  .screen[data-screen="ready"]:not([hidden]) {
+  .page:has(.screen[data-screen="ready"]:not([hidden])) {
     display: flex;
     flex-direction: column;
-    min-height: clamp(220px, 42svh, 320px);
-  }
-
-  .screen[data-screen="ready"] [data-action="show"] {
-    margin-top: auto;
+    justify-content: center;
+    padding-bottom: 48px;
   }
 }
 
