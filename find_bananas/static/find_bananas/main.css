@@ -521,10 +521,13 @@ h2 {
   margin-bottom: 24px;
 }
 
-/* Phones: the round card is centred on the screen, which puts "Show the
-   bananas" at thumb height, like the buttons of the other screens. */
+/* Phones: the round card and the guess card are centred on the screen,
+   which puts their button at thumb height like the buttons of the other
+   screens. The guess card only while the keyboard is closed (game.js sets
+   .keyboard-open), so "Submit" never hides behind the keyboard. */
 @media (max-width: 640px) {
-  .page:has(.screen[data-screen="ready"]:not([hidden])) {
+  .page:has(.screen[data-screen="ready"]:not([hidden])),
+  html:not(.keyboard-open) .page:has(.screen[data-screen="guess"]:not([hidden])) {
     display: flex;
     flex-direction: column;
     justify-content: center;

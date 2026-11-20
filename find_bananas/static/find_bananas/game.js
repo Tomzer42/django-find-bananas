@@ -60,6 +60,19 @@
     return span;
   }
 
+  // Phone keyboard open? (the visible area shrinks well below the window.)
+  // The guess card is centred on the screen only while the keyboard is
+  // closed, so that "Submit" never ends up hidden behind the keyboard.
+  var vv = window.visualViewport;
+  function trackKeyboard() {
+    var open = !!vv && vv.height < window.innerHeight * 0.8;
+    document.documentElement.classList.toggle("keyboard-open", open);
+  }
+  if (vv) {
+    vv.addEventListener("resize", trackKeyboard);
+    trackKeyboard();
+  }
+
   function field(name) {
     return root.querySelector('[data-field="' + name + '"]');
   }
