@@ -514,7 +514,21 @@ h2 {
 }
 
 .screen[data-screen="ready"] h2 {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+}
+
+/* Phones: the "Show the bananas" button sits low in the card, at thumb
+   height, like the buttons of the other screens (not right under the title). */
+@media (max-width: 640px) {
+  .screen[data-screen="ready"]:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    min-height: clamp(220px, 42svh, 320px);
+  }
+
+  .screen[data-screen="ready"] [data-action="show"] {
+    margin-top: auto;
+  }
 }
 
 .guess {

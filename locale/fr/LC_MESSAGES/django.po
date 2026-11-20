@@ -571,8 +571,8 @@ msgstr ""
 "réessaie."
 
 #: find_bananas/templates/find_bananas/base.html:13:1
-msgid "FindBananas — how many bananas can you see?"
-msgstr "FindBananas — combien de bananes vois-tu ?"
+msgid "FindBananas — guess how many bananas!"
+msgstr "FindBananas — Devine le nombre de bananes !"
 
 #: find_bananas/templates/find_bananas/base.html:14:1
 msgid "A new challenge every day at noon. 3 rounds, 5 seconds each."
@@ -621,7 +621,7 @@ msgid "Rounds"
 msgstr "Rounds"
 
 #: find_bananas/templates/find_bananas/home.html:14:1
-#: find_bananas/templates/find_bananas/home.html:55:1
+#: find_bananas/templates/find_bananas/home.html:56:1
 #, python-format
 msgid "Day #%(number)s"
 msgstr "Jour n°%(number)s"
@@ -644,51 +644,55 @@ msgid "Play"
 msgstr "Jouer"
 
 #: find_bananas/templates/find_bananas/home.html:22:1
+msgid "You’ll have 5 seconds to count them."
+msgstr "Tu auras 5 secondes pour les compter."
+
+#: find_bananas/templates/find_bananas/home.html:23:1
 msgid "Show the bananas"
 msgstr "Afficher les bananes"
 
-#: find_bananas/templates/find_bananas/home.html:28:1
+#: find_bananas/templates/find_bananas/home.html:29:1
 msgid "Loading…"
 msgstr "Chargement…"
 
-#: find_bananas/templates/find_bananas/home.html:36:1
+#: find_bananas/templates/find_bananas/home.html:37:1
 msgid "How many bananas did you see?"
 msgstr "Tu as vu combien de bananes ?"
 
-#: find_bananas/templates/find_bananas/home.html:40:1
+#: find_bananas/templates/find_bananas/home.html:41:1
 msgid "Submit guess"
 msgstr "Valider"
 
-#: find_bananas/templates/find_bananas/home.html:48:1
+#: find_bananas/templates/find_bananas/home.html:49:1
 msgid "Your guess"
 msgstr "Ta réponse"
 
-#: find_bananas/templates/find_bananas/home.html:49:1
-#: find_bananas/templates/find_bananas/home.html:63:1
+#: find_bananas/templates/find_bananas/home.html:50:1
+#: find_bananas/templates/find_bananas/home.html:64:1
 msgid "Bananas"
 msgstr "Bananes"
 
-#: find_bananas/templates/find_bananas/home.html:63:1
+#: find_bananas/templates/find_bananas/home.html:64:1
 msgid "Round"
 msgstr "Round"
 
-#: find_bananas/templates/find_bananas/home.html:63:1
+#: find_bananas/templates/find_bananas/home.html:64:1
 msgid "Guess"
 msgstr "Réponse"
 
-#: find_bananas/templates/find_bananas/home.html:63:1
+#: find_bananas/templates/find_bananas/home.html:64:1
 msgid "Off by"
 msgstr "Écart"
 
-#: find_bananas/templates/find_bananas/home.html:67:1
+#: find_bananas/templates/find_bananas/home.html:68:1
 msgid "Share my score"
 msgstr "Partager mon score"
 
-#: find_bananas/templates/find_bananas/home.html:74:1
+#: find_bananas/templates/find_bananas/home.html:75:1
 msgid "Something went wrong"
 msgstr "Un problème est survenu"
 
-#: find_bananas/templates/find_bananas/home.html:76:1
+#: find_bananas/templates/find_bananas/home.html:77:1
 msgid "Reload the game"
 msgstr "Recharger le jeu"
 
